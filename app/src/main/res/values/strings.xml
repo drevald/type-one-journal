@@ -7,4 +7,6 @@
     <string name="show_diagram">Show Digram</string>
     <string name="send_results">Send Results</string>
     <string name="title_activity_sugar">Sugar Level</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
 </resources>

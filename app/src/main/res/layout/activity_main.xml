@@ -6,45 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="1"
-        android:background="@color/colorAccent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
 
-        <Button
-            android:id="@+id/sugarButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorButtonText"
-            android:text="@string/add_sugar_level" />
+    <Button
+        android:id="@+id/sugarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_sugar_level"/>
 
-        <Button
-            android:id="@+id/insulinButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorButtonText"
-            android:text="@string/add_insulin_shot" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"/>
 
-        <Button
-            android:id="@+id/mealButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorButtonText"
-            android:text="@string/add_meal" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add"/>
 
-        <Button
-            android:id="@+id/activityButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorButtonText"
-            android:text="@string/add_activity" />
-
-    </GridLayout>
+</LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
