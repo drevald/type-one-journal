@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ShotsAndSugar</string>
+    <string name="add_sugar_level">Add Sugar Level</string>
+    <string name="add_insulin_shot">Add Insulin Shot</string>
+    <string name="add_meal">Add Meal</string>
+    <string name="add_activity">Add Activity</string>
+    <string name="show_diagram">Show Digram</string>
+    <string name="send_results">Send Results</string>
+    <string name="title_activity_sugar">Sugar Level</string>
 </resources>
