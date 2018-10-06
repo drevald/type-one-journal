@@ -19,14 +19,31 @@
         android:text="@string/add_sugar_level"/>
 
     <Button
+        android:id="@+id/shotButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"/>
+        android:text="@string/add_insulin_shot"/>
 
     <Button
+        android:id="@+id/mealButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"/>
+        android:text="@string/add_meal"/>
+
+    <Button
+        android:id="@+id/activityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_activity"/>
+
+    <Button
+        android:id="@+id/diagramButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_diagram"/>
+
+
+
 
 </LinearLayout>
 

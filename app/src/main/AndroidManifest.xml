@@ -19,6 +19,22 @@
         <activity
             android:name=".SugarActivity"
             android:label="@string/title_activity_sugar"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ShotActivity"
+            android:label="@string/title_activity_shot"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MealActivity"
+            android:label="@string/title_activity_meal"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DiagramActivity"
+            android:label="@string/title_activity_diagram"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ActivityActivity"
+            android:label="@string/title_activity_activity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
