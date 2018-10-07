@@ -43,7 +43,6 @@
             android:layout_height="wrap_content"
             android:text="@string/add"/>
 
-
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
