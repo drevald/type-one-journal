@@ -7,22 +7,19 @@ import android.support.annotation.NonNull;
 @Entity
 public class SugarLevel {
 
-    @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private float value;
 
-    public SugarLevel(@NonNull long id, float value) {
-        this.id = id;
+    public SugarLevel(float value) {
         this.value = value;
     }
 
-    @NonNull
     public long getId() {
         return id;
     }
 
-    public void setId(@NonNull long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -33,4 +30,5 @@ public class SugarLevel {
     public void setValue(float value) {
         this.value = value;
     }
+
 }

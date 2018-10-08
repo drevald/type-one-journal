@@ -9,8 +9,8 @@ import android.support.annotation.NonNull;
 
 import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
 
-@Database (entities = {SugarLevel.class}, version = 1, exportSchema = false)
-public abstract class SugarAndShotsDatabase extends RoomDatabase {
+@android.arch.persistence.room.Database(entities = {SugarLevel.class}, version = 1, exportSchema = false)
+public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DaoAccess daoAccess();
 

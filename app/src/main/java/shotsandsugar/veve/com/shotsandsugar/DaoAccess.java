@@ -22,6 +22,9 @@ public interface DaoAccess {
     @Query("SELECT * FROM SugarLevel WHERE Id = :id")
     SugarLevel fetchSugarLevel (int id);
 
+    @Query("SELECT * FROM SugarLevel")
+    List<SugarLevel> fetchSugarLevels ();
+
     @Update
     void updateMovie (SugarLevel record);
 
