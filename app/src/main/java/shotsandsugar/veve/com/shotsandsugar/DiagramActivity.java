@@ -16,7 +16,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.transform.Result;
 
@@ -24,6 +27,7 @@ import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
 
 public class DiagramActivity extends DatabaseActivity {
 
+    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
     List<SugarLevel> records;
 
     @Override
@@ -70,13 +74,26 @@ public class DiagramActivity extends DatabaseActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
                     TextView textView = new TextView(getApplicationContext());
-                    textView.setText(String.valueOf(records.get(position).getValue()));
+                    SugarLevel record = records.get(position);
+                    Date resultdate = new Date(record.getTimestamp());
+                    textView.setText(String.format(Locale.getDefault(), "Date %S id:%d value:%f",
+                            sdf.format(resultdate), record.getId(), record.getValue()));
                     return textView;
                 }
                 return convertView;
             }
         });
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        try {
+            records = new DiagramTask(daoAccess).execute().get();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
+        }
     }
 
     static class DiagramTask extends AsyncTask<Void, Void, List<SugarLevel>> {
@@ -91,8 +108,10 @@ public class DiagramActivity extends DatabaseActivity {
         protected List<SugarLevel> doInBackground(Void... voids) {
             List<SugarLevel> records = daoAccess.fetchSugarLevels();
             for (SugarLevel record : records) {
+                Date resultdate = new Date(record.getTimestamp());
                 Log.d(getClass().getName(),
-                        String.format("id:%d value:%f", record.getId(), record.getValue()));
+                        String.format("Date %S id:%d value:%f",
+                                sdf.format(resultdate), record.getId(), record.getValue()));
             }
             return records;
         }

@@ -4,15 +4,19 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.sql.Timestamp;
+
 @Entity
 public class SugarLevel {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
     private float value;
+    private long timestamp;
 
-    public SugarLevel(float value) {
+    public SugarLevel(float value, long timestamp) {
         this.value = value;
+        this.timestamp = timestamp;
     }
 
     public long getId() {
@@ -30,5 +34,14 @@ public class SugarLevel {
     public void setValue(float value) {
         this.value = value;
     }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
 
 }
