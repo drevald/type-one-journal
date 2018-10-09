@@ -31,16 +31,6 @@ public class ShotActivity extends DatabaseActivity {
             }
         });
 
-        Button sugarButton = (Button) findViewById(R.id.sugarButton);
-        sugarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SugarLevel sugarLevel = new SugarLevel(1.0f, System.currentTimeMillis());
-                appDatabase.daoAccess().insertSugarLevel(sugarLevel);
-            }
-        });
-
-
     }
 
 }

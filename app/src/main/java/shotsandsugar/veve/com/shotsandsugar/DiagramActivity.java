@@ -3,6 +3,7 @@ package shotsandsugar.veve.com.shotsandsugar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,7 @@ import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
 
 public class DiagramActivity extends DatabaseActivity {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+    static SimpleDateFormat sdf = new SimpleDateFormat("M dd, yyyy HH:mm");
     List<SugarLevel> records;
 
     @Override
@@ -73,13 +74,15 @@ public class DiagramActivity extends DatabaseActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
-                    TextView textView = new TextView(getApplicationContext());
-                    SugarLevel record = records.get(position);
-                    Date resultdate = new Date(record.getTimestamp());
-                    textView.setText(String.format(Locale.getDefault(), "Date %S id:%d value:%f",
-                            sdf.format(resultdate), record.getId(), record.getValue()));
-                    return textView;
+                    convertView = getLayoutInflater().inflate(R.layout.records_list, parent, false);
                 }
+                TextView dateTextView = convertView.findViewById(R.id.date);
+                TextView recordTextView = convertView.findViewById(R.id.record);
+                SugarLevel record = records.get(position);
+                Date resultdate = new Date(record.getTimestamp());
+                dateTextView.setText(String.format(Locale.getDefault(), "%s",
+                        sdf.format(resultdate)));
+                recordTextView.setText(String.valueOf(record.getValue()));
                 return convertView;
             }
         });
