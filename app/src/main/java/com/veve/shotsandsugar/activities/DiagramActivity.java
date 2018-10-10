@@ -1,14 +1,10 @@
-package shotsandsugar.veve.com.shotsandsugar;
+package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.PrecomputedText;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.xml.transform.Result;
+import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.SugarLevel;
 
-import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
+import com.veve.shotsandsugar.R;
 
 public class DiagramActivity extends DatabaseActivity {
 

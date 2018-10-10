@@ -13,4 +13,9 @@
     <string name="title_activity_meal">MealActivity</string>
     <string name="title_activity_diagram">DiagramActivity</string>
     <string name="title_activity_activity">ActivityActivity</string>
+    <string name="insulin_name">Insulin name</string>
+    <string name="tujeo">Tujeo</string>
+    <string name="apidra">Apidra</string>
+    <string name="humulin">Humulin</string>
+    <string name="humalog">Humalog</string>
 </resources>

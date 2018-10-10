@@ -1,4 +1,4 @@
-package shotsandsugar.veve.com.shotsandsugar;
+package com.veve.shotsandsugar;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -8,7 +8,9 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
+import com.veve.shotsandsugar.model.Insulin;
+import com.veve.shotsandsugar.model.SelectedInsulin;
+import com.veve.shotsandsugar.model.SugarLevel;
 
 @Dao
 public interface DaoAccess {
@@ -30,5 +32,20 @@ public interface DaoAccess {
 
     @Delete
     void deleteSugarLevel(SugarLevel record);
+
+    @Insert
+    void insertSugarLevel (Insulin record);
+
+    @Insert
+    void insertInsulin(Insulin insulin);
+
+    @Insert
+    void insertSelectedInsulin(SelectedInsulin insulin);
+
+    @Query("SELECT * FROM Insulin")
+    List<Insulin> listInsulins();
+
+    @Query("SELECT Insulin.* FROM Insulin, SelectedInsulin WHERE Insulin.id = SelectedInsulin.insulinId")
+    List<Insulin> listSelectedInsulins();
 
 }

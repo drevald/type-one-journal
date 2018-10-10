@@ -1,15 +1,20 @@
-package shotsandsugar.veve.com.shotsandsugar;
+package com.veve.shotsandsugar;
 
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.Database;
 import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.RoomDatabase;
 import android.support.annotation.NonNull;
 
-import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
+import com.veve.shotsandsugar.model.Insulin;
+import com.veve.shotsandsugar.model.SelectedInsulin;
+import com.veve.shotsandsugar.model.SugarLevel;
 
-@android.arch.persistence.room.Database(entities = {SugarLevel.class}, version = 1, exportSchema = false)
+@android.arch.persistence.room.Database(entities = {
+        SugarLevel.class,
+        Insulin.class,
+        SelectedInsulin.class
+}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DaoAccess daoAccess();
@@ -30,4 +35,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public void clearAllTables() {
 
     }
+
 }

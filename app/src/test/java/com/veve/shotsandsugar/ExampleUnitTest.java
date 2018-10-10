@@ -1,4 +1,4 @@
-package shotsandsugar.veve.com.shotsandsugar;
+package com.veve.shotsandsugar;
 
 import org.junit.Test;
 

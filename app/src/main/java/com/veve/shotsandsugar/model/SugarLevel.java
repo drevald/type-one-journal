@@ -1,10 +1,7 @@
-package shotsandsugar.veve.com.shotsandsugar.model;
+package com.veve.shotsandsugar.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
-
-import java.sql.Timestamp;
 
 @Entity
 public class SugarLevel {

@@ -1,4 +1,4 @@
-package shotsandsugar.veve.com.shotsandsugar;
+package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,11 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
+import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.SugarLevel;
 
-import shotsandsugar.veve.com.shotsandsugar.model.SugarLevel;
+import com.veve.shotsandsugar.R;
 
 public class SugarActivity extends DatabaseActivity {
 
