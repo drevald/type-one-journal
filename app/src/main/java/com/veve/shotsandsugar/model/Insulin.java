@@ -7,22 +7,19 @@ import android.arch.persistence.room.PrimaryKey;
 public class Insulin {
 
     @PrimaryKey(autoGenerate = false)
-    private long id;
+    private int id;
     private String code;
 
-    public Insulin() {
-    }
-
-    public Insulin(long id, String code) {
+    public Insulin(int id, String code) {
         this.id = id;
         this.code = code;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -33,14 +30,5 @@ public class Insulin {
     public void setCode(String code) {
         this.code = code;
     }
-
-    public static Insulin[] populateData() {
-        return new Insulin[] {
-                new Insulin(1, "tudjeo"),
-                new Insulin(2, "apidra"),
-                new Insulin(3, "humulin"),
-        };
-    }
-
 
 }

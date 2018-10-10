@@ -13,11 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.Record;
 import com.veve.shotsandsugar.model.SugarLevel;
 
 import com.veve.shotsandsugar.R;
@@ -25,7 +27,7 @@ import com.veve.shotsandsugar.R;
 public class DiagramActivity extends DatabaseActivity {
 
     static SimpleDateFormat sdf = new SimpleDateFormat("M dd, yyyy HH:mm");
-    List<SugarLevel> records;
+    List<Record> records;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class DiagramActivity extends DatabaseActivity {
 
             @Override
             public long getItemId(int position) {
-                return records.get(position).getId();
+                return position;
             }
 
             @Override
@@ -74,11 +76,11 @@ public class DiagramActivity extends DatabaseActivity {
                 }
                 TextView dateTextView = convertView.findViewById(R.id.date);
                 TextView recordTextView = convertView.findViewById(R.id.record);
-                SugarLevel record = records.get(position);
+                Record record = records.get(position);
                 Date resultdate = new Date(record.getTimestamp());
-                dateTextView.setText(String.format(Locale.getDefault(), "%s",
-                        sdf.format(resultdate)));
-                recordTextView.setText(String.valueOf(record.getValue()));
+//                dateTextView.setText(String.format(Locale.getDefault(), "%s",
+//                        sdf.format(resultdate)));
+//                recordTextView.setText(String.valueOf(record.getValue()));
                 return convertView;
             }
         });
@@ -95,7 +97,7 @@ public class DiagramActivity extends DatabaseActivity {
         }
     }
 
-    static class DiagramTask extends AsyncTask<Void, Void, List<SugarLevel>> {
+    static class DiagramTask extends AsyncTask<Void, Void, List<Record>> {
 
         DaoAccess daoAccess;
 
@@ -104,16 +106,52 @@ public class DiagramActivity extends DatabaseActivity {
         }
 
         @Override
-        protected List<SugarLevel> doInBackground(Void... voids) {
-            List<SugarLevel> records = daoAccess.fetchSugarLevels();
-            for (SugarLevel record : records) {
-                Date resultdate = new Date(record.getTimestamp());
-                Log.d(getClass().getName(),
-                        String.format("Date %S id:%d value:%f",
-                                sdf.format(resultdate), record.getId(), record.getValue()));
+        protected List<Record> doInBackground(Void... voids) {
+            List<Record> records = new ArrayList<Record>();
+            List<SugarLevel> sugarRecords = daoAccess.fetchSugarLevels();
+            for (SugarLevel sugarRecord : sugarRecords) {
+                String text = String.format("Glucose level is %f mmol", sugarRecord.getValue());
+//                Date resultdate = new Date(record.getTimestamp());
+//                Log.d(getClass().getName(),
+//                        String.format("Date %S id:%d value:%f",
+//                                sdf.format(resultdate), record.getId(), record.getValue()));
             }
             return records;
         }
+    }
+
+    class Record {
+
+        public Object getOriginalRecord() {
+            return originalRecord;
+        }
+
+        public void setOriginalRecord(Object originalRecord) {
+            this.originalRecord = originalRecord;
+        }
+
+        public long getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(long timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        Object originalRecord;
+
+        long timestamp;
+
+        String text;
+
     }
 
 }

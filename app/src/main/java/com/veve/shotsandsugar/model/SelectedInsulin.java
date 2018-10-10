@@ -30,9 +30,6 @@ public class SelectedInsulin {
         this.insulinId = insulinId;
     }
 
-
-
-
 }
 
 

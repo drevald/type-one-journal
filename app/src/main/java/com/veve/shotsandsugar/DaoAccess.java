@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import com.veve.shotsandsugar.model.Insulin;
+import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -47,5 +48,8 @@ public interface DaoAccess {
 
     @Query("SELECT Insulin.* FROM Insulin, SelectedInsulin WHERE Insulin.id = SelectedInsulin.insulinId")
     List<Insulin> listSelectedInsulins();
+
+    @Insert
+    void insertShot(InsulinShot insulinShot);
 
 }

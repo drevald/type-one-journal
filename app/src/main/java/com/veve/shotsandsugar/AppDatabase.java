@@ -7,13 +7,15 @@ import android.arch.persistence.room.RoomDatabase;
 import android.support.annotation.NonNull;
 
 import com.veve.shotsandsugar.model.Insulin;
+import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
 @android.arch.persistence.room.Database(entities = {
         SugarLevel.class,
         Insulin.class,
-        SelectedInsulin.class
+        SelectedInsulin.class,
+        InsulinShot.class
 }, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
