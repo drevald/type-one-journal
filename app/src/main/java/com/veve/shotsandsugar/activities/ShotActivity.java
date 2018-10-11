@@ -32,7 +32,7 @@ import com.veve.shotsandsugar.model.InsulinShot;
 
 public class ShotActivity extends DatabaseActivity {
 
-    List<Insulin> insulinsList = Arrays.asList(new Insulin[]{new Insulin(1, "apidra"),new Insulin(2, "tujeo")});
+    List<Insulin> insulinsList;
 
     int selectedInsulinId;
 
@@ -54,11 +54,11 @@ public class ShotActivity extends DatabaseActivity {
             }
         });
 
-//        try {
-//            insulinsList = new ListInsulinTask(daoAccess).execute().get();
-//        } catch (Exception e) {
-//            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
-//        }
+        try {
+            insulinsList = new ListInsulinTask(daoAccess).execute().get();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
+        }
 
         final GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
         gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -68,13 +68,19 @@ public class ShotActivity extends DatabaseActivity {
                 gridLayout.setColumnCount(
                         ((LinearLayout)gridLayout.getParent()).getWidth()/Constants.BUTTON_WIDTH);
                 for (int i=1; i<25; i++) {
-                    Button button = new Button(getApplicationContext());
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
-                            new ViewGroup.MarginLayoutParams(
-                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
-                    params.setMargins(0, 10, 10, 0);
-                    button.setLayoutParams(params);
-                    button.setTextColor(getResources().getColor(R.color.colorButtonText));
+                    //Button button = new Button(getApplicationContext());
+
+                    Button button = getLayoutInflater().inflate(R.layout.buttons, gridLayout)
+                            .findViewById(R.id.button);
+
+//                    Button button = findViewById(R.id.button);
+
+//                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+//                            new ViewGroup.MarginLayoutParams(
+//                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
+//                    params.setMargins(0, 10, 10, 0);
+//                    button.setLayoutParams(params);
+                    button.setTextColor(Color.WHITE);
                     button.setOnClickListener(new NumberListener(i));
                     button.setText(String.valueOf(i));
                     if (selectedInsulinId == 0) {
@@ -87,7 +93,7 @@ public class ShotActivity extends DatabaseActivity {
                         button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                         button.setEnabled(true);
                     }
-                    gridLayout.addView(button);
+                    //gridLayout.addView(button);
                 }
                 gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -100,6 +106,7 @@ public class ShotActivity extends DatabaseActivity {
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));
             insulinRadioButton.setId(insulin.getId());
+            insulinRadioButton.setTextColor(Color.BLACK);
             radioGroup.addView(insulinRadioButton);
         }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -121,24 +128,20 @@ public class ShotActivity extends DatabaseActivity {
 
     }
 
-//    static class ListInsulinTask extends AsyncTask<Void, Void, List<Insulin>> {
-//
-//        DaoAccess daoAccess;
-//
-//        ListInsulinTask(DaoAccess daoAccess) {
-//            this.daoAccess = daoAccess;
-//        }
-//
-//        @Override
-//        protected List<Insulin> doInBackground(Void... voids) {
-//            //return daoAccess.listSelectedInsulins();
-//            List<Insulin> insulins = new ArrayList<Insulin>();
-//            insulins.add(new Insulin(1, "apidra"));
-//            insulins.add(new Insulin(2, "tujeo"));
-//            return insulins;
-//        }
-//
-//    }
+    static class ListInsulinTask extends AsyncTask<Void, Void, List<Insulin>> {
+
+        DaoAccess daoAccess;
+
+        ListInsulinTask(DaoAccess daoAccess) {
+            this.daoAccess = daoAccess;
+        }
+
+        @Override
+        protected List<Insulin> doInBackground(Void... voids) {
+            return daoAccess.listSelectedInsulins();
+        }
+
+    }
 
     static class AddShotTask extends AsyncTask<Integer, Void, Void> {
 

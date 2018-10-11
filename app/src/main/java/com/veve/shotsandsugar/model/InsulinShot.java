@@ -11,11 +11,11 @@ public class InsulinShot {
 
     private int amount;
 
-    private long insulinId;
+    private int insulinId;
 
     private long time;
 
-    public InsulinShot(int amount, long insulinId, long time) {
+    public InsulinShot(int amount, int insulinId, long time) {
         this.amount = amount;
         this.insulinId = insulinId;
         this.time = time;
@@ -37,11 +37,11 @@ public class InsulinShot {
         this.amount = amount;
     }
 
-    public long getInsulinId() {
+    public int getInsulinId() {
         return insulinId;
     }
 
-    public void setInsulinId(long insulinId) {
+    public void setInsulinId(int insulinId) {
         this.insulinId = insulinId;
     }
 

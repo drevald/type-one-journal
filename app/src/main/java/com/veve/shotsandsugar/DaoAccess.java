@@ -40,6 +40,9 @@ public interface DaoAccess {
     @Insert
     void insertInsulin(Insulin insulin);
 
+    @Query("DELETE FROM Insulin")
+    void deleteInsulins();
+
     @Insert
     void insertSelectedInsulin(SelectedInsulin insulin);
 
@@ -49,7 +52,14 @@ public interface DaoAccess {
     @Query("SELECT Insulin.* FROM Insulin, SelectedInsulin WHERE Insulin.id = SelectedInsulin.insulinId")
     List<Insulin> listSelectedInsulins();
 
+    @Query("SELECT * FROM Insulin WHERE Id = :id")
+    Insulin fetchInsulin (int id);
+
     @Insert
     void insertShot(InsulinShot insulinShot);
+
+    @Query("SELECT * FROM InsulinShot")
+    List<InsulinShot> fetchInsulinShots();
+
 
 }

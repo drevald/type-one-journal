@@ -1,6 +1,7 @@
 package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +19,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.Insulin;
+import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.Record;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -26,12 +30,18 @@ import com.veve.shotsandsugar.R;
 
 public class DiagramActivity extends DatabaseActivity {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("M dd, yyyy HH:mm");
-    List<Record> records;
+    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+
+    List<Record> records = new ArrayList<Record>();
+
+    static Resources RESOURCES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RESOURCES = getResources();
+
         setContentView(R.layout.activity_diagram);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -78,9 +88,9 @@ public class DiagramActivity extends DatabaseActivity {
                 TextView recordTextView = convertView.findViewById(R.id.record);
                 Record record = records.get(position);
                 Date resultdate = new Date(record.getTimestamp());
-//                dateTextView.setText(String.format(Locale.getDefault(), "%s",
-//                        sdf.format(resultdate)));
-//                recordTextView.setText(String.valueOf(record.getValue()));
+                dateTextView.setText(String.format(Locale.getDefault(), "%s",
+                        sdf.format(resultdate)));
+                recordTextView.setText(record.getText());
                 return convertView;
             }
         });
@@ -111,47 +121,24 @@ public class DiagramActivity extends DatabaseActivity {
             List<SugarLevel> sugarRecords = daoAccess.fetchSugarLevels();
             for (SugarLevel sugarRecord : sugarRecords) {
                 String text = String.format("Glucose level is %f mmol", sugarRecord.getValue());
-//                Date resultdate = new Date(record.getTimestamp());
-//                Log.d(getClass().getName(),
-//                        String.format("Date %S id:%d value:%f",
-//                                sdf.format(resultdate), record.getId(), record.getValue()));
+                Record record = new Record(sugarRecord, sugarRecord.getTimestamp(), text);
+                records.add(record);
+            }
+            List<InsulinShot> shotRecords = daoAccess.fetchInsulinShots();
+            for (InsulinShot insulinShot : shotRecords) {
+                Insulin insulin = daoAccess.fetchInsulin(insulinShot.getInsulinId());
+                int insulinNameId = RESOURCES.getIdentifier(insulin.getCode(),
+                        Constants.STRING_RES_TYPE,"veve.com.shotsandsugar");
+                String insulinName = RESOURCES.getString(insulinNameId);
+                String text = String.format(Locale.getDefault(), "Shot of %d ml of %s",
+                        insulinShot.getAmount(),insulinName);
+                records.add(new Record(insulinShot, insulinShot.getTime(), text));
             }
             return records;
         }
     }
 
-    class Record {
 
-        public Object getOriginalRecord() {
-            return originalRecord;
-        }
-
-        public void setOriginalRecord(Object originalRecord) {
-            this.originalRecord = originalRecord;
-        }
-
-        public long getTimestamp() {
-            return timestamp;
-        }
-
-        public void setTimestamp(long timestamp) {
-            this.timestamp = timestamp;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        Object originalRecord;
-
-        long timestamp;
-
-        String text;
-
-    }
 
 }
+
