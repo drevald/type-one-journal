@@ -128,7 +128,7 @@ public class DiagramActivity extends DatabaseActivity {
             for (InsulinShot insulinShot : shotRecords) {
                 Insulin insulin = daoAccess.fetchInsulin(insulinShot.getInsulinId());
                 int insulinNameId = RESOURCES.getIdentifier(insulin.getCode(),
-                        Constants.STRING_RES_TYPE,"veve.com.shotsandsugar");
+                        Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
                 String insulinName = RESOURCES.getString(insulinNameId);
                 String text = String.format(Locale.getDefault(), "Shot of %d ml of %s",
                         insulinShot.getAmount(),insulinName);

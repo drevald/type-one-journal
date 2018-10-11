@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:title="@string/add_insulin_shot"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -30,21 +31,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="25sp"
-            android:background="#FF00FF"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="@string/insulin_name"
-                android:background="#FFFF00"
                 android:gravity="center_vertical"/>
 
             <RadioGroup
                 android:id="@+id/insulinsList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00FFFF"
                 android:orientation="horizontal">
             </RadioGroup>
 
@@ -53,18 +51,7 @@
         <GridLayout
             android:id="@+id/gridLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00FF00">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="60dp"
-                android:layout_height="20dp"
-                android:background="@color/colorAccent"
-                android:padding="10dp"
-                android:layout_margin="20dp"/>
-
-        </GridLayout>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

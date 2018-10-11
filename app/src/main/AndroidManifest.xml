@@ -17,23 +17,23 @@
         </activity>
         <activity
             android:name="com.veve.shotsandsugar.activities.SugarActivity"
-            android:label="@string/title_activity_sugar"
+            android:label="@string/add_sugar_level"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.veve.shotsandsugar.activities.ShotActivity"
-            android:label="@string/title_activity_shot"
+            android:label="@string/add_insulin_shot"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.veve.shotsandsugar.activities.MealActivity"
-            android:label="@string/title_activity_meal"
+            android:label="@string/add_meal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.veve.shotsandsugar.activities.DiagramActivity"
-            android:label="@string/title_activity_diagram"
+            android:label="@string/show_diagram"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.veve.shotsandsugar.activities.ActivityActivity"
-            android:label="@string/title_activity_activity"
+            android:label="@string/add_activity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>

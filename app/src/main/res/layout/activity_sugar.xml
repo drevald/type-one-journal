@@ -20,32 +20,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_activity"/>
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/sugarValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
-
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add"/>
-
-    </LinearLayout>
+    </GridLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/back"

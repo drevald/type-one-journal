@@ -67,19 +67,16 @@ public class ShotActivity extends DatabaseActivity {
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
                         ((LinearLayout)gridLayout.getParent()).getWidth()/Constants.BUTTON_WIDTH);
-                for (int i=1; i<25; i++) {
-                    //Button button = new Button(getApplicationContext());
+                for (int i=1; i<15; i++) {
+//                    Button button = getLayoutInflater().inflate(R.layout.buttons, gridLayout)
+//                            .findViewById(R.id.button);
 
-                    Button button = getLayoutInflater().inflate(R.layout.buttons, gridLayout)
-                            .findViewById(R.id.button);
-
-//                    Button button = findViewById(R.id.button);
-
-//                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
-//                            new ViewGroup.MarginLayoutParams(
-//                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
-//                    params.setMargins(0, 10, 10, 0);
-//                    button.setLayoutParams(params);
+                    Button button = new Button(getApplicationContext());
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                            new ViewGroup.MarginLayoutParams(
+                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
+                    params.setMargins(0, 10, 10, 0);
+                    button.setLayoutParams(params);
                     button.setTextColor(Color.WHITE);
                     button.setOnClickListener(new NumberListener(i));
                     button.setText(String.valueOf(i));
@@ -93,7 +90,7 @@ public class ShotActivity extends DatabaseActivity {
                         button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                         button.setEnabled(true);
                     }
-                    //gridLayout.addView(button);
+                    gridLayout.addView(button);
                 }
                 gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -138,7 +135,7 @@ public class ShotActivity extends DatabaseActivity {
 
         @Override
         protected List<Insulin> doInBackground(Void... voids) {
-            return daoAccess.listSelectedInsulins();
+            return daoAccess.listInsulins();
         }
 
     }
