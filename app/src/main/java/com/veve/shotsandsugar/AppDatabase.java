@@ -8,8 +8,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
+import com.veve.shotsandsugar.model.Meal;
+import com.veve.shotsandsugar.model.MealIngredient;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -17,8 +20,11 @@ import com.veve.shotsandsugar.model.SugarLevel;
         SugarLevel.class,
         Insulin.class,
         SelectedInsulin.class,
-        InsulinShot.class
-}, version = 2, exportSchema = false)
+        InsulinShot.class,
+        Meal.class,
+        MealIngredient.class,
+        Ingredient.class
+}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     protected static final String DATABASE_NAME = "db";
@@ -34,6 +40,22 @@ public abstract class AppDatabase extends RoomDatabase {
             daoAccess.deleteInsulins();
             daoAccess.insertInsulin(new Insulin(1, "apidra"));
             daoAccess.insertInsulin(new Insulin(2, "tujeo"));
+            daoAccess.deleteIngredients();
+            daoAccess.insertIngredient(new Ingredient(1, 0, "water", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(2, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
+
+//            @PrimaryKey
+//            int id;
+//            int typeId;
+//            String ingredientCode;
+//            float breadUnitsPer100g;
+//            float glycemicIndex;
+
+//            float fatPer100g;
+//            float carbohydratePer100g;
+//            float proteinPer100g;
+
+
         }
         return appDatabase;
     }

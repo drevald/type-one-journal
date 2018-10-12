@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="#FF0000"
+        android:id="@+id/ingredient"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="15sp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:background="#FF00FF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="15sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="#FFFF00"
+                android:id="@+id/product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_name"
+                android:textSize="15sp"
+                />
+
+            <!--<Spinner-->
+                <!--android:background="#00ff00"-->
+                <!--android:id="@+id/productSelection"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="15sp"/>-->
+
+            <TextView
+                android:background="#FFFF00"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Rfrjt nj ckjdj lkbyyjt"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#0000FF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="15sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="@color/design_default_color_primary_dark"
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/product_name"
+                android:textSize="15sp"
+                />
+
+            <Spinner
+                android:background="@color/colorAccent"
+                android:id="@+id/weightSelection"
+                android:layout_width="fill_parent"
+                android:paddingLeft="30sp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

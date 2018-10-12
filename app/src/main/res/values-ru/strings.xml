@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Журнал Первого Типа</string>
+    <string name="add_sugar_level">Добавить уровень глюкозы</string>
+    <string name="add_insulin_shot">Добавить подкол</string>
+    <string name="add_meal">Добавить еду</string>
+    <string name="add_activity">Добавить нагрузку</string>
+    <string name="show_diagram">Показать диаграмму</string>
+    <string name="send_results">Переслать результаты</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отменить</string>
+    <string name="insulin_name">Марка инсулина</string>
+    <string name="tujeo">Туджео</string>
+    <string name="apidra">Апидра</string>
+    <string name="humulin">Хумулин</string>
+    <string name="humalog">Хумалог</string>
+    <string name="glucose_level_record">Уровень глюкозы %2.1f ммоль</string>
+    <string name="water">Вода</string>
+    <string name="ray_bread">Ржаной хлеб</string>
+    <string name="product_name">Продукт</string>
+    <string name="product_weight">Количество</string>
+</resources>

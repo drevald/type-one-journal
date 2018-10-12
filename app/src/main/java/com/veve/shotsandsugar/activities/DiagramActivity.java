@@ -30,7 +30,7 @@ import com.veve.shotsandsugar.R;
 
 public class DiagramActivity extends DatabaseActivity {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm");
+    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
 
     List<Record> records = new ArrayList<Record>();
 
@@ -120,7 +120,8 @@ public class DiagramActivity extends DatabaseActivity {
             List<Record> records = new ArrayList<Record>();
             List<SugarLevel> sugarRecords = daoAccess.fetchSugarLevels();
             for (SugarLevel sugarRecord : sugarRecords) {
-                String text = String.format("Glucose level is %f mmol", sugarRecord.getValue());
+                String text = String.format(Locale.getDefault(),
+                        RESOURCES.getString(R.string.glucose_level_record), sugarRecord.getValue());
                 Record record = new Record(sugarRecord, sugarRecord.getTimestamp(), text);
                 records.add(record);
             }
