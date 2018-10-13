@@ -18,4 +18,6 @@
     <string name="ray_bread">Ржаной хлеб</string>
     <string name="product_name">Продукт</string>
     <string name="product_weight">Количество</string>
+    <string name="caviar">Икра</string>
+    <string name="champagne">Шампанское</string>
 </resources>

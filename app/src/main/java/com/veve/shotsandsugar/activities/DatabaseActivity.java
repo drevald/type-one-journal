@@ -1,6 +1,7 @@
 package com.veve.shotsandsugar.activities;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ public abstract class DatabaseActivity extends AppCompatActivity {
 
     protected static AppDatabase appDatabase;
     protected static DaoAccess daoAccess;
+    static Resources RESOURCES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,7 @@ public abstract class DatabaseActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage(), e);
         }
-
+        RESOURCES = getResources();
     }
 
     static class GetDatabaseTask extends AsyncTask<Context, Void, DaoAccess> {

@@ -43,6 +43,8 @@ public abstract class AppDatabase extends RoomDatabase {
             daoAccess.deleteIngredients();
             daoAccess.insertIngredient(new Ingredient(1, 0, "water", 5, 55, 1, 1, 1, 1));
             daoAccess.insertIngredient(new Ingredient(2, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(3, 0, "caviar", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(4, 0, "champagne", 5, 55, 1, 1, 1, 1));
 
 //            @PrimaryKey
 //            int id;
@@ -54,7 +56,6 @@ public abstract class AppDatabase extends RoomDatabase {
 //            float fatPer100g;
 //            float carbohydratePer100g;
 //            float proteinPer100g;
-
 
         }
         return appDatabase;

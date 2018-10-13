@@ -68,5 +68,8 @@ public interface DaoAccess {
     @Insert
     void insertIngredient(Ingredient ingredient);
 
+    @Query("SELECT * FROM Ingredient")
+    List<Ingredient> fetchIngredients ();
+
 
 }

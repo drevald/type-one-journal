@@ -34,13 +34,10 @@ public class DiagramActivity extends DatabaseActivity {
 
     List<Record> records = new ArrayList<Record>();
 
-    static Resources RESOURCES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        RESOURCES = getResources();
 
         setContentView(R.layout.activity_diagram);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
