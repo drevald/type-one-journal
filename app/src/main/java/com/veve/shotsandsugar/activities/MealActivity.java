@@ -72,8 +72,8 @@ public class MealActivity extends DatabaseActivity {
                 }
                 ((TextView)convertView.findViewById(R.id.product)).setText("Product");
                 ((TextView)convertView.findViewById(R.id.weight)).setText("Weight");
-//                ((Spinner)convertView.findViewById(R.id.productSelection)).
-//                        setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
+                ((Spinner)convertView.findViewById(R.id.productSelection)).
+                        setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
                 ((Spinner)convertView.findViewById(R.id.weightSelection)).
                         setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
                 return convertView;
@@ -86,6 +86,7 @@ public class MealActivity extends DatabaseActivity {
     static class WeightSpinnerAdapter extends BaseAdapter {
 
         Context context;
+        List<Integer> weights = new ArrayList<Integer>();
 
         public WeightSpinnerAdapter(Context context) {
             this.context = context;

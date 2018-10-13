@@ -28,18 +28,12 @@
                 android:textSize="15sp"
                 />
 
-            <!--<Spinner-->
-                <!--android:background="#00ff00"-->
-                <!--android:id="@+id/productSelection"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textSize="15sp"/>-->
-
-            <TextView
-                android:background="#FFFF00"
+            <Spinner
+                android:background="@color/colorAccent"
+                android:id="@+id/productSelection"
                 android:layout_width="fill_parent"
+                android:paddingLeft="30sp"
                 android:layout_height="wrap_content"
-                android:text="Rfrjt nj ckjdj lkbyyjt"
                 android:textSize="15sp"
                 />
 
