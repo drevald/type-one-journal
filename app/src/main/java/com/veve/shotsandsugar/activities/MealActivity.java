@@ -40,13 +40,12 @@ public class MealActivity extends DatabaseActivity {
 
     static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
+    IngredientsListAdapter ingredientsListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mealIngredients.add(new MealIngredient());
-        mealIngredients.add(new MealIngredient());
-        mealIngredients.add(new MealIngredient());
         mealIngredients.add(new MealIngredient());
 
         setContentView(R.layout.activity_meal);
@@ -63,6 +62,9 @@ public class MealActivity extends DatabaseActivity {
             }
         });
 
+        Button addIngredientButton = (Button) findViewById(R.id.addIngredientt);
+        addIngredientButton.setOnClickListener(new AddProductListener());
+
         try {
             ingredients = new ProductFinderTask(daoAccess).execute().get();
         } catch (Exception e) {
@@ -71,57 +73,8 @@ public class MealActivity extends DatabaseActivity {
 
 
         ListView listView = (ListView)findViewById(R.id.mealsList);
-        listView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return mealIngredients.size();
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return mealIngredients.get(position);
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return mealIngredients.get(position).getId();
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if(convertView == null) {
-                    convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
-                }
-                if(position % 2 == 0)
-                    convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.LTGRAY);
-                ((TextView)convertView.findViewById(R.id.product))
-                        .setText(RESOURCES.getString(R.string.product_name));
-                ((TextView)convertView.findViewById(R.id.weight))
-                        .setText(RESOURCES.getString(R.string.product_weight));
-                Spinner productSelection = ((Spinner)convertView.findViewById(R.id.productSelection));
-                productSelection.setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
-                productSelection.setOnItemSelectedListener(new ProductSelectionListener(position));
-
-                EditText weightInput = convertView.findViewById(R.id.weightInput);
-                Button add10gButton = convertView.findViewById(R.id.add10gButton);
-                Button minus10gButton = convertView.findViewById(R.id.minus10gButton);
-                Button add100gButton = convertView.findViewById(R.id.add100gButton);
-                Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
-                Button resetButton = convertView.findViewById(R.id.resetButton);
-
-                add10gButton.setOnClickListener(new WeightChangeListener(10));
-                minus10gButton.setOnClickListener(new WeightChangeListener(-10));
-                add100gButton.setOnClickListener(new WeightChangeListener(100));
-                minus100gButton.setOnClickListener(new WeightChangeListener(-100));
-
-                resetButton.setOnClickListener(new WeightResetListener());
-
-                weightInput.setOnClickListener(new ProductWeightListener(position));
-
-                return convertView;
-
-            }
-        });
+        ingredientsListAdapter = new IngredientsListAdapter();
+        listView.setAdapter(ingredientsListAdapter);
 
     }
 
@@ -196,7 +149,7 @@ public class MealActivity extends DatabaseActivity {
             Log.d(getClass().getName(),
                     String.format("Meal no #%d selected at position %d", productNumber, productPosition));
             MealIngredient mealIngredient = mealIngredients.get(productPosition);
-            mealIngredient.setIngredientId(id);
+            mealIngredient.setIngredientId((int)id);
         }
 
         @Override
@@ -255,4 +208,89 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
+
+    class RemoveProductListener implements Button.OnClickListener {
+
+        int productNumber;
+
+        public RemoveProductListener(int productNumber) {
+            this.productNumber = productNumber;
+        }
+
+        @Override
+        public void onClick(View v) {
+            mealIngredients.remove(productNumber);
+            ingredientsListAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    class AddProductListener implements Button.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            mealIngredients.add(new MealIngredient());
+            ingredientsListAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    class IngredientsListAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mealIngredients.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mealIngredients.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return mealIngredients.get(position).getId();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
+            }
+            if (position % 2 == 0)
+                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.LTGRAY);
+            ((TextView) convertView.findViewById(R.id.product))
+                    .setText(RESOURCES.getString(R.string.product_name));
+            ((TextView) convertView.findViewById(R.id.weight))
+                    .setText(RESOURCES.getString(R.string.product_weight));
+            Spinner productSelection = ((Spinner) convertView.findViewById(R.id.productSelection));
+            productSelection.setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
+            productSelection.setOnItemSelectedListener(new ProductSelectionListener(position));
+            productSelection.setSelection(mealIngredients.get(position).getIngredientId());
+
+            EditText weightInput = convertView.findViewById(R.id.weightInput);
+            //weightInput.setText(mealIngredients.get(position).getIngredientWeightGramms());
+            weightInput.setText("111");
+            Button add10gButton = convertView.findViewById(R.id.add10gButton);
+            Button minus10gButton = convertView.findViewById(R.id.minus10gButton);
+            Button add100gButton = convertView.findViewById(R.id.add100gButton);
+            Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
+            Button resetButton = convertView.findViewById(R.id.resetButton);
+            Button removeButton = convertView.findViewById(R.id.removeButton);
+
+            add10gButton.setOnClickListener(new WeightChangeListener(10));
+            minus10gButton.setOnClickListener(new WeightChangeListener(-10));
+            add100gButton.setOnClickListener(new WeightChangeListener(100));
+            minus100gButton.setOnClickListener(new WeightChangeListener(-100));
+
+            resetButton.setOnClickListener(new WeightResetListener());
+
+            weightInput.setOnClickListener(new ProductWeightListener(position));
+
+            removeButton.setOnClickListener(new RemoveProductListener(position));
+
+            return convertView;
+
+        }
+    }
 }

@@ -19,11 +19,26 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <ListView
         android:id="@+id/mealsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        />
+
+    <Button
+        android:id="@+id/addIngredientt"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Add"
+        android:layout_gravity="bottom|end"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/back"

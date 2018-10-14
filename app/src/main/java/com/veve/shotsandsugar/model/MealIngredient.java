@@ -9,13 +9,13 @@ public class MealIngredient {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private long mealId;
-    private long ingredientId;
+    private int ingredientId;
     private int ingredientWeightGramms;
 
     public MealIngredient() {
     }
 
-    public MealIngredient(long mealId, long ingredientId, int ingredientWeightGramms) {
+    public MealIngredient(long mealId, int ingredientId, int ingredientWeightGramms) {
         this.mealId = mealId;
         this.ingredientId = ingredientId;
         this.ingredientWeightGramms = ingredientWeightGramms;
@@ -37,11 +37,11 @@ public class MealIngredient {
         this.mealId = mealId;
     }
 
-    public long getIngredientId() {
+    public int getIngredientId() {
         return ingredientId;
     }
 
-    public void setIngredientId(long ingredientId) {
+    public void setIngredientId(int ingredientId) {
         this.ingredientId = ingredientId;
     }
 
