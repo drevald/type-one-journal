@@ -32,10 +32,17 @@
         />
 
     <Button
-        android:id="@+id/addIngredientt"
+        android:id="@+id/addIngredient"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:text="Add"
+        android:layout_gravity="center|end"/>
+
+    <Button
+        android:id="@+id/saveMeal"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Save"
         android:layout_gravity="bottom|end"/>
 
     </LinearLayout>

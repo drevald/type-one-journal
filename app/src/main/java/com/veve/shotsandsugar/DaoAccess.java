@@ -11,6 +11,8 @@ import java.util.List;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
+import com.veve.shotsandsugar.model.Meal;
+import com.veve.shotsandsugar.model.MealIngredient;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -71,5 +73,10 @@ public interface DaoAccess {
     @Query("SELECT * FROM Ingredient")
     List<Ingredient> fetchIngredients ();
 
+    @Insert
+    long insertMeal(Meal meal);
+
+    @Insert
+    void insertMealIngredients(List<MealIngredient> mealIngredients);
 
 }

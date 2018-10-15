@@ -60,8 +60,11 @@ public class MealActivity extends DatabaseActivity {
             }
         });
 
-        Button addIngredientButton = (Button) findViewById(R.id.addIngredientt);
+        Button addIngredientButton = (Button) findViewById(R.id.addIngredient);
         addIngredientButton.setOnClickListener(new AddProductListener());
+
+        Button saveMealButton = (Button) findViewById(R.id.saveMeal);
+        saveMealButton.setOnClickListener(new SaveMealListener());
 
         try {
             ingredients = new ProductFinderTask(daoAccess).execute().get();
@@ -75,52 +78,15 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
-    static class ProductSpinnerAdapter extends BaseAdapter {
 
-        Context context;
-
-        ProductSpinnerAdapter(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public int getCount() {
-            return ingredients.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return ingredients.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return ingredients.get(position).getId();
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if(convertView == null) {
-                TextView view = new TextView(context);
-                int ingredientResourceId = RESOURCES.getIdentifier(
-                        ingredients.get(position).getIngredientCode(),
-                        Constants.STRING_RES_TYPE, context.getPackageName());
-                view.setText(RESOURCES.getText(ingredientResourceId));
-                view.setTextSize(16);
-                view.setTextColor(Color.BLACK);
-                convertView = view;
-            }
-            return convertView;
-        }
-
-    }
+//////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
 
     static class ProductFinderTask extends AsyncTask<Void, Void, List<Ingredient>> {
 
         DaoAccess daoAccess;
 
         ProductFinderTask(DaoAccess daoAccess) {
-            this.daoAccess =daoAccess;
+            this.daoAccess = daoAccess;
         }
 
         @Override
@@ -129,11 +95,22 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 
+    static class MealSaverTask extends AsyncTask<List<MealIngredient>, Void, Void> {
 
+        @Override
+        protected Void doInBackground(List<MealIngredient>... lists) {
+            Long mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
+            for (MealIngredient mealIngredient : lists[0]) {
+                mealIngredient.setMealId(mealId);
+            }
+            daoAccess.insertMealIngredients(lists[0]);
+            return null;
+        }
+    }
 
-//////////////   LISTENERS //////////////////////////////////////////////////////////////////////
+//////////////   LISTENERS    //////////////////////////////////////////////////////////////////////
 
-    class ProductSelectionListener  implements AdapterView.OnItemSelectedListener {
+    class ProductSelectionListener implements AdapterView.OnItemSelectedListener {
 
         MealIngredient mealIngredient;
 
@@ -168,10 +145,10 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
-            EditText editText = ((LinearLayout)v.getParent()).findViewById(R.id.weightInput);
+            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
             Log.d(getClass().getName(),
                     String.format("Value before is %s", editText.getText().toString()));
-            if(amount + Integer.valueOf(editText.getText().toString())>=0)
+            if (amount + Integer.valueOf(editText.getText().toString()) >= 0)
                 editText.setText(
                         String.valueOf(amount + Integer.valueOf(editText.getText().toString())));
             Log.d(getClass().getName(),
@@ -190,7 +167,7 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
-            EditText editText = ((LinearLayout)v.getParent()).findViewById(R.id.weightInput);
+            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
             editText.setText("0");
             mealIngredient.setIngredientWeightGramms(0);
         }
@@ -206,14 +183,13 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
-            EditText editText = ((LinearLayout)v.getParent()).findViewById(R.id.weightInput);
+            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
             Log.d(getClass().getName(),
                     String.format("Meal no #%d weight is %s", mealIngredient.getId(), editText.getText().toString()));
             mealIngredient.setIngredientWeightGramms(Integer.valueOf(editText.getText().toString()));
         }
 
     }
-
 
     class RemoveProductListener implements Button.OnClickListener {
 
@@ -241,9 +217,63 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
+    class SaveMealListener implements Button.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            new MealSaverTask().execute(mealIngredients);
+            Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            getApplicationContext().startActivity(intentOne);
+            mealIngredients.clear();
+            ingredientsListAdapter.notifyDataSetChanged();
+        }
+
+    }
 
 
 //////////////   ADAPTERS     //////////////////////////////////////////////////////////////////////
+
+    static class ProductSpinnerAdapter extends BaseAdapter {
+
+        Context context;
+
+        ProductSpinnerAdapter(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return ingredients.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return ingredients.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return ingredients.get(position).getId();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                TextView view = new TextView(context);
+                int ingredientResourceId = RESOURCES.getIdentifier(
+                        ingredients.get(position).getIngredientCode(),
+                        Constants.STRING_RES_TYPE, context.getPackageName());
+                view.setText(RESOURCES.getText(ingredientResourceId));
+                view.setTextSize(16);
+                view.setTextColor(Color.BLACK);
+                convertView = view;
+            }
+            return convertView;
+        }
+
+    }
+
 
     class IngredientsListAdapter extends BaseAdapter {
 
@@ -293,9 +323,9 @@ public class MealActivity extends DatabaseActivity {
             Button removeButton = convertView.findViewById(R.id.removeButton);
 
             add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
-            minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient,-10));
-            add100gButton.setOnClickListener(new WeightChangeListener(mealIngredient,100));
-            minus100gButton.setOnClickListener(new WeightChangeListener(mealIngredient,-100));
+            minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));
+            add100gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 100));
+            minus100gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -100));
 
             resetButton.setOnClickListener(new WeightResetListener(mealIngredient));
 
@@ -309,3 +339,4 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 }
+
