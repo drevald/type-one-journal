@@ -11,6 +11,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:background="#EEEEEE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10sp"
@@ -18,13 +19,14 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:background="#DDDDDD"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:padding="15sp"
                 android:orientation="horizontal"
                 android:layout_weight="1">
 
                 <TextView
+                    android:background="#CCCCCC"
                     android:id="@+id/product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,9 +45,9 @@
             </LinearLayout>
 
             <LinearLayout
+                android:background="#DDDDDD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="15sp"
                 android:orientation="horizontal">
 
                 <TextView

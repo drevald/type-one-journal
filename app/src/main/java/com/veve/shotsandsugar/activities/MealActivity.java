@@ -46,13 +46,11 @@ public class MealActivity extends DatabaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mealIngredients.add(new MealIngredient());
-
         setContentView(R.layout.activity_meal);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.back);
+        FloatingActionButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,22 +69,17 @@ public class MealActivity extends DatabaseActivity {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
 
-
-        ListView listView = (ListView)findViewById(R.id.mealsList);
+        ListView listView = findViewById(R.id.mealsList);
         ingredientsListAdapter = new IngredientsListAdapter();
         listView.setAdapter(ingredientsListAdapter);
 
     }
 
-    public void ingredientSelected() {
-
-    }
-
-    static class WeightSpinnerAdapter extends BaseAdapter {
+    static class ProductSpinnerAdapter extends BaseAdapter {
 
         Context context;
 
-        public WeightSpinnerAdapter(Context context) {
+        ProductSpinnerAdapter(Context context) {
             this.context = context;
         }
 
@@ -126,7 +119,7 @@ public class MealActivity extends DatabaseActivity {
 
         DaoAccess daoAccess;
 
-        public ProductFinderTask(DaoAccess daoAccess) {
+        ProductFinderTask(DaoAccess daoAccess) {
             this.daoAccess =daoAccess;
         }
 
@@ -136,20 +129,23 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 
+
+
+//////////////   LISTENERS //////////////////////////////////////////////////////////////////////
+
     class ProductSelectionListener  implements AdapterView.OnItemSelectedListener {
 
-        int productNumber;
+        MealIngredient mealIngredient;
 
-        public ProductSelectionListener(int productNumber) {
-            this.productNumber = productNumber;
+        ProductSelectionListener(MealIngredient mealIngredient) {
+            this.mealIngredient = mealIngredient;
         }
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int productPosition, long id) {
             Log.d(getClass().getName(),
-                    String.format("Meal no #%d selected at position %d", productNumber, productPosition));
-            MealIngredient mealIngredient = mealIngredients.get(productPosition);
-            mealIngredient.setIngredientId((int)id);
+                    String.format("Meal no #%d selected at position %d", id, productPosition));
+            mealIngredient.setIngredientId(productPosition);
         }
 
         @Override
@@ -161,9 +157,12 @@ public class MealActivity extends DatabaseActivity {
 
     class WeightChangeListener implements Button.OnClickListener {
 
+        MealIngredient mealIngredient;
+
         int amount;
 
-        public WeightChangeListener(int amount) {
+        WeightChangeListener(MealIngredient mealIngredient, int amount) {
+            this.mealIngredient = mealIngredient;
             this.amount = amount;
         }
 
@@ -177,32 +176,39 @@ public class MealActivity extends DatabaseActivity {
                         String.valueOf(amount + Integer.valueOf(editText.getText().toString())));
             Log.d(getClass().getName(),
                     String.format("Value after is %s", editText.getText().toString()));
+            mealIngredient.setIngredientWeightGramms(Integer.valueOf(editText.getText().toString()));
         }
     }
 
     class WeightResetListener implements Button.OnClickListener {
 
+        MealIngredient mealIngredient;
+
+        WeightResetListener(MealIngredient mealIngredient) {
+            this.mealIngredient = mealIngredient;
+        }
+
         @Override
         public void onClick(View v) {
             EditText editText = ((LinearLayout)v.getParent()).findViewById(R.id.weightInput);
             editText.setText("0");
+            mealIngredient.setIngredientWeightGramms(0);
         }
     }
 
     class ProductWeightListener implements Button.OnClickListener {
 
-        int productNumber;
+        MealIngredient mealIngredient;
 
-        public ProductWeightListener(int productNumber) {
-            this.productNumber = productNumber;
+        ProductWeightListener(MealIngredient mealIngredient) {
+            this.mealIngredient = mealIngredient;
         }
 
         @Override
         public void onClick(View v) {
             EditText editText = ((LinearLayout)v.getParent()).findViewById(R.id.weightInput);
             Log.d(getClass().getName(),
-                    String.format("Meal no #%d weight is %s", productNumber, editText.getText().toString()));
-            MealIngredient mealIngredient = mealIngredients.get(productNumber);
+                    String.format("Meal no #%d weight is %s", mealIngredient.getId(), editText.getText().toString()));
             mealIngredient.setIngredientWeightGramms(Integer.valueOf(editText.getText().toString()));
         }
 
@@ -213,7 +219,7 @@ public class MealActivity extends DatabaseActivity {
 
         int productNumber;
 
-        public RemoveProductListener(int productNumber) {
+        RemoveProductListener(int productNumber) {
             this.productNumber = productNumber;
         }
 
@@ -235,6 +241,10 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
+
+
+//////////////   ADAPTERS     //////////////////////////////////////////////////////////////////////
+
     class IngredientsListAdapter extends BaseAdapter {
 
         @Override
@@ -254,23 +264,27 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            MealIngredient mealIngredient = mealIngredients.get(position);
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
             }
             if (position % 2 == 0)
+                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.WHITE);
+            else
                 convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.LTGRAY);
+
             ((TextView) convertView.findViewById(R.id.product))
                     .setText(RESOURCES.getString(R.string.product_name));
             ((TextView) convertView.findViewById(R.id.weight))
                     .setText(RESOURCES.getString(R.string.product_weight));
             Spinner productSelection = ((Spinner) convertView.findViewById(R.id.productSelection));
-            productSelection.setAdapter(new WeightSpinnerAdapter(getApplicationContext()));
-            productSelection.setOnItemSelectedListener(new ProductSelectionListener(position));
+            productSelection.setAdapter(new ProductSpinnerAdapter(getApplicationContext()));
+            productSelection.setOnItemSelectedListener(
+                    new ProductSelectionListener(mealIngredients.get(position)));
             productSelection.setSelection(mealIngredients.get(position).getIngredientId());
 
             EditText weightInput = convertView.findViewById(R.id.weightInput);
-            //weightInput.setText(mealIngredients.get(position).getIngredientWeightGramms());
-            weightInput.setText("111");
+            weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
             Button add10gButton = convertView.findViewById(R.id.add10gButton);
             Button minus10gButton = convertView.findViewById(R.id.minus10gButton);
             Button add100gButton = convertView.findViewById(R.id.add100gButton);
@@ -278,14 +292,15 @@ public class MealActivity extends DatabaseActivity {
             Button resetButton = convertView.findViewById(R.id.resetButton);
             Button removeButton = convertView.findViewById(R.id.removeButton);
 
-            add10gButton.setOnClickListener(new WeightChangeListener(10));
-            minus10gButton.setOnClickListener(new WeightChangeListener(-10));
-            add100gButton.setOnClickListener(new WeightChangeListener(100));
-            minus100gButton.setOnClickListener(new WeightChangeListener(-100));
+            add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
+            minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient,-10));
+            add100gButton.setOnClickListener(new WeightChangeListener(mealIngredient,100));
+            minus100gButton.setOnClickListener(new WeightChangeListener(mealIngredient,-100));
 
-            resetButton.setOnClickListener(new WeightResetListener());
+            resetButton.setOnClickListener(new WeightResetListener(mealIngredient));
 
-            weightInput.setOnClickListener(new ProductWeightListener(position));
+            weightInput.setOnClickListener(
+                    new ProductWeightListener(mealIngredients.get(position)));
 
             removeButton.setOnClickListener(new RemoveProductListener(position));
 
