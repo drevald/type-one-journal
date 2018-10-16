@@ -38,14 +38,30 @@ public abstract class AppDatabase extends RoomDatabase {
             appDatabase = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME).build();
             DaoAccess daoAccess = appDatabase.daoAccess();
             daoAccess.deleteInsulins();
-            daoAccess.insertInsulin(new Insulin(1, "apidra"));
-            daoAccess.insertInsulin(new Insulin(2, "tujeo"));
+            daoAccess.insertInsulin(new Insulin(0, "apidra"));
+            daoAccess.insertInsulin(new Insulin(1, "tujeo"));
             daoAccess.deleteIngredients();
-            daoAccess.insertIngredient(new Ingredient(0, 0, "water", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(1, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(2, 0, "caviar", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(3, 0, "champagne", 5, 55, 1, 1, 1, 1));
-
+            daoAccess.insertIngredient(new Ingredient(0, 0, "sugar", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(1, 0, "milk", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(2, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(3, 0, "wheat_bread", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(4, 0, "potato_boiled", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(5, 0, "potato_fried", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(6, 0, "spaghetti", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(7, 0, "buckwheat", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(8, 0, "rice", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(9, 0, "butter", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(10, 0, "cheese", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(11, 0, "sausage", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(12, 0, "burger", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(13, 0, "pork_boiled", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(14, 0, "pork_fried", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(15, 0, "beef_boiled", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(16, 0, "beef_fried", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(17, 0, "chicken_boiled", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(18, 0, "chicken_fried", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(19, 0, "egg", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(20, 0, "omelette", 5, 55, 1, 1, 1, 1));
 //            @PrimaryKey
 //            int id;
 //            int typeId;

@@ -67,7 +67,7 @@ public class ShotActivity extends DatabaseActivity {
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
                         ((LinearLayout)gridLayout.getParent()).getWidth()/Constants.BUTTON_WIDTH);
-                for (int i=1; i<15; i++) {
+                for (int i=1; i<30; i++) {
 //                    Button button = getLayoutInflater().inflate(R.layout.buttons, gridLayout)
 //                            .findViewById(R.id.button);
 

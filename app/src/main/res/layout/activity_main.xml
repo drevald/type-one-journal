@@ -37,10 +37,10 @@
         android:text="@string/add_activity"/>
 
     <Button
-        android:id="@+id/healthButton"
+        android:id="@+id/moreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Ilness"/>
+        android:text="@string/add_more"/>
 
     <Button
         android:id="@+id/diagramButton"

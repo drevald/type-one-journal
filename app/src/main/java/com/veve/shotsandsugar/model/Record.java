@@ -1,11 +1,27 @@
 package com.veve.shotsandsugar.model;
 
-public class Record {
+import android.support.annotation.NonNull;
+
+public class Record implements Comparable {
 
     public Record(Object originalRecord, long timestamp, String text) {
         this.originalRecord = originalRecord;
         this.timestamp = timestamp;
         this.text = text;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Record compareTo = (Record)o;
+        int result = 0;
+        if (timestamp > compareTo.getTimestamp()) {
+            result = 1;
+        } else if (timestamp == compareTo.getTimestamp()) {
+            result = 0;
+        } else if (timestamp < compareTo.getTimestamp()) {
+            result = -1;
+        }
+        return result;
     }
 
     public Object getOriginalRecord() {

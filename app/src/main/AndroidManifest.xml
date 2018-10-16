@@ -36,10 +36,6 @@
             android:name=".activities.ActivityActivity"
             android:label="@string/add_activity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".activities.HealthActivity"
-            android:label="@string/title_activity_health"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

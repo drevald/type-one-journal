@@ -1,4 +1,4 @@
 package com.veve.shotsandsugar.model;
 
-public class Health {
+public class More {
 }

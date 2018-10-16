@@ -9,12 +9,12 @@ import android.view.View;
 
 import com.veve.shotsandsugar.R;
 
-public class HealthActivity extends AppCompatActivity {
+public class MoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health);
+        setContentView(R.layout.activity_more);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

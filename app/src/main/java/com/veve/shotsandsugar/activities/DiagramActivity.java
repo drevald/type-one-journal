@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -101,6 +104,7 @@ public class DiagramActivity extends DatabaseActivity {
         super.onPostResume();
         try {
             records = new DiagramTask(daoAccess).execute().get();
+
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage(), e);
         }
@@ -156,12 +160,12 @@ public class DiagramActivity extends DatabaseActivity {
                 }
                 records.add(new Record(meal, meal.getTime(), sb.toString()));
             }
+
+            Collections.sort(records);
             return records;
 
         }
     }
-
-
 
 }
 
