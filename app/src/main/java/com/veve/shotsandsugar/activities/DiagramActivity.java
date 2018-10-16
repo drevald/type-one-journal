@@ -21,8 +21,11 @@ import java.util.Locale;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
+import com.veve.shotsandsugar.model.Meal;
+import com.veve.shotsandsugar.model.MealIngredient;
 import com.veve.shotsandsugar.model.Record;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -33,7 +36,6 @@ public class DiagramActivity extends DatabaseActivity {
     static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
 
     List<Record> records = new ArrayList<Record>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,9 @@ public class DiagramActivity extends DatabaseActivity {
 
         @Override
         protected List<Record> doInBackground(Void... voids) {
+
             List<Record> records = new ArrayList<Record>();
+
             List<SugarLevel> sugarRecords = daoAccess.fetchSugarLevels();
             for (SugarLevel sugarRecord : sugarRecords) {
                 String text = String.format(Locale.getDefault(),
@@ -122,6 +126,7 @@ public class DiagramActivity extends DatabaseActivity {
                 Record record = new Record(sugarRecord, sugarRecord.getTimestamp(), text);
                 records.add(record);
             }
+
             List<InsulinShot> shotRecords = daoAccess.fetchInsulinShots();
             for (InsulinShot insulinShot : shotRecords) {
                 Insulin insulin = daoAccess.fetchInsulin(insulinShot.getInsulinId());
@@ -132,7 +137,24 @@ public class DiagramActivity extends DatabaseActivity {
                         insulinShot.getAmount(),insulinName);
                 records.add(new Record(insulinShot, insulinShot.getTime(), text));
             }
+
+            List<Meal> mealRecords = daoAccess.fetchMeals();
+            for (Meal meal: mealRecords) {
+                StringBuilder sb = new StringBuilder();
+                List<MealIngredient> mealIngredients = daoAccess.fetchMealIngredients(meal.getId());
+                for (MealIngredient mealIngredient : mealIngredients) {
+                    Ingredient ingredient = daoAccess.fetchIngredient(
+                            mealIngredient.getIngredientId());
+                    sb.append(ingredient.getIngredientCode());
+                    sb.append(", ");
+                    sb.append(mealIngredient.getIngredientWeightGramms());
+                    sb.append("g");
+                    sb.append(";");
+                }
+                records.add(new Record(meal, meal.getTime(), sb.toString()));
+            }
             return records;
+
         }
     }
 

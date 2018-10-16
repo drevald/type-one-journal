@@ -41,10 +41,10 @@ public abstract class AppDatabase extends RoomDatabase {
             daoAccess.insertInsulin(new Insulin(1, "apidra"));
             daoAccess.insertInsulin(new Insulin(2, "tujeo"));
             daoAccess.deleteIngredients();
-            daoAccess.insertIngredient(new Ingredient(1, 0, "water", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(2, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(3, 0, "caviar", 5, 55, 1, 1, 1, 1));
-            daoAccess.insertIngredient(new Ingredient(4, 0, "champagne", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(0, 0, "water", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(1, 0, "ray_bread", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(2, 0, "caviar", 5, 55, 1, 1, 1, 1));
+            daoAccess.insertIngredient(new Ingredient(3, 0, "champagne", 5, 55, 1, 1, 1, 1));
 
 //            @PrimaryKey
 //            int id;

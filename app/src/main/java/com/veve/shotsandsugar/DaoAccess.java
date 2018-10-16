@@ -79,4 +79,16 @@ public interface DaoAccess {
     @Insert
     void insertMealIngredients(List<MealIngredient> mealIngredients);
 
+    @Query("SELECT * FROM Meal")
+    List<Meal> fetchMeals();
+
+    @Query("SELECT * FROM MealIngredient WHERE mealId = :mealId")
+    List<MealIngredient> fetchMealIngredients(long mealId);
+
+    @Query("SELECT * FROM Ingredient WHERE id = :id")
+    Ingredient fetchIngredient(int id);
+
+    @Insert
+    void insertMealIngredient(MealIngredient mealIngredient);
+
 }
