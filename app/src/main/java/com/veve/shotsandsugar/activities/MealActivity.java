@@ -36,7 +36,7 @@ import static java.security.AccessController.getContext;
 
 public class MealActivity extends DatabaseActivity {
 
-    List<MealIngredient> mealIngredients = new ArrayList<MealIngredient>();
+    static List<MealIngredient> mealIngredients = new ArrayList<MealIngredient>();
 
     static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
@@ -113,10 +113,10 @@ public class MealActivity extends DatabaseActivity {
         @Override
         protected Void doInBackground(List<MealIngredient>... lists) {
             Long mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
-            for (MealIngredient mealIngredient : lists[0]) {
+            for (MealIngredient mealIngredient : mealIngredients) {
                 mealIngredient.setMealId(mealId);
             }
-            daoAccess.insertMealIngredients(lists[0]);
+            daoAccess.insertMealIngredients(mealIngredients);
             return null;
         }
     }
@@ -238,7 +238,7 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
-            mealIngredients.clear();
+            //mealIngredients.clear();
             updateActivity();
         }
 
