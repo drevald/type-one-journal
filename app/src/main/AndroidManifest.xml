@@ -9,34 +9,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.veve.shotsandsugar.activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.veve.shotsandsugar.activities.SugarActivity"
+            android:name=".activities.SugarActivity"
             android:label="@string/add_sugar_level"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.veve.shotsandsugar.activities.ShotActivity"
+            android:name=".activities.ShotActivity"
             android:label="@string/add_insulin_shot"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.veve.shotsandsugar.activities.MealActivity"
+            android:name=".activities.MealActivity"
             android:label="@string/add_meal"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.veve.shotsandsugar.activities.DiagramActivity"
+            android:name=".activities.DiagramActivity"
             android:label="@string/show_diagram"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.veve.shotsandsugar.activities.ActivityActivity"
+            android:name=".activities.ActivityActivity"
             android:label="@string/add_activity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.HealthActivity"
+            android:label="@string/title_activity_health"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
