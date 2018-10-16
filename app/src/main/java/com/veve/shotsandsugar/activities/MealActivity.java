@@ -42,6 +42,8 @@ public class MealActivity extends DatabaseActivity {
 
     IngredientsListAdapter ingredientsListAdapter;
 
+    Button saveMealButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,7 @@ public class MealActivity extends DatabaseActivity {
         Button addIngredientButton = (Button) findViewById(R.id.addIngredient);
         addIngredientButton.setOnClickListener(new AddProductListener());
 
-        Button saveMealButton = (Button) findViewById(R.id.saveMeal);
+        saveMealButton = (Button) findViewById(R.id.saveMeal);
         saveMealButton.setOnClickListener(new SaveMealListener());
 
         try {
@@ -76,6 +78,17 @@ public class MealActivity extends DatabaseActivity {
         ingredientsListAdapter = new IngredientsListAdapter();
         listView.setAdapter(ingredientsListAdapter);
 
+        updateActivity();
+
+    }
+    
+    void updateActivity() {
+        ingredientsListAdapter.notifyDataSetChanged();
+        if (ingredientsListAdapter.getCount() == 0) {
+            saveMealButton.setVisibility(View.INVISIBLE);
+        } else {
+            saveMealButton.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -202,7 +215,7 @@ public class MealActivity extends DatabaseActivity {
         @Override
         public void onClick(View v) {
             mealIngredients.remove(productNumber);
-            ingredientsListAdapter.notifyDataSetChanged();
+            updateActivity();
         }
 
     }
@@ -212,7 +225,7 @@ public class MealActivity extends DatabaseActivity {
         @Override
         public void onClick(View v) {
             mealIngredients.add(new MealIngredient());
-            ingredientsListAdapter.notifyDataSetChanged();
+            updateActivity();
         }
 
     }
@@ -224,9 +237,9 @@ public class MealActivity extends DatabaseActivity {
             new MealSaverTask().execute(mealIngredients);
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            getApplicationContext().startActivity(intentOne);
+            startActivity(intentOne);
             mealIngredients.clear();
-            ingredientsListAdapter.notifyDataSetChanged();
+            updateActivity();
         }
 
     }
@@ -234,7 +247,7 @@ public class MealActivity extends DatabaseActivity {
 
 //////////////   ADAPTERS     //////////////////////////////////////////////////////////////////////
 
-    static class ProductSpinnerAdapter extends BaseAdapter {
+    class ProductSpinnerAdapter extends BaseAdapter {
 
         Context context;
 
@@ -261,12 +274,16 @@ public class MealActivity extends DatabaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 TextView view = new TextView(context);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                view.setLayoutParams(params);
                 int ingredientResourceId = RESOURCES.getIdentifier(
                         ingredients.get(position).getIngredientCode(),
                         Constants.STRING_RES_TYPE, context.getPackageName());
                 view.setText(RESOURCES.getText(ingredientResourceId));
                 view.setTextSize(16);
                 view.setTextColor(Color.BLACK);
+                view.setWidth(300);
                 convertView = view;
             }
             return convertView;
