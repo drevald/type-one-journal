@@ -8,11 +8,15 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.veve.shotsandsugar.model.Activity;
+import com.veve.shotsandsugar.model.ActivityPeriod;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.Meal;
 import com.veve.shotsandsugar.model.MealIngredient;
+import com.veve.shotsandsugar.model.Other;
+import com.veve.shotsandsugar.model.OtherRecord;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -23,7 +27,11 @@ import com.veve.shotsandsugar.model.SugarLevel;
         InsulinShot.class,
         Meal.class,
         MealIngredient.class,
-        Ingredient.class
+        Ingredient.class,
+        Activity.class,
+        ActivityPeriod.class,
+        Other.class,
+        OtherRecord.class
 }, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -62,17 +70,15 @@ public abstract class AppDatabase extends RoomDatabase {
             daoAccess.insertIngredient(new Ingredient(18, 0, "chicken_fried", 5, 55, 1, 1, 1, 1));
             daoAccess.insertIngredient(new Ingredient(19, 0, "egg", 5, 55, 1, 1, 1, 1));
             daoAccess.insertIngredient(new Ingredient(20, 0, "omelette", 5, 55, 1, 1, 1, 1));
-//            @PrimaryKey
-//            int id;
-//            int typeId;
-//            String ingredientCode;
-//            float breadUnitsPer100g;
-//            float glycemicIndex;
-
-//            float fatPer100g;
-//            float carbohydratePer100g;
-//            float proteinPer100g;
-
+            daoAccess.deleteActivities();
+            daoAccess.insertActivity(new Activity(0, "morning_exercise"));
+            daoAccess.insertActivity(new Activity(1, "warm_up"));
+            daoAccess.insertActivity(new Activity(2, "running"));
+            daoAccess.insertActivity(new Activity(3, "swimming"));
+            daoAccess.insertActivity(new Activity(4, "walking"));
+            daoAccess.deleteOthers();
+            daoAccess.insertOther(new Other(0, "hormons"));
+            daoAccess.insertOther(new Other(1, "cold"));
         }
         return appDatabase;
     }

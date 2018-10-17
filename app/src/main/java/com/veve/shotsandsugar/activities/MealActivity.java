@@ -238,7 +238,7 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
-            //mealIngredients.clear();
+            mealIngredients.clear();
             updateActivity();
         }
 

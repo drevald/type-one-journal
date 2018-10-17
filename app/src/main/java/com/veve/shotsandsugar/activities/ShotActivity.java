@@ -66,16 +66,14 @@ public class ShotActivity extends DatabaseActivity {
             @Override
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
-                        ((LinearLayout)gridLayout.getParent()).getWidth()/Constants.BUTTON_WIDTH);
+                        ((LinearLayout)gridLayout.getParent()).getWidth()/
+                                (Constants.BUTTON_WIDTH + 2 * Constants.PADDING));
                 for (int i=1; i<30; i++) {
-//                    Button button = getLayoutInflater().inflate(R.layout.buttons, gridLayout)
-//                            .findViewById(R.id.button);
-
                     Button button = new Button(getApplicationContext());
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(
                             new ViewGroup.MarginLayoutParams(
                                     Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
-                    params.setMargins(0, 10, 10, 0);
+                    params.setMargins(0, Constants.PADDING, Constants.PADDING, 0);
                     button.setLayoutParams(params);
                     button.setTextColor(Color.WHITE);
                     button.setOnClickListener(new NumberListener(i));
@@ -83,7 +81,7 @@ public class ShotActivity extends DatabaseActivity {
                     if (selectedInsulinId == 0) {
                         button.setBackgroundColor(Color.LTGRAY);
                         button.setEnabled(false);
-                    } else if (selectedInsulinId == 1) {
+                    } else if (selectedInsulinId == 0) {
                         button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                         button.setEnabled(true);
                     } else {

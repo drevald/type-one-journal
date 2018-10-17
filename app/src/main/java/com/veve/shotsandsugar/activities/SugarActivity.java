@@ -11,8 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.veve.shotsandsugar.Constants;
@@ -31,7 +33,7 @@ public class SugarActivity extends DatabaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sugar);
+//        setContentView(R.layout.activity_shot);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -45,15 +47,39 @@ public class SugarActivity extends DatabaseActivity {
             }
         });
 
+//        final GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
+//        gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//
+//            @Override
+//            public void onGlobalLayout() {
+//                gridLayout.setColumnCount(
+//                        ((CoordinatorLayout)gridLayout.getParent()).getWidth()/
+//                                (Constants.BUTTON_WIDTH + Constants.PADDING));
+//                for (float i=0; i<60.f; i++) {
+//                    Button button = new Button(getApplicationContext());
+//                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+//                            new ViewGroup.MarginLayoutParams(
+//                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
+//                    params.setMargins(0, Constants.PADDING, Constants.PADDING, 0);
+//                    button.setLayoutParams(params);
+//                    button.setTextColor(Color.WHITE);
+//                    button.setOnClickListener(new SugarActivity.NumberListener(i/2));
+//                    button.setText(String.valueOf(i/2));
+//                    gridLayout.addView(button);
+//                }
+//                gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//            }
+//        });
+
         final GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
         gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             @Override
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
-                        ((CoordinatorLayout)gridLayout.getParent()).getWidth()/
-                                (Constants.BUTTON_WIDTH + Constants.PADDING));
-                for (float i=0; i<60.f; i++) {
+                        ((LinearLayout)gridLayout.getParent()).getWidth()/
+                                (Constants.BUTTON_WIDTH + 2 * Constants.PADDING));
+                for (int i=1; i<30; i++) {
                     Button button = new Button(getApplicationContext());
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(
                             new ViewGroup.MarginLayoutParams(
@@ -68,6 +94,43 @@ public class SugarActivity extends DatabaseActivity {
                 gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
+
+//        GridView gridView = (GridView)findViewById(R.id.gridView);
+//        gridView.setNumColumns(6);
+//        gridView.setAdapter(new BaseAdapter() {
+//            @Override
+//            public int getCount() {
+//                return 30;
+//            }
+//
+//            @Override
+//            public Object getItem(int position) {
+//                return null;
+//            }
+//
+//            @Override
+//            public long getItemId(int position) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public View getView(int position, View convertView, ViewGroup parent) {
+//                if (convertView == null) {
+//                    convertView = getLayoutInflater().inflate(R.layout.buttons, parent, false);
+//                    Button button = (Button) convertView.findViewById(R.id.button);
+//
+////                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+////                            new ViewGroup.MarginLayoutParams(
+////                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
+////                    params.setMargins(10, 20, 30, 40);
+////                    button.setLayoutParams(params);
+//
+//                    button.setText(String.valueOf(position));
+//                }
+//                return convertView;
+//            }
+//        });
+
 
     }
 

@@ -8,11 +8,13 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
+import com.veve.shotsandsugar.model.Activity;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.Meal;
 import com.veve.shotsandsugar.model.MealIngredient;
+import com.veve.shotsandsugar.model.Other;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -90,5 +92,17 @@ public interface DaoAccess {
 
     @Insert
     void insertMealIngredient(MealIngredient mealIngredient);
+
+    @Insert
+    void insertActivity(Activity activity);
+
+    @Query("DELETE FROM Activity")
+    void deleteActivities();
+
+    @Insert
+    void insertOther(Other other);
+
+    @Query("DELETE FROM Other")
+    void deleteOthers();
 
 }

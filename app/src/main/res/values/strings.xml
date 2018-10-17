@@ -1,4 +1,5 @@
 <resources>
+    <!-- UI -->
     <string name="app_name">Type One Log</string>
     <string name="add_sugar_level">Add Sugar Level</string>
     <string name="add_insulin_shot">Add Insulin Shot</string>
@@ -12,11 +13,22 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="insulin_name">Insulin name</string>
+    <string name="glucose_level_record">Glucose level is %2.1f mmol</string>
+    <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>
     <string name="humulin">Humulin</string>
     <string name="humalog">Humalog</string>
-    <string name="glucose_level_record">Glucose level is %2.1f mmol</string>
+    <!-- DB Activity -->
+    <string name="morning_exercise">Morning exercise</string>
+    <string name="warm_up">Warm up</string>
+    <string name="running">Running</string>
+    <string name="swimming">Swimming</string>
+    <string name="walking">Walking</string>
+    <!-- DB Other -->
+    <string name="hormons">Hormons</string>
+    <string name="cold">Cold</string>
+    <!-- DB Food -->
     <string name="sugar">Sugar</string>
     <string name="milk">Milk</string>
     <string name="ray_bread">Ray bread</string>
@@ -38,4 +50,7 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
+
+
+
 </resources>

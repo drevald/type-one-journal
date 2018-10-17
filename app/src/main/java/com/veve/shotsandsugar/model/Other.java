@@ -4,15 +4,15 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
-public class Activity {
+public class Other {
 
     @PrimaryKey(autoGenerate = false)
     int id;
-    String activityCode;
+    String code;
 
-    public Activity(int id, String activityCode) {
+    public Other(int id, String code) {
         this.id = id;
-        this.activityCode = activityCode;
+        this.code = code;
     }
 
     public int getId() {
@@ -23,12 +23,12 @@ public class Activity {
         this.id = id;
     }
 
-    public String getActivityCode() {
-        return activityCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setActivityCode(String activityCode) {
-        this.activityCode = activityCode;
+    public void setCode(String code) {
+        this.code = code;
     }
+
 }
-
