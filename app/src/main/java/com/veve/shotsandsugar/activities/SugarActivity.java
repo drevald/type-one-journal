@@ -63,13 +63,18 @@ public class SugarActivity extends DatabaseActivity {
                             new ViewGroup.MarginLayoutParams(
                                     RESOURCES.getDimensionPixelSize(R.dimen.button_width),
                                     RESOURCES.getDimensionPixelSize(R.dimen.button_height)));
+
+//                    params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
+//                            RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
+//                    button.setTextColor(Color.WHITE);
+//                    button.setBackgroundResource(R.drawable.rounded_corners);
+
                     params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
                             RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
-//                    button.setBackground(RESOURCES.getDrawable(R.drawable.rounded_corners));
-//                    button.setLayoutParams(params);
-                    button.setTextColor(Color.WHITE);
+                    button.setLayoutParams(params);
                     button.setBackgroundResource(R.drawable.rounded_corners);
-//                    button.setBackgroundColor(Color.LTGRAY);
+                    button.setTextColor(Color.WHITE);
+
                     button.setOnClickListener(new SugarActivity.NumberListener(i/2));
                     button.setText(String.valueOf(i/2));
                     gridLayout.addView(button);

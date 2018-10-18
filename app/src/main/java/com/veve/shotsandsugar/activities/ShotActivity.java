@@ -78,9 +78,7 @@ public class ShotActivity extends DatabaseActivity {
                     params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
                             RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
                     button.setLayoutParams(params);
-                    //button.setBackground(RESOURCES.getDrawable(R.drawable.rounded_corners));
                     button.setBackgroundResource(R.drawable.rounded_corners);
-                    //button.setBackgroundColor(Color.LTGRAY);
                     button.setTextColor(Color.WHITE);
                     button.setText(String.valueOf(i));
                     button.setOnClickListener(new NumberListener(i));
