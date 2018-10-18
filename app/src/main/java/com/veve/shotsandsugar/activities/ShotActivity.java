@@ -67,27 +67,23 @@ public class ShotActivity extends DatabaseActivity {
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
                         ((LinearLayout)gridLayout.getParent()).getWidth()/
-                                (Constants.BUTTON_WIDTH + 2 * Constants.PADDING));
+                                (RESOURCES.getDimensionPixelSize(R.dimen.button_width)
+                                        + 2 * RESOURCES.getDimensionPixelSize(R.dimen.button_gap)));
                 for (int i=1; i<30; i++) {
                     Button button = new Button(getApplicationContext());
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(
                             new ViewGroup.MarginLayoutParams(
-                                    Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT));
-                    params.setMargins(0, Constants.PADDING, Constants.PADDING, 0);
+                                    RESOURCES.getDimensionPixelSize(R.dimen.button_width),
+                                    RESOURCES.getDimensionPixelSize(R.dimen.button_height)));
+                    params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
+                            RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
                     button.setLayoutParams(params);
+                    //button.setBackground(RESOURCES.getDrawable(R.drawable.rounded_corners));
+                    button.setBackgroundResource(R.drawable.rounded_corners);
+                    //button.setBackgroundColor(Color.LTGRAY);
                     button.setTextColor(Color.WHITE);
-                    button.setOnClickListener(new NumberListener(i));
                     button.setText(String.valueOf(i));
-                    if (selectedInsulinId == 0) {
-                        button.setBackgroundColor(Color.LTGRAY);
-                        button.setEnabled(false);
-                    } else if (selectedInsulinId == 0) {
-                        button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                        button.setEnabled(true);
-                    } else {
-                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                        button.setEnabled(true);
-                    }
+                    button.setOnClickListener(new NumberListener(i));
                     gridLayout.addView(button);
                 }
                 gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -110,12 +106,14 @@ public class ShotActivity extends DatabaseActivity {
                 selectedInsulinId = checkedId;
                 for (int i=0; i<gridLayout.getChildCount(); i++) {
                     gridLayout.getChildAt(i).setEnabled(true);
-                    if (selectedInsulinId == 1)
-                        gridLayout.getChildAt(i)
-                                .setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    else
-                        gridLayout.getChildAt(i)
-                                .setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    gridLayout.getChildAt(i).getBackground();
+                    gridLayout.getChildAt(i).setBackgroundColor(Color.RED);
+//                    if (selectedInsulinId == 0)
+//                        gridLayout.getChildAt(i)
+//                                .setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//                    else
+//                        gridLayout.getChildAt(i)
+//                                .setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
                 }
             }

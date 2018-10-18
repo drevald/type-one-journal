@@ -9,7 +9,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -18,6 +19,37 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
+
+    <!--<LinearLayout-->
+        <!--android:background="#d9eabd"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <LinearLayout
+            android:background="#d922bd"
+            android:layout_width="300sp"
+            android:layout_height="300sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:background="#00ea00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am using laravel 5.2 to develop my web application. i recently uploaded the web application from localhost to my hosting account. I also imported MySQL tables from phpmyadmin localhost to my phpmyadmin localhost in my hosting account.
+
+When I opened my phpmyadmin I noticed that in one of my tables, the id (which is set to auto-increment) is not working. It is displaying 0 in all the rows.
+
+When I set the id to auto-increment in phpmyadmin it gives me the following error:"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    <!--</LinearLayout>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/back"
