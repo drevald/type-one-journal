@@ -11,6 +11,8 @@
     <string name="product_name">Продукт</string>
     <string name="product_weight">Вес продукта</string>
     <string name="add">Добавить</string>
+    <string name="remove">Удалить</string>
+    <string name="save">Сохранить</string>
     <string name="cancel">Отменить</string>
     <string name="insulin_name">Марка инсулина</string>
     <string name="glucose_level_record">Уровень глюкозы %2.1f ммоль</string>

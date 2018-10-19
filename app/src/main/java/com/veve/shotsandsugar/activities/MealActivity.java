@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -348,7 +349,8 @@ public class MealActivity extends DatabaseActivity {
             minus100gButton.setBackgroundResource(R.drawable.small_rounded_corners);
             Button resetButton = convertView.findViewById(R.id.resetButton);
             resetButton.setBackgroundResource(R.drawable.small_rounded_corners);
-            Button removeButton = convertView.findViewById(R.id.removeButton);
+
+            ImageButton removeButton = convertView.findViewById(R.id.removeButton);
 
             add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
             minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));
