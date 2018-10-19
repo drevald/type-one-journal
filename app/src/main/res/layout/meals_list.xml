@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -53,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_name"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:textSize="15sp"
                     />
 
@@ -61,36 +62,42 @@
                     android:id="@+id/add10gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:text="+10g"/>
 
                 <Button
                     android:id="@+id/minus10gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:text="-10g"/>
 
                 <Button
                     android:id="@+id/add100gButton"
                     android:layout_height="wrap_content"
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:text="+100g"/>
 
                 <Button
                     android:id="@+id/minus100gButton"
                     android:layout_height="wrap_content"
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:text="-100g"/>
 
                 <Button
                     android:id="@+id/resetButton"
                     android:layout_height="wrap_content"
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:text="Reset"/>
 
                 <EditText
                     android:id="@+id/weightInput"
                     android:layout_height="wrap_content"
                     android:layout_width="70dp"
+                    android:layout_marginRight="@dimen/button_gap"
                     android:inputType="none"/>
 
             </LinearLayout>

@@ -1,8 +1,11 @@
 package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +20,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +70,7 @@ public class ShotActivity extends DatabaseActivity {
             @Override
             public void onGlobalLayout() {
                 gridLayout.setColumnCount(
-                        ((LinearLayout)gridLayout.getParent()).getWidth()/
+                        ((ScrollView)gridLayout.getParent()).getWidth()/
                                 (RESOURCES.getDimensionPixelSize(R.dimen.button_width)
                                         + 2 * RESOURCES.getDimensionPixelSize(R.dimen.button_gap)));
                 for (int i=1; i<30; i++) {
@@ -79,7 +83,6 @@ public class ShotActivity extends DatabaseActivity {
                             RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
                     button.setLayoutParams(params);
                     button.setBackgroundResource(R.drawable.rounded_corners);
-                    button.setTextColor(Color.WHITE);
                     button.setText(String.valueOf(i));
                     button.setOnClickListener(new NumberListener(i));
                     gridLayout.addView(button);
@@ -95,7 +98,6 @@ public class ShotActivity extends DatabaseActivity {
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));
             insulinRadioButton.setId(insulin.getId());
-            insulinRadioButton.setTextColor(Color.BLACK);
             radioGroup.addView(insulinRadioButton);
         }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -105,16 +107,11 @@ public class ShotActivity extends DatabaseActivity {
                 for (int i=0; i<gridLayout.getChildCount(); i++) {
                     gridLayout.getChildAt(i).setEnabled(true);
                     gridLayout.getChildAt(i).getBackground();
-                    gridLayout.getChildAt(i).setBackgroundColor(Color.RED);
-//                    if (selectedInsulinId == 0)
-//                        gridLayout.getChildAt(i)
-//                                .setBackgroundColor(getResources().getColor(R.color.colorAccent));
-//                    else
-//                        gridLayout.getChildAt(i)
-//                                .setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
+                    if (selectedInsulinId == 0)
+                        gridLayout.getChildAt(i).setBackgroundResource(R.drawable.red_button);
+                     else
+                        gridLayout.getChildAt(i).setBackgroundResource(R.drawable.blue_button);                    }
                 }
-            }
         });
 
     }

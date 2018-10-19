@@ -57,7 +57,7 @@ public class SugarActivity extends DatabaseActivity {
                         ((LinearLayout)gridLayout.getParent()).getWidth()/
                                 (RESOURCES.getDimensionPixelSize(R.dimen.button_width)
                                         + 2 * RESOURCES.getDimensionPixelSize(R.dimen.button_gap)));
-                for (int i=1; i<30; i++) {
+                for (float i=1f; i<30; i++) {
                     Button button = new Button(getApplicationContext());
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(
                             new ViewGroup.MarginLayoutParams(
