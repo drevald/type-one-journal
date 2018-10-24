@@ -30,7 +30,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_name"
-                    android:layout_marginRight="15dp"
                     android:textSize="15sp"
                     />
 
@@ -54,7 +53,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_name"
-                    android:layout_marginRight="@dimen/button_gap"
                     android:textSize="15sp"
                     />
 
@@ -62,43 +60,43 @@
                     android:id="@+id/add10gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
-                    android:layout_marginLeft="@dimen/button_gap"
+                    android:background="@drawable/small_rounded_corners"
                     android:text="+10g"/>
 
                 <Button
                     android:id="@+id/minus10gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
-                    android:layout_marginRight="@dimen/button_gap"
+                    android:background="@drawable/small_rounded_corners"
                     android:text="-10g"/>
 
                 <Button
                     android:id="@+id/add100gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
-                    android:layout_marginRight="@dimen/button_gap"
+                    android:background="@drawable/small_rounded_corners"
                     android:text="+100g"/>
 
                 <Button
                     android:id="@+id/minus100gButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
-                    android:layout_marginRight="@dimen/button_gap"
+                    android:background="@drawable/small_rounded_corners"
                     android:text="-100g"/>
 
                 <Button
                     android:id="@+id/resetButton"
                     android:layout_height="wrap_content"
                     android:layout_width="60dp"
-                    android:layout_marginRight="@dimen/button_gap"
-                    android:text="Reset"/>
+                    android:background="@drawable/small_rounded_corners"
+                    android:text="@string/reset"/>
 
                 <EditText
                     android:id="@+id/weightInput"
                     android:layout_height="wrap_content"
                     android:layout_width="70dp"
-                    android:layout_marginRight="@dimen/button_gap"
-                    android:inputType="none"/>
+                    android:hint="@string/product_weight"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
@@ -109,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <android.support.design.widget.ImageButton
+        <Button
             android:id="@+id/removeButton"
             android:layout_width="100dp"
             android:layout_height="50dp"

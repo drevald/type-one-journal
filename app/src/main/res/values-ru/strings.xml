@@ -14,8 +14,11 @@
     <string name="remove">Удалить</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отменить</string>
+    <string name="reset">Сбросить</string>
     <string name="insulin_name">Марка инсулина</string>
     <string name="glucose_level_record">Уровень глюкозы %2.1f ммоль</string>
+    <string name="physical_activity">Физическая нагрузка</string>
+    <string name="period">Период</string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

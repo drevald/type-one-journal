@@ -105,4 +105,8 @@ public interface DaoAccess {
     @Query("DELETE FROM Other")
     void deleteOthers();
 
+    @Query("SELECT * FROM Activity")
+    List<Activity> listActivity();
+
+
 }

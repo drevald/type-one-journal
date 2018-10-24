@@ -1,14 +1,29 @@
 package com.veve.shotsandsugar.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
+import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
+import com.veve.shotsandsugar.model.Activity;
+
+import java.util.List;
 
 public class ActivityActivity extends DatabaseActivity {
+
+    static List<Activity> activityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +41,68 @@ public class ActivityActivity extends DatabaseActivity {
                 startActivity(intentOne);
             }
         });
+
+
+        try {
+            activityList = new GetActivitiesTask().execute().get();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage());
+        }
+
+        Spinner spinner = findViewById(R.id.activities);
+        spinner.setAdapter(new ActivitiesAdapter(getApplicationContext()));
+
+    }
+
+    static class GetActivitiesTask extends AsyncTask<Void, Void, List<Activity>> {
+
+        @Override
+        protected List<Activity> doInBackground(Void... voids) {
+            return daoAccess.listActivity();
+        }
+
+    }
+
+    class ActivitiesAdapter extends BaseAdapter {
+
+        Context context;
+
+        public ActivitiesAdapter(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return activityList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return activityList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return activityList.get(position).getId();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                TextView view = new TextView(context);
+                int ingredientResourceId = RESOURCES.getIdentifier(
+                        activityList.get(position).getActivityCode(),
+                        Constants.STRING_RES_TYPE, context.getPackageName());
+                view.setText(RESOURCES.getText(ingredientResourceId));
+                view.setTextSize(16);
+                view.setTextColor(Color.BLACK);
+                view.setBackgroundResource(R.drawable.drop_down);
+                view.setWidth(300);
+                convertView = view;
+            }
+            return convertView;
+        }
+
     }
 
 }

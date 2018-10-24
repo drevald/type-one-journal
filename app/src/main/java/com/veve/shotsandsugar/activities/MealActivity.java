@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -118,6 +117,7 @@ public class MealActivity extends DatabaseActivity {
                 mealIngredient.setMealId(mealId);
             }
             daoAccess.insertMealIngredients(mealIngredients);
+            mealIngredients.clear();
             return null;
         }
     }
@@ -239,7 +239,6 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
-            mealIngredients.clear();
             updateActivity();
         }
 
@@ -275,10 +274,6 @@ public class MealActivity extends DatabaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 TextView view = new TextView(context);
-//                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
-//                        ViewGroup.LayoutParams.WRAP_CONTENT,
-//                        RESOURCES.getDimensionPixelSize(R.dimen.button_gap));
-//                view.setLayoutParams(params);
                 int ingredientResourceId = RESOURCES.getIdentifier(
                         ingredients.get(position).getIngredientCode(),
                         Constants.STRING_RES_TYPE, context.getPackageName());
@@ -287,11 +282,6 @@ public class MealActivity extends DatabaseActivity {
                 view.setTextColor(Color.BLACK);
                 view.setBackgroundResource(R.drawable.drop_down);
                 view.setWidth(300);
-
-//                Spinner.LayoutParams params = new Spinner.LayoutParams(
-//                        new ViewGroup.MarginLayoutParams(
-//                                RESOURCES.getDimensionPixelSize(R.dimen.button_width),
-//                                RESOURCES.getDimensionPixelSize(R.dimen.button_height)));
                 convertView = view;
             }
             return convertView;
@@ -340,17 +330,12 @@ public class MealActivity extends DatabaseActivity {
             EditText weightInput = convertView.findViewById(R.id.weightInput);
             weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
             Button add10gButton = convertView.findViewById(R.id.add10gButton);
-            add10gButton.setBackgroundResource(R.drawable.small_rounded_corners);
             Button minus10gButton = convertView.findViewById(R.id.minus10gButton);
-            minus10gButton.setBackgroundResource(R.drawable.small_rounded_corners);
             Button add100gButton = convertView.findViewById(R.id.add100gButton);
-            add100gButton.setBackgroundResource(R.drawable.small_rounded_corners);
             Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
-            minus100gButton.setBackgroundResource(R.drawable.small_rounded_corners);
             Button resetButton = convertView.findViewById(R.id.resetButton);
-            resetButton.setBackgroundResource(R.drawable.small_rounded_corners);
 
-            ImageButton removeButton = convertView.findViewById(R.id.removeButton);
+            Button removeButton = convertView.findViewById(R.id.removeButton);
 
             add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
             minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));
@@ -368,5 +353,6 @@ public class MealActivity extends DatabaseActivity {
 
         }
     }
+
 }
 
