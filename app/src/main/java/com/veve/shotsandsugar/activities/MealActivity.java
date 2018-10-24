@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -42,7 +43,7 @@ public class MealActivity extends DatabaseActivity {
 
     IngredientsListAdapter ingredientsListAdapter;
 
-    Button saveMealButton;
+    FloatingActionButton saveMealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +63,10 @@ public class MealActivity extends DatabaseActivity {
             }
         });
 
-        Button addIngredientButton = (Button) findViewById(R.id.addIngredient);
+        ImageButton addIngredientButton = findViewById(R.id.addIngredient);
         addIngredientButton.setOnClickListener(new AddProductListener());
 
-        saveMealButton = (Button) findViewById(R.id.saveMeal);
+        saveMealButton = findViewById(R.id.saveMeal);
         saveMealButton.setOnClickListener(new SaveMealListener());
 
         try {
@@ -335,7 +336,7 @@ public class MealActivity extends DatabaseActivity {
             Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
             Button resetButton = convertView.findViewById(R.id.resetButton);
 
-            Button removeButton = convertView.findViewById(R.id.removeButton);
+            FloatingActionButton removeButton = convertView.findViewById(R.id.removeButton);
 
             add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
             minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));

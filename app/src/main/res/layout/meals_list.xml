@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <Button
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/removeButton"
             android:layout_width="100dp"
             android:layout_height="50dp"
@@ -116,8 +116,7 @@
             android:background="@color/colorAccent"
             android:textColor="@color/colorButtonText"
             android:text="@string/remove"
-            android:contentDescription="@string/remove"
-            app:srcCompat="@drawable/ic_minus" />
+            android:contentDescription="@string/remove"/>
 
     </LinearLayout>
 
