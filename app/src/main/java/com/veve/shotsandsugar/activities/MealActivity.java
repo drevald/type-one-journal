@@ -63,7 +63,7 @@ public class MealActivity extends DatabaseActivity {
             }
         });
 
-        ImageButton addIngredientButton = findViewById(R.id.addIngredient);
+        FloatingActionButton addIngredientButton = findViewById(R.id.addIngredient);
         addIngredientButton.setOnClickListener(new AddProductListener());
 
         saveMealButton = findViewById(R.id.saveMeal);
