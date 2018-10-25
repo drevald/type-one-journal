@@ -22,7 +22,6 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#FF00FF"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -37,38 +36,37 @@
             android:background="#00FF00"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:columnCount="3"
             android:orientation="horizontal">
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/addIngredient"
+                android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|end"
-                android:text="Add"
+                app:srcCompat="@drawable/ic_return" />
+
+            <ImageButton
+                android:id="@+id/addIngredient"
+                android:layout_width="112dp"
+                android:layout_height="112dp"
+                android:background="#00000000"
+                android:tint="@color/colorAccent"
+                android:text="@string/add"
+                android:contentDescription="@string/add"
                 app:srcCompat="@drawable/ic_plus" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/saveMeal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|end"
-                android:text="Save"
+                android:text="@string/save"
                 app:srcCompat="@drawable/ic_check" />
-
-
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@drawable/ic_return" />
-
 
         </LinearLayout>
 
-
-
     </LinearLayout>
+
+
+
 
 </android.support.design.widget.CoordinatorLayout>

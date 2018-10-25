@@ -63,7 +63,7 @@ public class MealActivity extends DatabaseActivity {
             }
         });
 
-        FloatingActionButton addIngredientButton = findViewById(R.id.addIngredient);
+        ImageButton addIngredientButton = findViewById(R.id.addIngredient);
         addIngredientButton.setOnClickListener(new AddProductListener());
 
         saveMealButton = findViewById(R.id.saveMeal);
@@ -336,7 +336,7 @@ public class MealActivity extends DatabaseActivity {
             Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
             Button resetButton = convertView.findViewById(R.id.resetButton);
 
-            FloatingActionButton removeButton = convertView.findViewById(R.id.removeButton);
+            ImageButton removeButton = convertView.findViewById(R.id.removeButton);
 
             add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
             minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));
