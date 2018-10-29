@@ -16,14 +16,14 @@
         android:id="@+id/sugarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_sugar_level"/>
+        android:text="@string/add_glucose_level"/>
 
     <Button
         android:id="@+id/shotButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_insulin_shot"/>
-
+k
     <Button
         android:id="@+id/mealButton"
         android:layout_width="wrap_content"

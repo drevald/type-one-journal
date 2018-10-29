@@ -329,21 +329,8 @@ public class MealActivity extends DatabaseActivity {
                     new ProductSelectionListener(mealIngredients.get(position)));
             productSelection.setSelection(mealIngredients.get(position).getIngredientId());
             EditText weightInput = convertView.findViewById(R.id.weightInput);
-            weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
-            Button add10gButton = convertView.findViewById(R.id.add10gButton);
-            Button minus10gButton = convertView.findViewById(R.id.minus10gButton);
-            Button add100gButton = convertView.findViewById(R.id.add100gButton);
-            Button minus100gButton = convertView.findViewById(R.id.minus100gButton);
-            Button resetButton = convertView.findViewById(R.id.resetButton);
 
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
-
-            add10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 10));
-            minus10gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -10));
-            add100gButton.setOnClickListener(new WeightChangeListener(mealIngredient, 100));
-            minus100gButton.setOnClickListener(new WeightChangeListener(mealIngredient, -100));
-
-            resetButton.setOnClickListener(new WeightResetListener(mealIngredient));
 
             weightInput.setOnClickListener(
                     new ProductWeightListener(mealIngredients.get(position)));

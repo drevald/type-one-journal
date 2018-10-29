@@ -56,41 +56,6 @@
                     android:textSize="15sp"
                     />
 
-                <Button
-                    android:id="@+id/add10gButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="60dp"
-                    android:background="@drawable/small_rounded_corners"
-                    android:text="+10g"/>
-
-                <Button
-                    android:id="@+id/minus10gButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="60dp"
-                    android:background="@drawable/small_rounded_corners"
-                    android:text="-10g"/>
-
-                <Button
-                    android:id="@+id/add100gButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="60dp"
-                    android:background="@drawable/small_rounded_corners"
-                    android:text="+100g"/>
-
-                <Button
-                    android:id="@+id/minus100gButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="60dp"
-                    android:background="@drawable/small_rounded_corners"
-                    android:text="-100g"/>
-
-                <Button
-                    android:id="@+id/resetButton"
-                    android:layout_height="wrap_content"
-                    android:layout_width="60dp"
-                    android:background="@drawable/small_rounded_corners"
-                    android:text="@string/reset"/>
-
                 <EditText
                     android:id="@+id/weightInput"
                     android:layout_height="wrap_content"

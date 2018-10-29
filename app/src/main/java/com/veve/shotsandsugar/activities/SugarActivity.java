@@ -13,9 +13,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.DaoAccess;
@@ -37,7 +40,7 @@ public class SugarActivity extends DatabaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,39 +50,17 @@ public class SugarActivity extends DatabaseActivity {
             }
         });
 
-        final GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
-        gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
+        final EditText textView = findViewById(R.id.sugar_level);
 
+        FloatingActionButton saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onGlobalLayout() {
-                gridLayout.setColumnCount(
-                        ((LinearLayout)gridLayout.getParent()).getWidth()/
-                                (RESOURCES.getDimensionPixelSize(R.dimen.button_width)
-                                        + 2 * RESOURCES.getDimensionPixelSize(R.dimen.button_gap)));
-                for (float i=1f; i<30; i++) {
-                    Button button = new Button(getApplicationContext());
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
-                            new ViewGroup.MarginLayoutParams(
-                                    RESOURCES.getDimensionPixelSize(R.dimen.button_width),
-                                    RESOURCES.getDimensionPixelSize(R.dimen.button_height)));
-
-//                    params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
-//                            RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
-//                    button.setTextColor(Color.WHITE);
-//                    button.setBackgroundResource(R.drawable.rounded_corners);
-
-                    params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
-                            RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
-                    button.setLayoutParams(params);
-                    button.setBackgroundResource(R.drawable.rounded_corners);
-                    button.setTextColor(Color.WHITE);
-
-                    button.setOnClickListener(new SugarActivity.NumberListener(i/2));
-                    button.setText(String.valueOf(i/2));
-                    gridLayout.addView(button);
-                }
-                gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            public void onClick(View v) {
+                new AddSugarTask(daoAccess).execute(
+                        Float.parseFloat(textView.getEditableText().toString()));
+                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentOne);
             }
         });
 
@@ -97,24 +78,6 @@ public class SugarActivity extends DatabaseActivity {
         protected Void doInBackground(Float... floats) {
             daoAccess.insertSugarLevel(new SugarLevel(floats[0], System.currentTimeMillis()));
             return null;
-        }
-
-    }
-
-    class NumberListener implements View.OnClickListener {
-
-        float level;
-
-        public NumberListener(float level) {
-            this.level = level;
-        }
-
-        @Override
-        public void onClick(View v) {
-            new SugarActivity.AddSugarTask(daoAccess).execute(level);
-            Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
-            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intentOne);
         }
 
     }

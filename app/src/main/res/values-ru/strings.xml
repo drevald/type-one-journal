@@ -1,7 +1,7 @@
 <resources>
     <!-- UI -->
     <string name="app_name">Журнал Первого Типа</string>
-    <string name="add_sugar_level">Добавить уровень глюкозы</string>
+    <string name="add_glucose_level">Добавить уровень глюкозы</string>
     <string name="add_insulin_shot">Добавить подкол</string>
     <string name="add_meal">Добавить еду</string>
     <string name="add_activity">Добавить нагрузку</string>
@@ -17,8 +17,10 @@
     <string name="reset">Сбросить</string>
     <string name="insulin_name">Марка инсулина</string>
     <string name="glucose_level_record">Уровень глюкозы %2.1f ммоль</string>
+    <string name="glucose_level">Уровень глюкозы, ммоль</string>
     <string name="physical_activity">Физическая нагрузка</string>
     <string name="period">Период</string>
+    <string name="amount_units">Количество, единиц</string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

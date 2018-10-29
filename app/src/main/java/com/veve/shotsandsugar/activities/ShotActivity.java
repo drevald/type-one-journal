@@ -9,14 +9,19 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,6 +43,8 @@ public class ShotActivity extends DatabaseActivity {
 
     List<Insulin> insulinsList;
 
+    int insulinAmount;
+
     int selectedInsulinId;
 
     @Override
@@ -48,10 +55,21 @@ public class ShotActivity extends DatabaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentOne);
+            }
+        });
+
+        FloatingActionButton saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AddShotTask(daoAccess).execute(insulinAmount, selectedInsulinId);
                 Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
                 intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentOne);
@@ -64,54 +82,39 @@ public class ShotActivity extends DatabaseActivity {
             Log.e(getClass().getName(), e.getLocalizedMessage(), e);
         }
 
-        final GridLayout gridLayout = (GridLayout)findViewById(R.id.gridLayout);
-        gridLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                gridLayout.setColumnCount(
-                        ((ScrollView)gridLayout.getParent()).getWidth()/
-                                (RESOURCES.getDimensionPixelSize(R.dimen.button_width)
-                                        + 2 * RESOURCES.getDimensionPixelSize(R.dimen.button_gap)));
-                for (int i=1; i<30; i++) {
-                    Button button = new Button(getApplicationContext());
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(
-                            new ViewGroup.MarginLayoutParams(
-                                    RESOURCES.getDimensionPixelSize(R.dimen.button_width),
-                                    RESOURCES.getDimensionPixelSize(R.dimen.button_height)));
-                    params.setMargins(0, RESOURCES.getDimensionPixelSize(R.dimen.button_gap),
-                            RESOURCES.getDimensionPixelSize(R.dimen.button_gap), 0);
-                    button.setLayoutParams(params);
-                    button.setBackgroundResource(R.drawable.rounded_corners);
-                    button.setText(String.valueOf(i));
-                    button.setOnClickListener(new NumberListener(i));
-                    gridLayout.addView(button);
-                }
-                gridLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.insulinsList);
         for (Insulin insulin : insulinsList) {
             RadioButton insulinRadioButton = new RadioButton(getApplicationContext());
             int id = getResources()
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));
+            insulinRadioButton.setTextColor(Color.BLACK);
             insulinRadioButton.setId(insulin.getId());
             radioGroup.addView(insulinRadioButton);
         }
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+        final EditText insulinAmountInput = findViewById(R.id.insulinAmount);
+        insulinAmountInput.addTextChangedListener(new TextWatcher() {
+
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                selectedInsulinId = checkedId;
-                for (int i=0; i<gridLayout.getChildCount(); i++) {
-                    gridLayout.getChildAt(i).setEnabled(true);
-                    gridLayout.getChildAt(i).getBackground();
-                    if (selectedInsulinId == 0)
-                        gridLayout.getChildAt(i).setBackgroundResource(R.drawable.red_button);
-                     else
-                        gridLayout.getChildAt(i).setBackgroundResource(R.drawable.blue_button);                    }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    insulinAmount = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                    Snackbar.make(insulinAmountInput, e.getLocalizedMessage(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
         });
 
     }
@@ -143,24 +146,6 @@ public class ShotActivity extends DatabaseActivity {
         protected Void doInBackground(Integer... params) {
             daoAccess.insertShot(new InsulinShot(params[0], params[1], System.currentTimeMillis()));
             return null;
-        }
-
-    }
-
-    class NumberListener implements View.OnClickListener {
-
-        int number;
-
-        public NumberListener(int number) {
-            this.number = number;
-        }
-
-        @Override
-        public void onClick(View v) {
-            new AddShotTask(daoAccess).execute(number, selectedInsulinId);
-            Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
-            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intentOne);
         }
 
     }

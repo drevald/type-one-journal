@@ -1,7 +1,7 @@
 <resources>
     <!-- UI -->
     <string name="app_name">Type One Log</string>
-    <string name="add_sugar_level">Add Sugar Level</string>
+    <string name="add_glucose_level">Add Glucose Level</string>
     <string name="add_insulin_shot">Add Insulin Shot</string>
     <string name="add_meal">Add Meal</string>
     <string name="add_activity">Add Activity</string>
@@ -17,8 +17,10 @@
     <string name="reset">Reset</string>
     <string name="insulin_name">Insulin name</string>
     <string name="glucose_level_record">Glucose level is %2.1f mmol</string>
+    <string name="glucose_level">Glucose level, mmol</string>
     <string name="physical_activity">Physical Activity</string>
     <string name="period">Interval</string>
+    <string name="amount_units">Amount, units</string>
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>

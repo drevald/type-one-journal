@@ -20,52 +20,59 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/button_gap"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/button_gap">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/button_gap"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="@string/insulin_name"
-                android:gravity="center_vertical"/>
+                android:layout_height="wrap_content"
+                android:text="@string/glucose_level"/>
 
-            <RadioGroup
-                android:id="@+id/insulinsList"
+            <EditText
+                android:id="@+id/sugar_level"
+                android:hint="@+id/sugar_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <GridLayout
-            android:id="@+id/gridLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                android:inputType="numberDecimal"/>
 
     </LinearLayout>
 
-    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:tint="@color/colorAccent"
+            android:text="@string/add"
+            android:contentDescription="@string/add"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/ic_return" />
+
+    </LinearLayout>
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/back"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_return" />
+        app:srcCompat="@drawable/ic_check" />
 
 </android.support.design.widget.CoordinatorLayout>

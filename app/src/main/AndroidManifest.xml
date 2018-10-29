@@ -18,7 +18,7 @@
         </activity>
         <activity
             android:name=".activities.SugarActivity"
-            android:label="@string/add_sugar_level"
+            android:label="@string/add_glucose_level"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.ShotActivity"
@@ -35,7 +35,7 @@
         <activity
             android:name=".activities.ActivityActivity"
             android:label="@string/add_activity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
