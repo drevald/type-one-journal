@@ -23,9 +23,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
+        android:padding="@dimen/button_gap"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ListView
+            android:background="@color/colorPrimary"
             android:id="@+id/mealsList"
             android:layout_width="match_parent"
             android:layout_height="0sp"
@@ -33,40 +35,44 @@
             />
 
         <LinearLayout
-            android:background="#00FF00"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <android.support.design.widget.FloatingActionButton
+            <ImageButton
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_return" />
-
-            <ImageButton
-                android:id="@+id/addIngredient"
-                android:layout_width="112dp"
-                android:layout_height="112dp"
                 android:background="#00000000"
                 android:tint="@color/colorAccent"
                 android:text="@string/add"
                 android:contentDescription="@string/add"
-                app:srcCompat="@drawable/ic_plus" />
+                android:layout_gravity="bottom"
+                app:srcCompat="@drawable/ic_return" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/saveMeal"
+            <ImageButton
+                android:id="@+id/addIngredient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                app:srcCompat="@drawable/ic_check" />
+                android:background="#00000000"
+                android:tint="@color/colorAccent"
+                android:text="@string/add"
+                android:contentDescription="@string/add"
+                android:layout_gravity="bottom"
+                android:paddingLeft="@dimen/button_gap"
+                app:srcCompat="@drawable/ic_plus" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/saveMeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_check" />
 
 </android.support.design.widget.CoordinatorLayout>

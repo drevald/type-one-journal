@@ -49,11 +49,13 @@ public class MealActivity extends DatabaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mealIngredients.add(new MealIngredient());
+
         setContentView(R.layout.activity_meal);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,11 +87,11 @@ public class MealActivity extends DatabaseActivity {
     
     void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
-        if (ingredientsListAdapter.getCount() == 0) {
-            saveMealButton.setVisibility(View.INVISIBLE);
-        } else {
-            saveMealButton.setVisibility(View.VISIBLE);
-        }
+//        if (ingredientsListAdapter.getCount() == 0) {
+//            saveMealButton.setVisibility(View.INVISIBLE);
+//        } else {
+//            saveMealButton.setVisibility(View.VISIBLE);
+//        }
     }
 
 
@@ -290,57 +292,83 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
-
     class IngredientsListAdapter extends BaseAdapter {
+
+        public IngredientsListAdapter() {
+            super();
+        }
 
         @Override
         public int getCount() {
-            return mealIngredients.size();
+            return 0;
         }
 
         @Override
         public Object getItem(int position) {
-            return mealIngredients.get(position);
+            return null;
         }
 
         @Override
         public long getItemId(int position) {
-            return mealIngredients.get(position).getId();
+            return 0;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            MealIngredient mealIngredient = mealIngredients.get(position);
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
-            }
-            if (position % 2 == 0)
-                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.WHITE);
-            else
-                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.LTGRAY);
-
-            ((TextView) convertView.findViewById(R.id.product))
-                    .setText(RESOURCES.getString(R.string.product_name));
-            ((TextView) convertView.findViewById(R.id.weight))
-                    .setText(RESOURCES.getString(R.string.product_weight));
-            Spinner productSelection = ((Spinner) convertView.findViewById(R.id.productSelection));
-            productSelection.setAdapter(new ProductSpinnerAdapter(getApplicationContext()));
-            productSelection.setOnItemSelectedListener(
-                    new ProductSelectionListener(mealIngredients.get(position)));
-            productSelection.setSelection(mealIngredients.get(position).getIngredientId());
-            EditText weightInput = convertView.findViewById(R.id.weightInput);
-
-            ImageButton removeButton = convertView.findViewById(R.id.removeButton);
-
-            weightInput.setOnClickListener(
-                    new ProductWeightListener(mealIngredients.get(position)));
-
-            removeButton.setOnClickListener(new RemoveProductListener(position));
-
-            return convertView;
-
+            return new TextView(getApplicationContext());
         }
     }
+
+//    class IngredientsListAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int getCount() {
+//            return mealIngredients.size();
+//        }
+//
+//        @Override
+//        public Object getItem(int position) {
+//            return mealIngredients.get(position);
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return mealIngredients.get(position).getId();
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            MealIngredient mealIngredient = mealIngredients.get(position);
+//            if (convertView == null) {
+//                convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
+//            }
+//            if (position % 2 == 0)
+//                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.WHITE);
+//            else
+//                convertView.findViewById(R.id.ingredient).setBackgroundColor(Color.LTGRAY);
+//
+//            ((TextView) convertView.findViewById(R.id.product))
+//                    .setText(RESOURCES.getString(R.string.product_name));
+//            ((TextView) convertView.findViewById(R.id.weight))
+//                    .setText(RESOURCES.getString(R.string.product_weight));
+//            Spinner productSelection = ((Spinner) convertView.findViewById(R.id.productSelection));
+//            productSelection.setAdapter(new ProductSpinnerAdapter(getApplicationContext()));
+//            productSelection.setOnItemSelectedListener(
+//                    new ProductSelectionListener(mealIngredients.get(position)));
+//            productSelection.setSelection(mealIngredients.get(position).getIngredientId());
+//            EditText weightInput = convertView.findViewById(R.id.weightInput);
+//
+//            ImageButton removeButton = convertView.findViewById(R.id.removeButton);
+//
+//            weightInput.setOnClickListener(
+//                    new ProductWeightListener(mealIngredients.get(position)));
+//
+//            removeButton.setOnClickListener(new RemoveProductListener(position));
+//
+//            return convertView;
+//
+//        }
+//    }
 
 }
 
