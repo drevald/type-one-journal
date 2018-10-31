@@ -60,7 +60,7 @@
                     android:id="@+id/weightInput"
                     android:layout_height="wrap_content"
                     android:layout_width="70dp"
-                    android:hint="@string/product_weight"
+                    android:hint="@string/zero"
                     android:inputType="number"/>
 
             </LinearLayout>

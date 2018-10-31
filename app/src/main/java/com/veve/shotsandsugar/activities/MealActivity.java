@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -41,9 +42,9 @@ public class MealActivity extends DatabaseActivity {
 
     static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    IngredientsListAdapter ingredientsListAdapter;
+    static IngredientsListAdapter ingredientsListAdapter;
 
-    FloatingActionButton saveMealButton;
+    static FloatingActionButton saveMealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MealActivity extends DatabaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +84,7 @@ public class MealActivity extends DatabaseActivity {
 
     }
     
-    void updateActivity() {
+    static void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
             saveMealButton.setVisibility(View.INVISIBLE);
@@ -92,8 +93,13 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateActivity();
+    }
 
-//////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
+    //////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
 
     static class ProductFinderTask extends AsyncTask<Void, Void, List<Ingredient>> {
 
@@ -240,7 +246,6 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
-            updateActivity();
         }
 
     }
@@ -329,6 +334,7 @@ public class MealActivity extends DatabaseActivity {
                     new ProductSelectionListener(mealIngredients.get(position)));
             productSelection.setSelection(mealIngredients.get(position).getIngredientId());
             EditText weightInput = convertView.findViewById(R.id.weightInput);
+            weightInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
 

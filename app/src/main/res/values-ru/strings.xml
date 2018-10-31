@@ -21,6 +21,7 @@
     <string name="physical_activity">Физическая нагрузка</string>
     <string name="period">Период</string>
     <string name="amount_units">Количество, единиц</string>
+    <string name="zero">0</string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

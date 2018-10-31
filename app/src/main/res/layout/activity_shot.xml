@@ -42,7 +42,20 @@
                 android:id="@+id/insulinsList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Apidra"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Tujeo"/>
+
+
+            </RadioGroup>
 
         </LinearLayout>
 

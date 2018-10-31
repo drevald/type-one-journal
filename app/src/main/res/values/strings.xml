@@ -21,6 +21,7 @@
     <string name="physical_activity">Physical Activity</string>
     <string name="period">Interval</string>
     <string name="amount_units">Amount, units</string>
+    <string name="zero">0</string>
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>
