@@ -42,9 +42,9 @@ public class MealActivity extends DatabaseActivity {
 
     static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    static IngredientsListAdapter ingredientsListAdapter;
+    IngredientsListAdapter ingredientsListAdapter;
 
-    static FloatingActionButton saveMealButton;
+    FloatingActionButton saveMealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class MealActivity extends DatabaseActivity {
 
     }
     
-    static void updateActivity() {
+    void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
             saveMealButton.setVisibility(View.INVISIBLE);
@@ -99,7 +99,7 @@ public class MealActivity extends DatabaseActivity {
         updateActivity();
     }
 
-    //////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
+//////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
 
     static class ProductFinderTask extends AsyncTask<Void, Void, List<Ingredient>> {
 
@@ -246,6 +246,7 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
+            updateActivity();
         }
 
     }
