@@ -60,8 +60,8 @@
                     android:id="@+id/weightInput"
                     android:layout_height="wrap_content"
                     android:layout_width="70dp"
-                    android:hint="@string/zero"
-                    android:inputType="number"/>
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned"/>
 
             </LinearLayout>
 
@@ -81,6 +81,7 @@
             android:tint="@color/colorAccent"
             android:text="@string/add"
             android:contentDescription="@string/remove"
+            android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_minus" />
 
     </LinearLayout>

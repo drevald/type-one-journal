@@ -178,22 +178,6 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 
-    class WeightResetListener implements Button.OnClickListener {
-
-        MealIngredient mealIngredient;
-
-        WeightResetListener(MealIngredient mealIngredient) {
-            this.mealIngredient = mealIngredient;
-        }
-
-        @Override
-        public void onClick(View v) {
-            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
-            editText.setText("0");
-            mealIngredient.setIngredientWeightGramms(0);
-        }
-    }
-
     class ProductWeightListener implements Button.OnClickListener {
 
         MealIngredient mealIngredient;
@@ -204,12 +188,18 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
-            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
-            Log.d(getClass().getName(),
-                    String.format("Meal no #%d weight is %s", mealIngredient.getId(), editText.getText().toString()));
-            mealIngredient.setIngredientWeightGramms(Integer.valueOf(editText.getText().toString()));
+            try {
+                EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
+                mealIngredient.setIngredientWeightGramms(
+                        Integer.valueOf(editText.getText().toString()));
+                Log.d(getClass().getName(),
+                        String.format("Meal no #%d weight is %s",
+                                mealIngredient.getId(), editText.getText().toString()));
+            } catch (Exception e) {
+                mealIngredient.setIngredientWeightGramms(0);
+                Log.e(getClass().getName(), e.getLocalizedMessage());
+            }
         }
-
     }
 
     class RemoveProductListener implements Button.OnClickListener {
@@ -335,7 +325,10 @@ public class MealActivity extends DatabaseActivity {
                     new ProductSelectionListener(mealIngredients.get(position)));
             productSelection.setSelection(mealIngredients.get(position).getIngredientId());
             EditText weightInput = convertView.findViewById(R.id.weightInput);
+            weightInput.setWidth(600);
+            weightInput.setHeight(50);
             weightInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+            weightInput.setRawInputType(EditorInfo.TYPE_CLASS_NUMBER);
 
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
 
