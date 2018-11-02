@@ -7,7 +7,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -87,9 +90,9 @@ public class MealActivity extends DatabaseActivity {
     void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
-            saveMealButton.setVisibility(View.INVISIBLE);
+            saveMealButton.setEnabled(false);
         } else {
-            saveMealButton.setVisibility(View.VISIBLE);
+            saveMealButton.setEnabled(true);
         }
     }
 
@@ -124,7 +127,7 @@ public class MealActivity extends DatabaseActivity {
                 mealIngredient.setMealId(mealId);
             }
             daoAccess.insertMealIngredients(mealIngredients);
-            mealIngredients.clear();
+//            mealIngredients.clear();
             return null;
         }
     }
@@ -153,56 +156,31 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
-    class WeightChangeListener implements Button.OnClickListener {
+//    class ProductWeightFocusListener implements View.OnFocusChangeListener {
+//
+//        MealIngredient mealIngredient;
+//
+//        public ProductWeightFocusListener(MealIngredient mealIngredient) {
+//            this.mealIngredient = mealIngredient;
+//        }
+//
+//        @Override
+//        public void onFocusChange(View v, boolean hasFocus) {
+//            try {
+//                EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
+//                mealIngredient.setIngredientWeightGramms(
+//                        Integer.valueOf(editText.getText().toString()));
+//                Log.d(getClass().getName(),
+//                        String.format("Meal no #%d weight is %s",
+//                                mealIngredient.getId(), editText.getText().toString()));
+//            } catch (Exception e) {
+//                mealIngredient.setIngredientWeightGramms(0);
+//                Log.e(getClass().getName(), e.getLocalizedMessage());
+//            }
+//        }
+//    }
 
-        MealIngredient mealIngredient;
-
-        int amount;
-
-        WeightChangeListener(MealIngredient mealIngredient, int amount) {
-            this.mealIngredient = mealIngredient;
-            this.amount = amount;
-        }
-
-        @Override
-        public void onClick(View v) {
-            EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
-            Log.d(getClass().getName(),
-                    String.format("Value before is %s", editText.getText().toString()));
-            if (amount + Integer.valueOf(editText.getText().toString()) >= 0)
-                editText.setText(
-                        String.valueOf(amount + Integer.valueOf(editText.getText().toString())));
-            Log.d(getClass().getName(),
-                    String.format("Value after is %s", editText.getText().toString()));
-            mealIngredient.setIngredientWeightGramms(Integer.valueOf(editText.getText().toString()));
-        }
-    }
-
-    class ProductWeightListener implements Button.OnClickListener {
-
-        MealIngredient mealIngredient;
-
-        ProductWeightListener(MealIngredient mealIngredient) {
-            this.mealIngredient = mealIngredient;
-        }
-
-        @Override
-        public void onClick(View v) {
-            try {
-                EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
-                mealIngredient.setIngredientWeightGramms(
-                        Integer.valueOf(editText.getText().toString()));
-                Log.d(getClass().getName(),
-                        String.format("Meal no #%d weight is %s",
-                                mealIngredient.getId(), editText.getText().toString()));
-            } catch (Exception e) {
-                mealIngredient.setIngredientWeightGramms(0);
-                Log.e(getClass().getName(), e.getLocalizedMessage());
-            }
-        }
-    }
-
-    class RemoveProductListener implements Button.OnClickListener {
+     class RemoveProductListener implements Button.OnClickListener {
 
         int productNumber;
 
@@ -232,15 +210,40 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
-            new MealSaverTask().execute(mealIngredients);
+            v.requestFocus();
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
+            new MealSaverTask().execute(mealIngredients);
+            mealIngredients.clear();
             updateActivity();
         }
 
     }
 
+    class IngredientWeightTextWatcher implements TextWatcher {
+
+        MealIngredient mealIngredient;
+
+        public IngredientWeightTextWatcher(MealIngredient mealIngredient) {
+            this.mealIngredient = mealIngredient;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            mealIngredient.setIngredientWeightGramms(Integer.parseInt(s.toString()));
+        }
+    }
 
 //////////////   ADAPTERS     //////////////////////////////////////////////////////////////////////
 
@@ -325,17 +328,22 @@ public class MealActivity extends DatabaseActivity {
                     new ProductSelectionListener(mealIngredients.get(position)));
             productSelection.setSelection(mealIngredients.get(position).getIngredientId());
             EditText weightInput = convertView.findViewById(R.id.weightInput);
-            weightInput.setWidth(600);
-            weightInput.setHeight(50);
-            weightInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-            weightInput.setRawInputType(EditorInfo.TYPE_CLASS_NUMBER);
-
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
 
-            weightInput.setOnClickListener(
-                    new ProductWeightListener(mealIngredients.get(position)));
+            weightInput.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    return false;
+                }
+            });
+
+//            weightInput.setOnFocusChangeListener(
+//                    new ProductWeightFocusListener(mealIngredients.get(position)));
 
             removeButton.setOnClickListener(new RemoveProductListener(position));
+
+            weightInput.addTextChangedListener(
+                    new IngredientWeightTextWatcher(mealIngredients.get(position)));
 
             return convertView;
 
