@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -58,11 +59,13 @@ public class ActivityActivity extends DatabaseActivity {
 
     }
 
+    EditText fromTime = findViewById(R.id.fromTime);
+
     public void setFrom(View view) {
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+                fromTime.setText(String.format("%d:%d", hourOfDay, minute));
             }
         }, 1, 1, false );
         timePickerDialog.show();
