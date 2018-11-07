@@ -86,7 +86,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0sp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,9 +96,13 @@
                 android:text="From"/>
 
             <EditText
+                android:id="@+id/fromTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="time"/>
+                android:selectedWeekBackgroundColor="#ff0000"
+                android:weekNumberColor="#0000ff"
+                android:weekSeparatorLineColor="#00ff00"
+                android:onClick="setFrom"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,9 +110,12 @@
                 android:text="To"/>
 
             <EditText
+                android:id="@+id/toTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="date"/>
+                android:selectedWeekBackgroundColor="#ff0000"
+                android:weekNumberColor="#0000ff"
+                android:weekSeparatorLineColor="#00ff00" />
 
         </LinearLayout>
 

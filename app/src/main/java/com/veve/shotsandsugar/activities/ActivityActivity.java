@@ -1,5 +1,6 @@
 package com.veve.shotsandsugar.activities;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
@@ -24,6 +26,8 @@ import java.util.List;
 public class ActivityActivity extends DatabaseActivity {
 
     static List<Activity> activityList;
+
+    static TimePickerDialog timePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,16 @@ public class ActivityActivity extends DatabaseActivity {
         Spinner spinner = findViewById(R.id.activities);
         spinner.setAdapter(new ActivitiesAdapter(getApplicationContext()));
 
+    }
+
+    public void setFrom(View view) {
+        timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+            }
+        }, 1, 1, false );
+        timePickerDialog.show();
     }
 
     static class GetActivitiesTask extends AsyncTask<Void, Void, List<Activity>> {

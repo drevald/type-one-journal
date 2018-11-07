@@ -45,9 +45,9 @@ public class MealActivity extends DatabaseActivity {
 
     static List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
-    IngredientsListAdapter ingredientsListAdapter;
+    static IngredientsListAdapter ingredientsListAdapter;
 
-    FloatingActionButton saveMealButton;
+    static FloatingActionButton saveMealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +87,7 @@ public class MealActivity extends DatabaseActivity {
 
     }
     
-    void updateActivity() {
+    static void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
             saveMealButton.setEnabled(false);
@@ -120,6 +120,12 @@ public class MealActivity extends DatabaseActivity {
 
     static class MealSaverTask extends AsyncTask<List<MealIngredient>, Void, Void> {
 
+        View view;
+
+        public MealSaverTask(View view) {
+            this.view = view;
+        }
+
         @Override
         protected Void doInBackground(List<MealIngredient>... lists) {
             Long mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
@@ -127,7 +133,13 @@ public class MealActivity extends DatabaseActivity {
                 mealIngredient.setMealId(mealId);
             }
             daoAccess.insertMealIngredients(mealIngredients);
-//            mealIngredients.clear();
+            view.post(new Runnable(){
+                @Override
+                public void run() {
+                    mealIngredients.clear();
+                    updateActivity();
+                }
+            });
             return null;
         }
     }
@@ -214,9 +226,7 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intentOne);
-            new MealSaverTask().execute(mealIngredients);
-            mealIngredients.clear();
-            updateActivity();
+            new MealSaverTask(v).execute(mealIngredients);
         }
 
     }
