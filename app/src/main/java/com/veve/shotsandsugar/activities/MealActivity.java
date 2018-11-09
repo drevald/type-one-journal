@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.sax.StartElementListener;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +88,7 @@ public class MealActivity extends DatabaseActivity {
         updateActivity();
 
     }
-    
+
     static void updateActivity() {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
@@ -133,7 +135,7 @@ public class MealActivity extends DatabaseActivity {
                 mealIngredient.setMealId(mealId);
             }
             daoAccess.insertMealIngredients(mealIngredients);
-            view.post(new Runnable(){
+            view.post(new Runnable() {
                 @Override
                 public void run() {
                     mealIngredients.clear();
@@ -168,31 +170,7 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
-//    class ProductWeightFocusListener implements View.OnFocusChangeListener {
-//
-//        MealIngredient mealIngredient;
-//
-//        public ProductWeightFocusListener(MealIngredient mealIngredient) {
-//            this.mealIngredient = mealIngredient;
-//        }
-//
-//        @Override
-//        public void onFocusChange(View v, boolean hasFocus) {
-//            try {
-//                EditText editText = ((LinearLayout) v.getParent()).findViewById(R.id.weightInput);
-//                mealIngredient.setIngredientWeightGramms(
-//                        Integer.valueOf(editText.getText().toString()));
-//                Log.d(getClass().getName(),
-//                        String.format("Meal no #%d weight is %s",
-//                                mealIngredient.getId(), editText.getText().toString()));
-//            } catch (Exception e) {
-//                mealIngredient.setIngredientWeightGramms(0);
-//                Log.e(getClass().getName(), e.getLocalizedMessage());
-//            }
-//        }
-//    }
-
-     class RemoveProductListener implements Button.OnClickListener {
+    class RemoveProductListener implements Button.OnClickListener {
 
         int productNumber;
 
@@ -235,7 +213,7 @@ public class MealActivity extends DatabaseActivity {
 
         MealIngredient mealIngredient;
 
-        public IngredientWeightTextWatcher(MealIngredient mealIngredient) {
+        IngredientWeightTextWatcher(MealIngredient mealIngredient) {
             this.mealIngredient = mealIngredient;
         }
 
@@ -291,6 +269,7 @@ public class MealActivity extends DatabaseActivity {
                 view.setTextSize(16);
                 view.setTextColor(Color.BLACK);
                 view.setBackgroundResource(R.drawable.drop_down);
+                view.setGravity(Gravity.START|Gravity.CENTER);
                 view.setWidth(300);
                 convertView = view;
             }
@@ -319,6 +298,7 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+
             MealIngredient mealIngredient = mealIngredients.get(position);
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.meals_list, parent, false);
@@ -347,8 +327,6 @@ public class MealActivity extends DatabaseActivity {
                 }
             });
 
-//            weightInput.setOnFocusChangeListener(
-//                    new ProductWeightFocusListener(mealIngredients.get(position)));
 
             removeButton.setOnClickListener(new RemoveProductListener(position));
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -24,21 +27,28 @@ import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
 import com.veve.shotsandsugar.model.Activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class ActivityActivity extends DatabaseActivity {
 
-    final static Calendar CALENDAR = Calendar.getInstance();
+    final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     static List<Activity> activityList;
 
     static TimePickerDialog timePickerDialog;
 
-    EditText fromTime;
+    EditText fromTimeInput;
 
-    EditText toTime;
+    EditText toTimeInput;
+
+    LinearLayout otherInterval;
+
+    long fromTime;
+
+    long toTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,42 +80,97 @@ public class ActivityActivity extends DatabaseActivity {
         Spinner spinner = findViewById(R.id.activities);
         spinner.setAdapter(new ActivitiesAdapter(getApplicationContext()));
 
-        fromTime = findViewById(R.id.fromTime);
+        fromTimeInput = findViewById(R.id.fromTime);
 
-        toTime = findViewById(R.id.toTime);
+        toTimeInput = findViewById(R.id.toTime);
+
+        otherInterval = findViewById(R.id.otherInterval);
 
     }
 
-
-
-
     public void setFrom(View view) {
-        int hour = CALENDAR.get(Calendar.HOUR_OF_DAY);
-        int minute = CALENDAR.get(Calendar.MINUTE);
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                fromTime.setText(String.format(Locale.getDefault(), "%d2:%d2", hourOfDay, minute));
-                Log.i(getClass().getName(), String.format("%d2:%d2", hourOfDay, minute));
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                fromTimeInput.setText(sdf.format(calendar.getTime()));
+                fromTime = calendar.getTime().getTime();
+                checkDates(view);
             }
         }, hour, minute, true );
         timePickerDialog.show();
     }
 
     public void setTo(View view) {
-        int hour = CALENDAR.get(Calendar.HOUR_OF_DAY);
-        int minute = CALENDAR.get(Calendar.MINUTE);
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
         timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                toTime.setText(String.format(Locale.getDefault(), "%2d:%2d", hourOfDay, minute));
-                Log.i(getClass().getName(), String.format("%dd:%dd", hourOfDay, minute));
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
+                toTimeInput.setText(sdf.format(calendar.getTime()));
+                toTime = calendar.getTime().getTime();
+                checkDates(view);
             }
         }, hour, minute, true );
         timePickerDialog.show();
     }
 
-    public void checkOthers(View view) {
+    private void checkDates(View view) {
+        if(fromTime > 0 && toTime > 0) {
+            if (fromTime > toTime) {
+                Snackbar.make(view, "Wrong time", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                fromTime = 0;
+                toTime = 0;
+                fromTimeInput.setText("");
+                toTimeInput.setText("");
+            }
+        }
+    }
+
+    public void setInterval(View view) {
+        Calendar calendar = Calendar.getInstance();
+        switch(((RadioButton)view).getId()) {
+            case 1: {
+                otherInterval.setVisibility(View.INVISIBLE);
+                toTime = calendar.getTime().getTime();
+                calendar.add(Calendar.MINUTE, -15);
+                fromTime = calendar.getTime().getTime();
+                break;
+            }
+            case 2: {
+                otherInterval.setVisibility(View.INVISIBLE);
+                toTime = calendar.getTime().getTime();
+                calendar.add(Calendar.MINUTE, -30);
+                fromTime = calendar.getTime().getTime();
+                break;
+            }
+            case 3: {
+                otherInterval.setVisibility(View.INVISIBLE);
+                toTime = calendar.getTime().getTime();
+                calendar.add(Calendar.MINUTE, -60);
+                fromTime = calendar.getTime().getTime();
+                break;
+            }
+            case 4: {
+                otherInterval.setVisibility(View.VISIBLE);
+                toTime = calendar.getTime().getTime();
+                toTimeInput.setText(sdf.format(calendar.getTime()));
+                calendar.add(Calendar.MINUTE, -120);
+                fromTimeInput.setText(sdf.format(calendar.getTime()));
+                fromTime = calendar.getTime().getTime();
+                break;
+            }
+        }
     }
 
     static class GetActivitiesTask extends AsyncTask<Void, Void, List<Activity>> {

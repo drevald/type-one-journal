@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ingredient"
@@ -14,55 +13,52 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10sp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:padding="10sp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal"
-                android:padding="10sp"
-                android:layout_weight="1">
+                android:padding="10sp">
 
                 <TextView
                     android:id="@+id/product"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_name"
-                    android:textSize="15sp"
-                    />
+                    android:textSize="15sp" />
 
                 <Spinner
                     android:id="@+id/productSelection"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10sp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10sp">
 
                 <TextView
                     android:id="@+id/weight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/product_name"
-                    android:textSize="15sp"
-                    />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/weightInput"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:hint="@string/product_weight"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/zero"
                     android:imeOptions="actionDone"
-                    android:inputType="numberSigned"/>
+                    android:inputType="numberSigned" />
 
             </LinearLayout>
 
@@ -71,18 +67,18 @@
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/removeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00000000"
             android:layout_gravity="center|end"
-            android:tint="@color/colorAccent"
-            android:text="@string/add"
-            android:contentDescription="@string/remove"
             android:layout_margin="@dimen/fab_margin"
+            android:background="#00000000"
+            android:contentDescription="@string/remove"
+            android:text="@string/add"
+            android:tint="@color/colorAccent"
             app:srcCompat="@drawable/ic_minus" />
 
     </LinearLayout>

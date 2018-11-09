@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 import com.veve.shotsandsugar.model.Activity;
+import com.veve.shotsandsugar.model.ActivityPeriod;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
@@ -108,5 +109,10 @@ public interface DaoAccess {
     @Query("SELECT * FROM Activity")
     List<Activity> listActivity();
 
+    @Insert
+    void insertActivityPeriod(ActivityPeriod activityPeriod);
+
+    @Query("SELECT * FROM ActivityPeriod")
+    void fetchActivityPeriods();
 
 }
