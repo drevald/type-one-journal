@@ -19,113 +19,136 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:columnCount="2"
-        android:orientation="horizontal"
-        android:padding="@dimen/button_gap"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        <TextView
-            android:layout_gravity="center|end"
-            android:text="@string/physical_activity" />
-
-        <Spinner
-            android:id="@+id/activities"
-            android:layout_gravity="fill_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
-            android:text="@string/period" />
-
-        <RadioGroup
-            android:id="@+id/interval"
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:padding="@dimen/button_gap">
 
-            <RadioButton
+            <TextView
+                android:layout_gravity="center|end"
+                android:text="@string/physical_activity" />
+
+            <Spinner
+                android:id="@+id/activities"
+                android:layout_gravity="fill_horizontal" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setInterval"
-                android:text="Last 15 min" />
+                android:layout_gravity="center|end"
+                android:text="@string/period" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="setInterval"
-                android:text="Last 30 min" />
+            <RadioGroup
+                android:id="@+id/interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setInterval"
+                    android:text="Last 15 min" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setInterval"
+                    android:text="Last 30 min" />
 
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="setInterval"
-                android:text="Last hour" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setInterval"
+                    android:text="Last hour" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="setInterval"
-                android:text="Other" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setInterval"
+                    android:text="Other" />
 
-        </RadioGroup>
+            </RadioGroup>
 
-        <Space />
+            <Space />
+
+            <LinearLayout
+                android:id="@+id/otherInterval"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From" />
+
+                <EditText
+                    android:id="@+id/fromTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:onClick="setFrom"
+                    android:selectedWeekBackgroundColor="#ff0000"
+                    android:weekNumberColor="#0000ff"
+                    android:weekSeparatorLineColor="#00ff00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To" />
+
+                <EditText
+                    android:id="@+id/toTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:onClick="setTo"
+                    android:selectedWeekBackgroundColor="#ff0000"
+                    android:weekNumberColor="#0000ff"
+                    android:weekSeparatorLineColor="#00ff00" />
+
+            </LinearLayout>
+
+        </GridLayout>
 
         <LinearLayout
-            android:id="@+id/otherInterval"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:visibility="invisible">
+            android:layout_height="match_parent"
+            android:padding="@dimen/button_gap">
 
-            <TextView
+            <ImageButton
+                android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="From" />
-
-            <EditText
-                android:id="@+id/fromTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:inputType="none"
-                android:onClick="setFrom"
-                android:selectedWeekBackgroundColor="#ff0000"
-                android:weekNumberColor="#0000ff"
-                android:weekSeparatorLineColor="#00ff00" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To" />
-
-            <EditText
-                android:id="@+id/toTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:inputType="none"
-                android:onClick="setTo"
-                android:selectedWeekBackgroundColor="#ff0000"
-                android:weekNumberColor="#0000ff"
-                android:weekSeparatorLineColor="#00ff00" />
+                android:layout_gravity="bottom"
+                android:background="#00000000"
+                android:contentDescription="@string/add"
+                android:text="@string/add"
+                android:tint="@color/colorAccent"
+                app:srcCompat="@drawable/ic_return" />
 
         </LinearLayout>
 
-
-    </GridLayout>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/back"
+        android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_return" />
+        app:srcCompat="@drawable/ic_check" />
 
 </android.support.design.widget.CoordinatorLayout>

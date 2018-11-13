@@ -113,6 +113,9 @@ public interface DaoAccess {
     void insertActivityPeriod(ActivityPeriod activityPeriod);
 
     @Query("SELECT * FROM ActivityPeriod")
-    void fetchActivityPeriods();
+    List<ActivityPeriod> fetchActivityPeriods();
+
+    @Query("SELECT * FROM Activity WHERE Id = :id")
+    Activity fetchActivity (int id);
 
 }

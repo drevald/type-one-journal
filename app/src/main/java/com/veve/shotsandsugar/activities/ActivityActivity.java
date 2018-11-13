@@ -15,17 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
 import com.veve.shotsandsugar.model.Activity;
+import com.veve.shotsandsugar.model.ActivityPeriod;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -50,6 +50,8 @@ public class ActivityActivity extends DatabaseActivity {
 
     long toTime;
 
+    Spinner activities;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,9 @@ public class ActivityActivity extends DatabaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.back);
+        activities = findViewById(R.id.activities);
+
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,9 +71,13 @@ public class ActivityActivity extends DatabaseActivity {
             }
         });
 
-        RadioGroup intervalGroup = findViewById(R.id.interval);
-        intervalGroup.check(0);
-
+        FloatingActionButton saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener((view) -> {
+            new ActivitySaverTask().execute((int)activities.getSelectedItemId(), fromTime, toTime);
+            Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intentOne);
+        });
 
         try {
             activityList = new GetActivitiesTask().execute().get();
@@ -102,7 +110,7 @@ public class ActivityActivity extends DatabaseActivity {
                 fromTime = calendar.getTime().getTime();
                 checkDates(view);
             }
-        }, hour, minute, true );
+        }, hour, minute, true);
         timePickerDialog.show();
     }
 
@@ -120,12 +128,12 @@ public class ActivityActivity extends DatabaseActivity {
                 toTime = calendar.getTime().getTime();
                 checkDates(view);
             }
-        }, hour, minute, true );
+        }, hour, minute, true);
         timePickerDialog.show();
     }
 
     private void checkDates(View view) {
-        if(fromTime > 0 && toTime > 0) {
+        if (fromTime > 0 && toTime > 0) {
             if (fromTime > toTime) {
                 Snackbar.make(view, "Wrong time", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -139,7 +147,7 @@ public class ActivityActivity extends DatabaseActivity {
 
     public void setInterval(View view) {
         Calendar calendar = Calendar.getInstance();
-        switch(((RadioButton)view).getId()) {
+        switch (((RadioButton) view).getId()) {
             case 1: {
                 otherInterval.setVisibility(View.INVISIBLE);
                 toTime = calendar.getTime().getTime();
@@ -171,15 +179,6 @@ public class ActivityActivity extends DatabaseActivity {
                 break;
             }
         }
-    }
-
-    static class GetActivitiesTask extends AsyncTask<Void, Void, List<Activity>> {
-
-        @Override
-        protected List<Activity> doInBackground(Void... voids) {
-            return daoAccess.listActivity();
-        }
-
     }
 
     class ActivitiesAdapter extends BaseAdapter {
@@ -216,11 +215,32 @@ public class ActivityActivity extends DatabaseActivity {
                 view.setTextSize(16);
                 view.setTextColor(Color.BLACK);
                 view.setBackgroundResource(R.drawable.drop_down);
-                view.setGravity(Gravity.CENTER|Gravity.START);
+                view.setGravity(Gravity.CENTER | Gravity.START);
                 view.setWidth(300);
                 convertView = view;
             }
             return convertView;
+        }
+
+    }
+
+    static class GetActivitiesTask extends AsyncTask<Void, Void, List<Activity>> {
+
+        @Override
+        protected List<Activity> doInBackground(Void... voids) {
+            return daoAccess.listActivity();
+        }
+
+    }
+
+    static class ActivitySaverTask extends AsyncTask<Object, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Object... objects) {
+            ActivityPeriod activityPeriod = new ActivityPeriod(
+                    (Integer) objects[0], (Long)objects[1], (Long)objects[2]);
+            daoAccess.insertActivityPeriod(activityPeriod);
+            return null;
         }
 
     }

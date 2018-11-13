@@ -24,6 +24,8 @@ import java.util.Locale;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.DaoAccess;
+import com.veve.shotsandsugar.model.Activity;
+import com.veve.shotsandsugar.model.ActivityPeriod;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
@@ -160,6 +162,29 @@ public class DiagramActivity extends DatabaseActivity {
                 }
                 records.add(new Record(meal, meal.getTime(), sb.toString()));
             }
+
+            List<ActivityPeriod> activityRecords = daoAccess.fetchActivityPeriods();
+            for (ActivityPeriod activityPeriod : activityRecords) {
+                Activity activity = daoAccess.fetchActivity(activityPeriod.getActivityId());
+                    int activityNameId = RESOURCES.getIdentifier(activity.getActivityCode(),
+                            Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
+                    String activityName = RESOURCES.getString(activityNameId);
+                    int durationInMin =
+                            (int)(activityPeriod.getEndTime()-activityPeriod.getStartTime())
+                                    /Constants.MS_IN_MINUTE;
+                    String text;
+                    if (durationInMin < Constants.MIN_IN_HOUR) {
+                        text = String.format(Locale.getDefault(), "%S for %d minutes",
+                                activityName, durationInMin);
+                    } else {
+                        int durationInHours = (int)(durationInMin / Constants.MIN_IN_HOUR);
+                        durationInMin = durationInMin % Constants.MIN_IN_HOUR;
+                        text = String.format(Locale.getDefault(),
+                                "%S for %d hours %d minutes",
+                                activityName, durationInHours, durationInMin);
+                    }
+                    records.add(new Record(activityPeriod, activityPeriod.getEndTime(), text));
+                }
 
             Collections.sort(records);
             return records;
