@@ -22,6 +22,7 @@
     <string name="period">Период</string>
     <string name="amount_units">Количество, единиц</string>
     <string name="zero">0</string>
+    <string name="physical_state">Физическое состояние</string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

@@ -22,6 +22,7 @@
     <string name="period">Interval</string>
     <string name="amount_units">Amount, units</string>
     <string name="zero">0</string>
+    <string name="physical_state">Physical state</string>
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>
@@ -58,7 +59,5 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
-
-
 
 </resources>

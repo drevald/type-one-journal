@@ -174,13 +174,13 @@ public class DiagramActivity extends DatabaseActivity {
                                     /Constants.MS_IN_MINUTE;
                     String text;
                     if (durationInMin < Constants.MIN_IN_HOUR) {
-                        text = String.format(Locale.getDefault(), "%S for %d minutes",
+                        text = String.format(Locale.getDefault(), "%s for %d minutes",
                                 activityName, durationInMin);
                     } else {
                         int durationInHours = (int)(durationInMin / Constants.MIN_IN_HOUR);
                         durationInMin = durationInMin % Constants.MIN_IN_HOUR;
                         text = String.format(Locale.getDefault(),
-                                "%S for %d hours %d minutes",
+                                "%s for %d hours %d minutes",
                                 activityName, durationInHours, durationInMin);
                     }
                     records.add(new Record(activityPeriod, activityPeriod.getEndTime(), text));

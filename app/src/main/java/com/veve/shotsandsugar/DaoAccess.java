@@ -16,6 +16,7 @@ import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.Meal;
 import com.veve.shotsandsugar.model.MealIngredient;
 import com.veve.shotsandsugar.model.Other;
+import com.veve.shotsandsugar.model.OtherRecord;
 import com.veve.shotsandsugar.model.SelectedInsulin;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -117,5 +118,11 @@ public interface DaoAccess {
 
     @Query("SELECT * FROM Activity WHERE Id = :id")
     Activity fetchActivity (int id);
+
+    @Query("SELECT * FROM Other")
+    List<Other> fetchOthers();
+
+    @Insert
+    void insertOtherRecord(OtherRecord otherRecord);
 
 }

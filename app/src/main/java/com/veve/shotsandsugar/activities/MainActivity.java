@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Button moreButton = findViewById(R.id.moreButton);
-//        activityButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intentOne = new Intent(MainActivity.this, MoreActivity.class);
-//                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intentOne);
-//            }
-//        });
+        Button moreButton = findViewById(R.id.moreButton);
+        moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentOne = new Intent(MainActivity.this, MoreActivity.class);
+                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentOne);
+            }
+        });
 
         Button diagramButton = findViewById(R.id.diagramButton);
         diagramButton.setOnClickListener(new View.OnClickListener() {
