@@ -23,6 +23,11 @@
     <string name="amount_units">Количество, единиц</string>
     <string name="zero">0</string>
     <string name="physical_state">Физическое состояние</string>
+    <string name="physical_activity_duration_minutes">%s в течении %d минут</string>
+    <string name="physical_activity_duration_hours_minutes">%s в течении %d часов %d минут</string>
+    <string name="other_record">%s сегодня</string>
+    <string name="shot_record">Укол %d ед %s</string>
+
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

@@ -138,7 +138,8 @@ public class DiagramActivity extends DatabaseActivity {
                 int insulinNameId = RESOURCES.getIdentifier(insulin.getCode(),
                         Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
                 String insulinName = RESOURCES.getString(insulinNameId);
-                String text = String.format(Locale.getDefault(), "Shot of %d ml of %s",
+                String text = String.format(Locale.getDefault(),
+                        RESOURCES.getString(R.string.shot_record),
                         insulinShot.getAmount(),insulinName);
                 records.add(new Record(insulinShot, insulinShot.getTime(), text));
             }
@@ -173,13 +174,14 @@ public class DiagramActivity extends DatabaseActivity {
                                     /Constants.MS_IN_MINUTE;
                     String text;
                     if (durationInMin < Constants.MIN_IN_HOUR) {
-                        text = String.format(Locale.getDefault(), "%s for %d minutes",
+                        text = String.format(Locale.getDefault(),
+                                RESOURCES.getString(R.string.physical_activity_duration_minutes),
                                 activityName, durationInMin);
                     } else {
                         int durationInHours = (int)(durationInMin / Constants.MIN_IN_HOUR);
                         durationInMin = durationInMin % Constants.MIN_IN_HOUR;
                         text = String.format(Locale.getDefault(),
-                                "%s for %d hours %d minutes",
+                                RESOURCES.getString(R.string.physical_activity_duration_hours_minutes),
                                 activityName, durationInHours, durationInMin);
                     }
                     records.add(new Record(activityPeriod, activityPeriod.getEndTime(), text));
@@ -191,7 +193,9 @@ public class DiagramActivity extends DatabaseActivity {
                 int otherNameId = RESOURCES.getIdentifier(other.getCode(),
                         Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
                 String otherName = RESOURCES.getString(otherNameId);
-                String text = String.format(Locale.getDefault(), "%s for today", otherName);
+                String text = String.format(Locale.getDefault(),
+                        RESOURCES.getString(R.string.other_record),
+                        otherName);
                 records.add(new Record(otherRecord, otherRecord.getStartTime(), text));
             }
 

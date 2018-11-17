@@ -49,4 +49,5 @@ public class OtherRecord {
     public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
+
 }
