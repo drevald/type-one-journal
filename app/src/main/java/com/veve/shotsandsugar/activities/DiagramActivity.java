@@ -1,10 +1,8 @@
 package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +28,8 @@ import com.veve.shotsandsugar.model.Insulin;
 import com.veve.shotsandsugar.model.InsulinShot;
 import com.veve.shotsandsugar.model.Meal;
 import com.veve.shotsandsugar.model.MealIngredient;
+import com.veve.shotsandsugar.model.Other;
+import com.veve.shotsandsugar.model.OtherRecord;
 import com.veve.shotsandsugar.model.Record;
 import com.veve.shotsandsugar.model.SugarLevel;
 
@@ -185,6 +184,16 @@ public class DiagramActivity extends DatabaseActivity {
                     }
                     records.add(new Record(activityPeriod, activityPeriod.getEndTime(), text));
                 }
+
+            List<OtherRecord> otherRecords = daoAccess.fetchOtherRecords();
+            for (OtherRecord otherRecord : otherRecords) {
+                Other other = daoAccess.fetchOther(otherRecord.getOtherId());
+                int otherNameId = RESOURCES.getIdentifier(other.getCode(),
+                        Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
+                String otherName = RESOURCES.getString(otherNameId);
+                String text = String.format(Locale.getDefault(), "%s for today", otherName);
+                records.add(new Record(otherRecord, otherRecord.getStartTime(), text));
+            }
 
             Collections.sort(records);
             return records;

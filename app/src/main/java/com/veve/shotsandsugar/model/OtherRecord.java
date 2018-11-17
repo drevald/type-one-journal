@@ -9,12 +9,12 @@ public class OtherRecord {
     @PrimaryKey(autoGenerate = true)
     long id;
     int otherId;
-    long startTims;
+    long startTime;
     long endTime;
 
-    public OtherRecord(int otherId, long startTims, long endTime) {
+    public OtherRecord(int otherId, long startTime, long endTime) {
         this.otherId = otherId;
-        this.startTims = startTims;
+        this.startTime = startTime;
         this.endTime = endTime;
     }
 
@@ -34,12 +34,12 @@ public class OtherRecord {
         this.otherId = otherId;
     }
 
-    public long getStartTims() {
-        return startTims;
+    public long getStartTime() {
+        return startTime;
     }
 
-    public void setStartTims(long startTims) {
-        this.startTims = startTims;
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 
     public long getEndTime() {

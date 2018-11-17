@@ -125,4 +125,10 @@ public interface DaoAccess {
     @Insert
     void insertOtherRecord(OtherRecord otherRecord);
 
+    @Query("SELECT * FROM OtherRecord")
+    List<OtherRecord> fetchOtherRecords();
+
+    @Query("SELECT * FROM Other WHERE Id = :id")
+    Other fetchOther(int id);
+
 }

@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
 import com.veve.shotsandsugar.model.Other;
+import com.veve.shotsandsugar.model.OtherRecord;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MoreActivity extends DatabaseActivity {
@@ -46,17 +48,6 @@ public class MoreActivity extends DatabaseActivity {
             }
         });
 
-        FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.save);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new SaveOthersTask().execute();
-                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
-                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intentOne);
-            }
-        });
-
         try {
             othersList = new MoreActivity.ListOthersTask().execute().get();
         } catch (Exception e) {
@@ -65,6 +56,17 @@ public class MoreActivity extends DatabaseActivity {
 
         Spinner other = findViewById(R.id.other);
         other.setAdapter(new OthersAdapter(getApplicationContext()));
+
+        FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SaveOthersTask().execute((int)other.getSelectedItemId());
+                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intentOne);
+            }
+        });
 
     }
 
@@ -79,6 +81,15 @@ public class MoreActivity extends DatabaseActivity {
     public static class SaveOthersTask extends AsyncTask<Integer, Void, Void> {
         @Override
         protected Void doInBackground(Integer... integers) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            long fromTime = calendar.getTime().getTime();
+            calendar.add(Calendar.HOUR, 24);
+            long toTime = calendar.getTime().getTime();
+            OtherRecord otherRecord = new OtherRecord(integers[0], fromTime, toTime);
+            daoAccess.insertOtherRecord(otherRecord);
             return null;
         }
     }
