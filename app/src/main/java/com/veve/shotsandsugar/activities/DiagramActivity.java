@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,13 +51,43 @@ public class DiagramActivity extends DatabaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.back);
+        ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
                 intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentOne);
+            }
+        });
+
+        FloatingActionButton sendButton = findViewById(R.id.send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuffer sb = new StringBuffer();
+                Date resultdate;
+                for (Record record : records) {
+                    resultdate = new Date(record.getTimestamp());
+                    sb.append(String.format(Locale.getDefault(), "%s",
+                            sdf.format(resultdate)));
+                    sb.append("\t\t");
+                    sb.append(record.getText());
+                    sb.append("\n");
+                }
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"ddreval@gmail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "Report");
+                i.putExtra(Intent.EXTRA_TEXT   , sb.toString());
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(DiagramActivity.this,
+                            "There are no email clients installed.",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

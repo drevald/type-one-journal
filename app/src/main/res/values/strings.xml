@@ -28,7 +28,6 @@
     <string name="other_record">%s for today</string>
     <string name="shot_record">Shot of %d units of %s</string>
 
-
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>
@@ -65,5 +64,6 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>
