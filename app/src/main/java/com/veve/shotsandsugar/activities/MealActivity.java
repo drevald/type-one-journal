@@ -38,6 +38,7 @@ import com.veve.shotsandsugar.model.MealIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static java.security.AccessController.getContext;
 
@@ -50,6 +51,8 @@ public class MealActivity extends DatabaseActivity {
     static IngredientsListAdapter ingredientsListAdapter;
 
     static FloatingActionButton saveMealButton;
+
+    static TextView counterText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,8 @@ public class MealActivity extends DatabaseActivity {
         ingredientsListAdapter = new IngredientsListAdapter();
         listView.setAdapter(ingredientsListAdapter);
 
+        counterText = findViewById(R.id.counterText);
+
         updateActivity();
 
     }
@@ -93,8 +98,18 @@ public class MealActivity extends DatabaseActivity {
         ingredientsListAdapter.notifyDataSetChanged();
         if (ingredientsListAdapter.getCount() == 0) {
             saveMealButton.setEnabled(false);
+            counterText.clearComposingText();
         } else {
             saveMealButton.setEnabled(true);
+            float breadUnitsTotal = 0f;
+            for (MealIngredient mealIngredient : mealIngredients) {
+                Ingredient ingredient = ingredients.get(mealIngredient.getIngredientId());
+                breadUnitsTotal += ingredient.getBreadUnitsPer100g()
+                        * mealIngredient.getIngredientWeightGramms() * 0.01;
+            }
+            String counterTextValue = String.format(Locale.getDefault(),
+                    RESOURCES.getString(R.string.bread_units_counter), breadUnitsTotal);
+            counterText.setText(counterTextValue);
         }
     }
 
@@ -142,6 +157,14 @@ public class MealActivity extends DatabaseActivity {
                     updateActivity();
                 }
             });
+            return null;
+        }
+    }
+
+    static class UpdateActivityTask extends AsyncTask <Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+
             return null;
         }
     }
@@ -230,6 +253,7 @@ public class MealActivity extends DatabaseActivity {
         @Override
         public void afterTextChanged(Editable s) {
             mealIngredient.setIngredientWeightGramms(Integer.parseInt(s.toString()));
+            updateActivity();
         }
     }
 

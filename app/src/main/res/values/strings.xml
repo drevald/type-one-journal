@@ -27,7 +27,7 @@
     <string name="physical_activity_duration_hours_minutes">%s for %d hours %d minutes</string>
     <string name="other_record">%s for today</string>
     <string name="shot_record">Shot of %d units of %s</string>
-
+    <string name="bread_units_counter">Total %2.1f bread units"</string>
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>

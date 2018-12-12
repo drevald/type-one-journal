@@ -27,7 +27,7 @@
     <string name="physical_activity_duration_hours_minutes">%s в течении %d часов %d минут</string>
     <string name="other_record">%s сегодня</string>
     <string name="shot_record">Укол %d ед %s</string>
-
+    <string name="bread_units_counter">Всего %2.1f хлебных единиц"</string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

@@ -10,7 +10,7 @@ public class Ingredient {
     private int id;
     private int typeId;
     private String ingredientCode;
-    private int breadUnitsPer100g;
+    private float breadUnitsPer100g;
     private int glycemicIndex;
     private int fatPer100g;
     private int carbohydratePer100g;
@@ -20,7 +20,7 @@ public class Ingredient {
     public Ingredient(int id,
                       int typeId,
                       String ingredientCode,
-                      int breadUnitsPer100g,
+                      float breadUnitsPer100g,
                       int glycemicIndex,
                       int fatPer100g,
                       int carbohydratePer100g,
@@ -61,11 +61,11 @@ public class Ingredient {
         this.ingredientCode = ingredientCode;
     }
 
-    public int getBreadUnitsPer100g() {
+    public float getBreadUnitsPer100g() {
         return breadUnitsPer100g;
     }
 
-    public void setBreadUnitsPer100g(int breadUnitsPer100g) {
+    public void setBreadUnitsPer100g(float breadUnitsPer100g) {
         this.breadUnitsPer100g = breadUnitsPer100g;
     }
 
