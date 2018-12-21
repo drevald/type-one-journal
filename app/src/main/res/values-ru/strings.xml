@@ -1,5 +1,6 @@
 <resources>
     <!-- UI -->
+    <string name="title_activity_settings">Настройки</string>
     <string name="app_name">Журнал Первого Типа</string>
     <string name="add_glucose_level">Добавить уровень глюкозы</string>
     <string name="add_insulin_shot">Добавить подкол</string>
@@ -27,7 +28,7 @@
     <string name="physical_activity_duration_hours_minutes">%s в течении %d часов %d минут</string>
     <string name="other_record">%s сегодня</string>
     <string name="shot_record">Укол %d ед %s</string>
-    <string name="bread_units_counter">Всего %2.1f хлебных единиц"</string>
+    <string name="bread_units_counter">Всего %2.1f %2.1f </string>
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>
@@ -64,4 +65,5 @@
     <string name="chicken_boiled">Курица вареная</string>
     <string name="egg">Яйцо</string>
     <string name="omelette">Омлет</string>
+
 </resources>

@@ -1,5 +1,6 @@
 <resources>
     <!-- UI -->
+    <string name="title_activity_settings">Setting sActivity</string>
     <string name="app_name">Type One Log</string>
     <string name="add_glucose_level">Add Glucose Level</string>
     <string name="add_insulin_shot">Add Insulin Shot</string>
@@ -27,7 +28,7 @@
     <string name="physical_activity_duration_hours_minutes">%s for %d hours %d minutes</string>
     <string name="other_record">%s for today</string>
     <string name="shot_record">Shot of %d units of %s</string>
-    <string name="bread_units_counter">Total %2.1f bread units"</string>
+    <string name="bread_units_counter">Total %2.1f %2.1f </string>
     <!-- DB Insulin -->
     <string name="tujeo">Tujeo</string>
     <string name="apidra">Apidra</string>
@@ -64,6 +65,6 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_meal_ingredient">MealIngredientActivity</string>
 
 </resources>
