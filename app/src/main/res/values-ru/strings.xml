@@ -8,6 +8,7 @@
     <string name="add_activity">Добавить нагрузку</string>
     <string name="add_more">Добавить другое</string>
     <string name="show_diagram">Показать диаграмму</string>
+    <string name="title_activity_meal_ingredient">Добавить продукт</string>
     <string name="send_results">Переслать результаты</string>
     <string name="product_name">Продукт</string>
     <string name="product_weight">Вес продукта</string>
@@ -28,7 +29,9 @@
     <string name="physical_activity_duration_hours_minutes">%s в течении %d часов %d минут</string>
     <string name="other_record">%s сегодня</string>
     <string name="shot_record">Укол %d ед %s</string>
-    <string name="bread_units_counter">Всего %2.1f %2.1f </string>
+    <string name="bread_units_counter">Всего %2.1f ХЕ %2.1f ккал</string>
+    <string name="ingredient_record">%s %d грамм</string>
+
     <!-- DB Insulin -->
     <string name="tujeo">Туджео</string>
     <string name="apidra">Апидра</string>

@@ -93,7 +93,7 @@ public interface DaoAccess {
     Ingredient fetchIngredient(int id);
 
     @Insert
-    void insertMealIngredient(MealIngredient mealIngredient);
+    long insertMealIngredient(MealIngredient mealIngredient);
 
     @Insert
     void insertActivity(Activity activity);
@@ -130,5 +130,8 @@ public interface DaoAccess {
 
     @Query("SELECT * FROM Other WHERE Id = :id")
     Other fetchOther(int id);
+
+    @Query("DELETE FROM MealIngredient WHERE Id = :id")
+    void deleteMealIngredient(long id);
 
 }

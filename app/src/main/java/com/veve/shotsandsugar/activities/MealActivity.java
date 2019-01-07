@@ -60,7 +60,24 @@ public class MealActivity extends DatabaseActivity {
     static TextView counterText;
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mealId = getIntent().getLongExtra("mealId", 0);
+        Log.d(getClass().getName(), "Getting mealId="+mealId+ " from intent "
+                + getIntent().hashCode());
+        MealIngredientsFinderTask mealIngredientsFinderTask = new MealIngredientsFinderTask();
+        mealIngredientsFinderTask.execute(mealId);
+        try {
+            mealIngredients = mealIngredientsFinderTask.get();
+            updateActivity();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage());
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_meal);
@@ -81,7 +98,6 @@ public class MealActivity extends DatabaseActivity {
         addIngredientButton.setOnClickListener(new AddProductListener());
 
         saveMealButton = findViewById(R.id.saveMeal);
-        saveMealButton.setOnClickListener(new SaveMealListener());
 
         try {
             ingredients = new ProductFinderTask(daoAccess).execute().get();
@@ -143,39 +159,28 @@ public class MealActivity extends DatabaseActivity {
         }
     }
 
-    static class MealSaverTask extends AsyncTask<List<MealIngredient>, Void, Void> {
-
-        View view;
-
-        public MealSaverTask(View view) {
-            this.view = view;
-        }
-
+    static class MealIngredientsFinderTask extends AsyncTask<Long, Void, List<MealIngredient>> {
         @Override
-        protected Void doInBackground(List<MealIngredient>... lists) {
-            Long mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
-            for (MealIngredient mealIngredient : mealIngredients) {
-                mealIngredient.setMealId(mealId);
+        protected List<MealIngredient> doInBackground(Long... ids) {
+            List<MealIngredient> result = null;
+            if (ids == null || ids[0] == null || ids[0] == 0) {
+                result = new ArrayList<MealIngredient>();
+            } else {
+                result = daoAccess.fetchMealIngredients(ids[0]);
             }
-            daoAccess.insertMealIngredients(mealIngredients);
-            view.post(new Runnable() {
-                @Override
-                public void run() {
-                    mealIngredients.clear();
-                    updateActivity();
-                }
-            });
-            return null;
+            return result;
         }
     }
 
-    static class UpdateActivityTask extends AsyncTask <Void, Void, Void> {
+    static class MealIngredientRemoverTask extends AsyncTask<Long, Void, Void> {
         @Override
-        protected Void doInBackground(Void... voids) {
-
+        protected Void doInBackground(Long... longs) {
+            daoAccess.deleteMealIngredient(longs[0]);
             return null;
         }
     }
+
+
 
 //////////////   LISTENERS    //////////////////////////////////////////////////////////////////////
 
@@ -211,6 +216,8 @@ public class MealActivity extends DatabaseActivity {
 
         @Override
         public void onClick(View v) {
+            MealIngredientRemoverTask task = new MealIngredientRemoverTask();
+            task.execute((long)mealIngredients.get(productNumber).getId());
             mealIngredients.remove(productNumber);
             updateActivity();
         }
@@ -232,19 +239,6 @@ public class MealActivity extends DatabaseActivity {
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intentOne.putExtra("mealId", mealId);
             startActivity(intentOne);
-        }
-
-    }
-
-    class SaveMealListener implements Button.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            v.requestFocus();
-            Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
-            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intentOne);
-            new MealSaverTask(v).execute(mealIngredients);
         }
 
     }
@@ -304,8 +298,23 @@ public class MealActivity extends DatabaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.meal_ingredient_record, parent, false);
+                convertView = getLayoutInflater()
+                        .inflate(R.layout.meal_ingredient_record, parent, false);
             }
+
+            TextView mealIngredientText = convertView.findViewById(R.id.mealIngredient);
+
+            MealIngredient mealIngredient = mealIngredients.get(position);
+            Ingredient ingredient = ingredients.get(mealIngredient.getIngredientId());
+            int ingredientResourceId = RESOURCES.getIdentifier(
+                    ingredient.getIngredientCode(),
+                    Constants.STRING_RES_TYPE, "com.veve.shotsandsugar");
+
+            String mealRecordText = RESOURCES.getString(R.string.ingredient_record,
+                    RESOURCES.getText(ingredientResourceId),
+                    mealIngredient.getIngredientWeightGramms());
+
+            mealIngredientText.setText(mealRecordText);
 
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
             removeButton.setOnClickListener(new RemoveProductListener(position));
