@@ -1,49 +1,30 @@
 package com.veve.shotsandsugar.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.sax.StartElementListener;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Space;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.veve.shotsandsugar.Constants;
-import com.veve.shotsandsugar.DaoAccess;
 import com.veve.shotsandsugar.R;
 import com.veve.shotsandsugar.model.Ingredient;
-import com.veve.shotsandsugar.model.Meal;
 import com.veve.shotsandsugar.model.MealIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static java.security.AccessController.getContext;
 
 public class MealActivity extends DatabaseActivity {
 
@@ -100,7 +81,7 @@ public class MealActivity extends DatabaseActivity {
         saveMealButton = findViewById(R.id.saveMeal);
 
         try {
-            ingredients = new ProductFinderTask(daoAccess).execute().get();
+            ingredients = new ProductFinderTask().execute().get();
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
@@ -146,13 +127,6 @@ public class MealActivity extends DatabaseActivity {
 //////////////    DATABASE TASKS    ////////////////////////////////////////////////////////////////
 
     static class ProductFinderTask extends AsyncTask<Void, Void, List<Ingredient>> {
-
-        DaoAccess daoAccess;
-
-        ProductFinderTask(DaoAccess daoAccess) {
-            this.daoAccess = daoAccess;
-        }
-
         @Override
         protected List<Ingredient> doInBackground(Void... voids) {
             return daoAccess.fetchIngredients();
@@ -164,7 +138,7 @@ public class MealActivity extends DatabaseActivity {
         protected List<MealIngredient> doInBackground(Long... ids) {
             List<MealIngredient> result = null;
             if (ids == null || ids[0] == null || ids[0] == 0) {
-                result = new ArrayList<MealIngredient>();
+                result = new ArrayList<>();
             } else {
                 result = daoAccess.fetchMealIngredients(ids[0]);
             }
