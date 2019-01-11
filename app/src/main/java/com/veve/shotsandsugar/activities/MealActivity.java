@@ -43,17 +43,18 @@ public class MealActivity extends DatabaseActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        mealId = getIntent().getLongExtra("mealId", 0);
-        Log.d(getClass().getName(), "Getting mealId="+mealId+ " from intent "
-                + getIntent().hashCode());
-        MealIngredientsFinderTask mealIngredientsFinderTask = new MealIngredientsFinderTask();
-        mealIngredientsFinderTask.execute(mealId);
-        try {
-            mealIngredients = mealIngredientsFinderTask.get();
-            updateActivity();
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getLocalizedMessage());
+        int mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
+        if (mealIngredientPosition < 0){
+            MealIngredient mealIngredient = new MealIngredient();
+            mealIngredient.setIngredientId(getIntent().getIntExtra("ingredientId", 0));
+            mealIngredient.setIngredientWeightGramms(getIntent().getIntExtra("weightGramms", 0));
+            mealIngredients.add(mealIngredient);
+        } else {
+            MealIngredient mealIngredient = mealIngredients.get(mealIngredientPosition);
+            mealIngredient.setIngredientId(getIntent().getIntExtra("ingredientId", 0));
+            mealIngredient.setIngredientWeightGramms(getIntent().getIntExtra("weightGramms", 0));
         }
+        updateActivity();
     }
 
     @Override
@@ -89,6 +90,19 @@ public class MealActivity extends DatabaseActivity {
         ListView listView = findViewById(R.id.mealsList);
         ingredientsListAdapter = new IngredientsListAdapter();
         listView.setAdapter(ingredientsListAdapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.d(getClass().getName(), "Selecting position " + position);
+//                MealIngredient mealIngredient = mealIngredients.get(position);
+//                Intent modifyIngredientIndent = new Intent(getApplicationContext(), MealIngredientActivity.class);
+//                modifyIngredientIndent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                modifyIngredientIndent.putExtra("mealIngredientPosition", position);
+//                modifyIngredientIndent.putExtra("ingredientId", mealIngredient.getIngredientId());
+//                modifyIngredientIndent.putExtra("weightGramms", mealIngredient.getIngredientWeightGramms());
+//                startActivity(modifyIngredientIndent);
+//            }
+//        });
 
         counterText = findViewById(R.id.counterText);
 
@@ -289,6 +303,19 @@ public class MealActivity extends DatabaseActivity {
                     mealIngredient.getIngredientWeightGramms());
 
             mealIngredientText.setText(mealRecordText);
+            mealIngredientText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(getClass().getName(), "List is clicked at position " + position);
+                    MealIngredient mealIngredient = mealIngredients.get(position);
+                    Intent modifyIngredientIndent = new Intent(getApplicationContext(), MealIngredientActivity.class);
+                    modifyIngredientIndent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    modifyIngredientIndent.putExtra("mealIngredientPosition", position);
+                    modifyIngredientIndent.putExtra("ingredientId", mealIngredient.getIngredientId());
+                    modifyIngredientIndent.putExtra("weightGramms", mealIngredient.getIngredientWeightGramms());
+                    startActivity(modifyIngredientIndent);
+                }
+            });
 
             ImageButton removeButton = convertView.findViewById(R.id.removeButton);
             removeButton.setOnClickListener(new RemoveProductListener(position));
