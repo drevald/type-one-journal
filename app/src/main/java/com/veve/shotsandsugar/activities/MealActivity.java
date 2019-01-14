@@ -226,6 +226,7 @@ public class MealActivity extends DatabaseActivity {
             Intent intentOne = new Intent(getApplicationContext(), MealIngredientActivity.class);
             intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intentOne.putExtra("mealId", mealId);
+            intentOne.putExtra("mealIngredientPosition", -1);
             startActivity(intentOne);
         }
 
