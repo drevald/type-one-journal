@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.R;
@@ -22,17 +23,27 @@ import java.util.List;
 
 public class MealIngredientActivity extends DatabaseActivity {
 
+    MealIngredient mealIngredient;
+
     List<Ingredient> ingredientsList;
 
     List<String> ingredientsNamesList;
 
     int mealIngredientPosition;
 
+    Spinner productSelection;
+
+    EditText weightInput;
+
+    TextView productLabel;
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
+        mealIngredient = (MealIngredient) getIntent().getSerializableExtra("mealIngredient");
+        productLabel.setText(productLabel.getText().toString() + "_" + mealIngredientPosition);
+        updateView();
     }
 
     @Override
@@ -42,7 +53,10 @@ public class MealIngredientActivity extends DatabaseActivity {
         setContentView(R.layout.activity_meal_ingredient);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getIntent().getLongExtra("mealIngredientPosition", -1);
+        mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
+        mealIngredient = (MealIngredient) getIntent().getSerializableExtra("mealIngredient");
+
+        productLabel = findViewById(R.id.productLabel);
 
         try {
             MealActivity.ProductFinderTask task = new MealActivity.ProductFinderTask();
@@ -50,10 +64,7 @@ public class MealIngredientActivity extends DatabaseActivity {
             ingredientsList = task.get();
             ingredientsNamesList = new ArrayList<String>();
             for (Ingredient ingredient : ingredientsList) {
-                int ingredientResourceId = RESOURCES.getIdentifier(
-                        ingredient.getIngredientCode(),
-                        Constants.STRING_RES_TYPE, getApplicationContext().getPackageName());
-                ingredientsNamesList.add(RESOURCES.getText(ingredientResourceId).toString());
+                ingredientsNamesList.add(getLocalizedStringFromCode(ingredient.getIngredientCode()));
             }
             Log.d(getClass().getName(), "Ingredients list " + ingredientsList.hashCode()
                     + " has " + ingredientsList.size() + " items added");
@@ -61,17 +72,13 @@ public class MealIngredientActivity extends DatabaseActivity {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
 
-        Spinner productSelection = findViewById(R.id.productSelection);
-        //productSelection.setAdapter(new ProductSpinnerAdapter(getApplicationContext()));
+        productSelection = findViewById(R.id.productSelection);
         productSelection.setAdapter(new ArrayAdapter<>(
                 getApplicationContext(),
                 R.layout.activity_meal_ingredient_item,
                 ingredientsNamesList));
-        productSelection.setSelection(getIntent().getIntExtra("ingredientId", 0));
 
-        EditText weightInput = findViewById(R.id.weightInput);
-        if (getIntent().getStringExtra("weightGramms") != null)
-            weightInput.setText(getIntent().getStringExtra("weightGramms"));
+        weightInput = findViewById(R.id.weightInput);
 
         FloatingActionButton fab = findViewById(R.id.saveMealIngredient);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,17 +86,18 @@ public class MealIngredientActivity extends DatabaseActivity {
             public void onClick(View view) {
                 Intent intentOne = new Intent(getApplicationContext(), MealActivity.class);
                 intentOne.putExtra("mealIngredientPosition", mealIngredientPosition);
-                intentOne.putExtra("ingredientId", (int)productSelection.getSelectedItemId());
-                intentOne.putExtra("weightGramms",
-                        Integer.parseInt(weightInput.getText().toString()));
-                Log.d(getClass().getName(), "Setting ingredientId = "
-                        +  productSelection.getSelectedItemId() + "weightGrams="+"weightGrams="+
-                        Integer.parseInt(weightInput.getText().toString())+ "to intent "
-                        + getIntent().hashCode());
+                intentOne.putExtra("mealIngredient", mealIngredient);
                 startActivity(intentOne);
             }
         });
 
+        updateView();
+
+    }
+
+    private void updateView() {
+        productSelection.setSelection(mealIngredient.getIngredientId());
+        weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
     }
 
     //////////////////  DB TASK  ///////////////////////////////////////////////////

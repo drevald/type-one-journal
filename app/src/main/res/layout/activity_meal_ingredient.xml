@@ -33,6 +33,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/productLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize = "15sp"
@@ -62,7 +63,9 @@
             <EditText
                 android:id="@+id/weightInput"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="@string/product_weight"
+                android:inputType="numberDecimal"/>
 
         </LinearLayout>
 

@@ -27,7 +27,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ListView
-            android:id="@+id/mealsList"
+            android:id="@+id/mealIngredientsList"
             android:layout_width="match_parent"
             android:layout_height="0sp"
             android:layout_weight="1"

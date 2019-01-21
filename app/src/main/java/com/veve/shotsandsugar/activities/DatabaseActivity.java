@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.veve.shotsandsugar.AppDatabase;
+import com.veve.shotsandsugar.Constants;
 import com.veve.shotsandsugar.DaoAccess;
 
 public abstract class DatabaseActivity extends AppCompatActivity {
@@ -34,6 +35,12 @@ public abstract class DatabaseActivity extends AppCompatActivity {
             appDatabase = AppDatabase.getInstance(contexts[0]);
             return appDatabase.daoAccess();
         }
+    }
+
+    protected String getLocalizedStringFromCode(String code) {
+        int resourceId = RESOURCES.getIdentifier(code,
+                Constants.STRING_RES_TYPE, getApplicationContext().getPackageName());
+        return RESOURCES.getText(resourceId).toString();
     }
 
 }

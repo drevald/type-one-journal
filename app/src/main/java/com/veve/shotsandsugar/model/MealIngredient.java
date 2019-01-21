@@ -3,8 +3,10 @@ package com.veve.shotsandsugar.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class MealIngredient {
+public class MealIngredient implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
