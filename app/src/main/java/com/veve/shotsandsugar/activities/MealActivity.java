@@ -1,21 +1,13 @@
 package com.veve.shotsandsugar.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -26,9 +18,8 @@ import com.veve.shotsandsugar.R;
 import com.veve.shotsandsugar.model.Ingredient;
 import com.veve.shotsandsugar.model.MealIngredient;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,17 +37,74 @@ public class MealActivity extends DatabaseActivity {
 
     static ImageButton saveMealButton;
 
+    static long mealId;
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d(getClass().getName(),"onPostResume");
+        int mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
+        int ingredientId = getIntent().getIntExtra("ingredientId", -1);
+        MealIngredient mealIngredient = (MealIngredient)getIntent().getSerializableExtra("mealIngredient");
+        Log.d(getClass().getName(),
+                "Received: " + mealIngredient + " at " + mealIngredientPosition);
+        if (mealIngredientPosition < 0 && mealIngredient == null) {
+            return;
+        } else if (mealIngredientPosition < 0) {
+            Log.d(getClass().getName(), "Received new: " + mealIngredient.toString());
+            mealIngredients.add(mealIngredient);
+        } else {
+            mealIngredients.set(mealIngredientPosition, mealIngredient);
+            Log.d(getClass().getName(), "Received update " + mealIngredientPosition + " " + mealIngredient.toString()+" at " + mealIngredientPosition);
+        }
+        getIntent().removeExtra("mealIngredientPosition");
+        getIntent().removeExtra("mealIngredient");
+        updateActivity();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(getClass().getName(),"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(getClass().getName(),"onDestroy");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("mealIngredients", (Serializable) mealIngredients);
+        Log.d(getClass().getName(), "onSaveInstanceState List of " + mealIngredients.size() + " saved");
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        Log.d(getClass().getName(),"onRestoreInstanceState");
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(getClass().getName(),"onCreate");
 
         setContentView(R.layout.activity_meal);
 
-        mealIngredients = new ArrayList<MealIngredient>();
-        mealIngredients.add(new MealIngredient(1, 2, 3));
-        mealIngredients.add(new MealIngredient(1, 3, 3));
-        mealIngredients.add(new MealIngredient(1, 4, 3));
+        if (savedInstanceState != null && savedInstanceState.get("mealIngredients") != null) {
+            mealIngredients = (List<MealIngredient>) savedInstanceState.get("mealIngredients");
+            Log.d(getClass().getName(),"List of " + mealIngredients.size() + " restored");
+        } else {
+            mealIngredients = new ArrayList<MealIngredient>();
+            mealIngredients.add(new MealIngredient(1, 2, 3));
+            mealIngredients.add(new MealIngredient(1, 3, 3));
+            mealIngredients.add(new MealIngredient(1, 4, 3));
+            Log.d(getClass().getName(),"new meals list created");
+        }
 
         try {
             ingredients = new ProductFinderTask().execute().get();
@@ -73,7 +121,7 @@ public class MealActivity extends DatabaseActivity {
                     convertView = getLayoutInflater().inflate(R.layout.meal_ingredient_record, null);
                     TextView mealIngredientText = convertView.findViewById(R.id.mealIngredient);
                     MealIngredient mealIngredient = mealIngredients.get(position);
-                    Ingredient ingredient = ingredients.get(mealIngredient.getIngredientId());
+                    Ingredient ingredient = ingredients.get((int)mealIngredient.getIngredientId());
                     int ingredientResourceId = RESOURCES.getIdentifier(
                     ingredient.getIngredientCode(),
                     Constants.STRING_RES_TYPE, "com.veve.shotsandsugar");
@@ -87,7 +135,8 @@ public class MealActivity extends DatabaseActivity {
                         public void onClick(View v) {
                             Intent intent = new Intent(getApplicationContext(), MealIngredientActivity.class);
                             intent.putExtra("mealIngredientPosition", position);
-                            intent.putExtra("mealIngredient", new MealIngredient(1, 1, 1));
+                            intent.putExtra("mealIngredient", mealIngredients.get(position));
+                            Log.d(getClass().getName(),"Sending " + mealIngredient.toString() + " at " + position);
                             startActivity(intent);
                         }
                     });
@@ -104,6 +153,8 @@ public class MealActivity extends DatabaseActivity {
                 return convertView;
             }
         };
+
+
 
         list.setAdapter(ingredientsListAdapter);
 
@@ -127,18 +178,11 @@ public class MealActivity extends DatabaseActivity {
 
         // Add
         ImageButton addIngredientButton = findViewById(R.id.addIngredient);
-        addIngredientButton.setOnClickListener(new AddingredientListener());
+        addIngredientButton.setOnClickListener(new AddIngredientListener());
 
         updateActivity();
 
     }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
-
-
 
     static void updateActivity() {
         ingredientsListAdapter.clear();
@@ -149,16 +193,16 @@ public class MealActivity extends DatabaseActivity {
         } else {
             saveMealButton.setEnabled(true);
             float breadUnitsTotal = 0f;
-            float kkalTotal = 0f;
+            float kKalTotal = 0f;
             for (MealIngredient mealIngredient : mealIngredients) {
-                Ingredient ingredient = ingredients.get(mealIngredient.getIngredientId());
+                Ingredient ingredient = ingredients.get((int)mealIngredient.getIngredientId());
                 breadUnitsTotal += ingredient.getBreadUnitsPer100g()
                         * mealIngredient.getIngredientWeightGramms() * 0.01;
-                kkalTotal += ingredient.getEnergyKkalPer100g()
+                kKalTotal += ingredient.getEnergyKkalPer100g()
                         * mealIngredient.getIngredientWeightGramms() * 0.01;
             }
             String counterTextValue = String.format(Locale.getDefault(),
-                    RESOURCES.getString(R.string.bread_units_counter), breadUnitsTotal, kkalTotal);
+                    RESOURCES.getString(R.string.bread_units_counter), breadUnitsTotal, kKalTotal);
             counterText.setText(counterTextValue);
         }
     }
@@ -184,24 +228,26 @@ public class MealActivity extends DatabaseActivity {
         @Override
         public void onClick(View v) {
             MealIngredient mealIngredient = mealIngredients.get(productNumber);
-            Log.d(getClass().getName(), "Removing ingredient at position " + productNumber + " " + mealIngredients.get(productNumber).getId());
+            Log.d(getClass().getName(), "Removing ingredient at position " + productNumber + " ingredient:" + mealIngredients.toString());
             mealIngredients.remove(mealIngredient);
             updateActivity();
         }
 
     }
 
-    class AddingredientListener implements Button.OnClickListener {
+    class AddIngredientListener implements Button.OnClickListener {
 
         @Override
         public void onClick(View v) {
             Intent intentOne = new Intent(getApplicationContext(), MealIngredientActivity.class);
-            intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            intentOne.putExtra("mealIngredient", new MealIngredient());
+            MealIngredient mealIngredient = new MealIngredient();
+            intentOne.putExtra("mealIngredient", mealIngredient);
+            Log.d(getClass().getName(), "Adding " + mealIngredient);
             startActivity(intentOne);
         }
 
     }
+
 
 }
 

@@ -90,7 +90,7 @@ public interface DaoAccess {
     List<MealIngredient> fetchMealIngredients(long mealId);
 
     @Query("SELECT * FROM Ingredient WHERE id = :id")
-    Ingredient fetchIngredient(int id);
+    Ingredient fetchIngredient(long id);
 
     @Insert
     long insertMealIngredient(MealIngredient mealIngredient);

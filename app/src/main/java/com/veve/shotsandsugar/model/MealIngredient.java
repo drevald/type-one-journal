@@ -11,13 +11,13 @@ public class MealIngredient implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     private long mealId;
-    private int ingredientId;
+    private long ingredientId;
     private int ingredientWeightGramms;
 
     public MealIngredient() {
     }
 
-    public MealIngredient(long mealId, int ingredientId, int ingredientWeightGramms) {
+    public MealIngredient(long mealId, long ingredientId, int ingredientWeightGramms) {
         this.mealId = mealId;
         this.ingredientId = ingredientId;
         this.ingredientWeightGramms = ingredientWeightGramms;
@@ -39,11 +39,11 @@ public class MealIngredient implements Serializable {
         this.mealId = mealId;
     }
 
-    public int getIngredientId() {
+    public long getIngredientId() {
         return ingredientId;
     }
 
-    public void setIngredientId(int ingredientId) {
+    public void setIngredientId(long ingredientId) {
         this.ingredientId = ingredientId;
     }
 
@@ -54,4 +54,9 @@ public class MealIngredient implements Serializable {
     public void setIngredientWeightGramms(int ingredientWeightGramms) {
         this.ingredientWeightGramms = ingredientWeightGramms;
     }
+
+    public String toString() {
+        return "id:"+id+",mealId:"+mealId+",ingredientId:"+ingredientId+",weight:"+ingredientWeightGramms;
+    }
+
 }

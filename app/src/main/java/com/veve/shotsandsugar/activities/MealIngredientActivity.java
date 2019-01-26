@@ -43,6 +43,8 @@ public class MealIngredientActivity extends DatabaseActivity {
         mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
         mealIngredient = (MealIngredient) getIntent().getSerializableExtra("mealIngredient");
         productLabel.setText(productLabel.getText().toString() + "_" + mealIngredientPosition);
+        Log.d(getClass().getName(),
+                "Received: " + mealIngredient.toString() + " at " + mealIngredientPosition);
         updateView();
     }
 
@@ -86,7 +88,13 @@ public class MealIngredientActivity extends DatabaseActivity {
             public void onClick(View view) {
                 Intent intentOne = new Intent(getApplicationContext(), MealActivity.class);
                 intentOne.putExtra("mealIngredientPosition", mealIngredientPosition);
+                mealIngredient.setIngredientId(productSelection.getSelectedItemId());
+                mealIngredient.setIngredientWeightGramms(Integer.parseInt(weightInput.getText().toString()));
                 intentOne.putExtra("mealIngredient", mealIngredient);
+                intentOne.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Log.d(getClass().getName(),
+                        "Returning: " + mealIngredient.toString()
+                                + " at " + mealIngredientPosition);
                 startActivity(intentOne);
             }
         });
@@ -96,7 +104,7 @@ public class MealIngredientActivity extends DatabaseActivity {
     }
 
     private void updateView() {
-        productSelection.setSelection(mealIngredient.getIngredientId());
+        productSelection.setSelection((int)mealIngredient.getIngredientId());
         weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
     }
 
