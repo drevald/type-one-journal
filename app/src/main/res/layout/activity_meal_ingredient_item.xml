@@ -18,4 +18,5 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:padding = "10sp"
-    android:textColor="#666666"/>
+    android:textColor="#666666"
+    android:theme="@style/AppTheme"/>
