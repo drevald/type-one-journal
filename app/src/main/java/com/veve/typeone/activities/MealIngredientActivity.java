@@ -38,10 +38,10 @@ public class MealIngredientActivity extends DatabaseActivity {
     TextView productLabel;
 
     @Override
-    protected void onPostResume() {
+    protected void onNewIntent(Intent intent) {
         super.onPostResume();
-        mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
-        mealIngredient = (MealIngredient) getIntent().getSerializableExtra("mealIngredient");
+        mealIngredientPosition = intent.getIntExtra("mealIngredientPosition", -1);
+        mealIngredient = (MealIngredient) intent.getSerializableExtra("mealIngredient");
         productLabel.setText(productLabel.getText().toString() + "_" + mealIngredientPosition);
         Log.d(getClass().getName(),
                 "Received: " + mealIngredient.toString() + " at " + mealIngredientPosition);

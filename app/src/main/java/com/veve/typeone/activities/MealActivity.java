@@ -40,12 +40,12 @@ public class MealActivity extends DatabaseActivity {
     static long mealId;
 
     @Override
-    protected void onPostResume() {
+    protected void onNewIntent(Intent intent) {
         super.onPostResume();
         Log.d(getClass().getName(),"onPostResume");
-        int mealIngredientPosition = getIntent().getIntExtra("mealIngredientPosition", -1);
-        int ingredientId = getIntent().getIntExtra("ingredientId", -1);
-        MealIngredient mealIngredient = (MealIngredient)getIntent().getSerializableExtra("mealIngredient");
+        int mealIngredientPosition = intent.getIntExtra("mealIngredientPosition", -1);
+        int ingredientId = intent.getIntExtra("ingredientId", -1);
+        MealIngredient mealIngredient = (MealIngredient)intent.getSerializableExtra("mealIngredient");
         Log.d(getClass().getName(),
                 "Received: " + mealIngredient + " at " + mealIngredientPosition);
         if (mealIngredientPosition < 0 && mealIngredient == null) {
