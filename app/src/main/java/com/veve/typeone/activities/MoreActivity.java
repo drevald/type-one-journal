@@ -125,8 +125,6 @@ public class MoreActivity extends DatabaseActivity {
                         othersList.get(position).getCode(),
                         Constants.STRING_RES_TYPE, context.getPackageName());
                 view.setText(RESOURCES.getText(ingredientResourceId));
-                view.setTextSize(16);
-                view.setTextColor(Color.BLACK);
                 view.setBackgroundResource(R.drawable.drop_down);
                 view.setGravity(Gravity.CENTER | Gravity.START);
                 view.setWidth(300);

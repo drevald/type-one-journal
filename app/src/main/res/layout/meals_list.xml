@@ -27,14 +27,12 @@
                     android:id="@+id/product"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_name"
-                    android:textSize="15sp" />
+                    android:text="@string/product_name" />
 
                 <Spinner
                     android:id="@+id/productSelection"
                     android:layout_width="200sp"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -48,8 +46,7 @@
                     android:id="@+id/weight"
                     android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="@string/product_name"
-                    android:textSize="15sp" />
+                    android:text="@string/product_name" />
 
                 <EditText
                     android:id="@+id/weightInput"

@@ -88,7 +88,6 @@ public class ShotActivity extends DatabaseActivity {
             int id = getResources()
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));
-            insulinRadioButton.setTextColor(Color.BLACK);
             insulinRadioButton.setId(insulin.getId());
             radioGroup.addView(insulinRadioButton);
         }
