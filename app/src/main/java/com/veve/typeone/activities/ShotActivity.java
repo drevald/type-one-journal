@@ -84,7 +84,9 @@ public class ShotActivity extends DatabaseActivity {
 
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.insulinsList);
         for (Insulin insulin : insulinsList) {
-            RadioButton insulinRadioButton = new RadioButton(getApplicationContext());
+            RadioButton insulinRadioButton = (RadioButton)
+                    getLayoutInflater().inflate(R.layout.insulin_radio_button, null);
+//            RadioButton insulinRadioButton = new RadioButton(getApplicationContext());
             int id = getResources()
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));

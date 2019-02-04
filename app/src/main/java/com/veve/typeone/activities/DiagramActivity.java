@@ -39,7 +39,7 @@ import com.veve.typeone.R;
 
 public class DiagramActivity extends DatabaseActivity {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
+    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault());
 
     List<Record> records = new ArrayList<Record>();
 

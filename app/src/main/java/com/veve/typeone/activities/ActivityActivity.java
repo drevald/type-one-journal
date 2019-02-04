@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,8 +27,11 @@ import com.veve.typeone.Constants;
 import com.veve.typeone.R;
 import com.veve.typeone.model.Activity;
 import com.veve.typeone.model.ActivityPeriod;
+import com.veve.typeone.model.Ingredient;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +41,8 @@ public class ActivityActivity extends DatabaseActivity {
     final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     static List<Activity> activityList;
+
+    static List<String> activityNamesList;
 
     static TimePickerDialog timePickerDialog;
 
@@ -79,14 +85,26 @@ public class ActivityActivity extends DatabaseActivity {
             startActivity(intentOne);
         });
 
+
+        activityNamesList = new ArrayList<String>();
         try {
             activityList = new GetActivitiesTask().execute().get();
+            for (Activity activity : activityList) {
+                activityNamesList.add(getLocalizedStringFromCode(activity.getActivityCode()));
+            }
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
 
+
+
+
+
         Spinner spinner = findViewById(R.id.activities);
-        spinner.setAdapter(new ActivitiesAdapter(getApplicationContext()));
+        spinner.setAdapter(new ArrayAdapter<>(
+                getApplicationContext(),
+                R.layout.activity_meal_ingredient_item,
+                activityNamesList));
 
         fromTimeInput = findViewById(R.id.fromTime);
 
