@@ -1,35 +1,29 @@
 package com.veve.typeone.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
-import com.veve.typeone.Constants;
 import com.veve.typeone.R;
 import com.veve.typeone.model.Other;
 import com.veve.typeone.model.OtherRecord;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class MoreActivity extends DatabaseActivity {
 
     static List<Other> othersList;
+
+    static List<String> othersNamesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +42,22 @@ public class MoreActivity extends DatabaseActivity {
             }
         });
 
+        othersNamesList = new ArrayList<String>();
+
         try {
             othersList = new MoreActivity.ListOthersTask().execute().get();
+            for (Other other : othersList) {
+                othersNamesList.add(getLocalizedStringFromCode(other.getCode()));
+            }
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
 
         Spinner other = findViewById(R.id.other);
-        other.setAdapter(new OthersAdapter(getApplicationContext()));
+        other.setAdapter(new ArrayAdapter<String>(
+                getApplicationContext(),
+                R.layout.list_item,
+                othersNamesList));
 
         FloatingActionButton saveButton = (FloatingActionButton) findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -92,47 +94,6 @@ public class MoreActivity extends DatabaseActivity {
             daoAccess.insertOtherRecord(otherRecord);
             return null;
         }
-    }
-
-    class OthersAdapter extends BaseAdapter {
-
-        Context context;
-
-        OthersAdapter(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public int getCount() {
-            return othersList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return othersList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return othersList.get(position).getId();
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                TextView view = new TextView(context);
-                int ingredientResourceId = RESOURCES.getIdentifier(
-                        othersList.get(position).getCode(),
-                        Constants.STRING_RES_TYPE, context.getPackageName());
-                view.setText(RESOURCES.getText(ingredientResourceId));
-                view.setBackgroundResource(R.drawable.drop_down);
-                view.setGravity(Gravity.CENTER | Gravity.START);
-                view.setWidth(300);
-                convertView = view;
-            }
-            return convertView;
-        }
-
     }
 
 }

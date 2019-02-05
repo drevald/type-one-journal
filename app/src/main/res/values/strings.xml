@@ -18,8 +18,9 @@
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
     <string name="insulin_name">Insulin name</string>
-    <string name="glucose_level_record">Glucose level is %2.1f mmol</string>
-    <string name="glucose_level">Glucose level, mmol</string>
+    <string name="glucose_level_record">Glucose level is %2.1f mmol/L</string>
+    <!--<string name="glucose_level_record">Glucose level is %2.1f mg/dL</string>-->
+    <string name="glucose_level">Glucose level, mmol/L</string>
     <string name="physical_activity">Physical Activity</string>
     <string name="period">Interval</string>
     <string name="amount_units">Amount, units</string>

@@ -1,6 +1,7 @@
 package com.veve.typeone.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class MealIngredient implements Serializable {
     private long ingredientId;
     private int ingredientWeightGramms;
 
+    @Ignore
     public MealIngredient() {
     }
 

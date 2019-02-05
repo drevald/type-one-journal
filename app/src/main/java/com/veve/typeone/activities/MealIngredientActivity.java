@@ -1,7 +1,6 @@
 package com.veve.typeone.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -9,13 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.veve.typeone.Constants;
 import com.veve.typeone.R;
 import com.veve.typeone.model.Ingredient;
-import com.veve.typeone.model.Meal;
 import com.veve.typeone.model.MealIngredient;
 
 import java.util.ArrayList;
@@ -77,7 +75,7 @@ public class MealIngredientActivity extends DatabaseActivity {
         productSelection = findViewById(R.id.productSelection);
         productSelection.setAdapter(new ArrayAdapter<>(
                 getApplicationContext(),
-                R.layout.activity_meal_ingredient_item,
+                R.layout.list_item,
                 ingredientsNamesList));
 
         weightInput = findViewById(R.id.weightInput);
@@ -96,6 +94,16 @@ public class MealIngredientActivity extends DatabaseActivity {
                         "Returning: " + mealIngredient.toString()
                                 + " at " + mealIngredientPosition);
                 startActivity(intentOne);
+            }
+        });
+
+        ImageButton backButton = findViewById(R.id.back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MealActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
             }
         });
 

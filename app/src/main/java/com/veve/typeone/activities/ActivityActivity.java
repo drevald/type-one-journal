@@ -3,7 +3,6 @@ package com.veve.typeone.activities;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,11 +26,9 @@ import com.veve.typeone.Constants;
 import com.veve.typeone.R;
 import com.veve.typeone.model.Activity;
 import com.veve.typeone.model.ActivityPeriod;
-import com.veve.typeone.model.Ingredient;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -96,14 +93,10 @@ public class ActivityActivity extends DatabaseActivity {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
 
-
-
-
-
         Spinner spinner = findViewById(R.id.activities);
         spinner.setAdapter(new ArrayAdapter<>(
                 getApplicationContext(),
-                R.layout.activity_meal_ingredient_item,
+                R.layout.list_item,
                 activityNamesList));
 
         fromTimeInput = findViewById(R.id.fromTime);
