@@ -55,6 +55,8 @@ public class ShotActivity extends DatabaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final EditText insulinAmountInput = findViewById(R.id.insulinAmount);
+
         ImageButton backButton = findViewById(R.id.back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +71,7 @@ public class ShotActivity extends DatabaseActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                insulinAmount = Integer.parseInt(insulinAmountInput.getText().toString());
                 new AddShotTask(daoAccess).execute(insulinAmount, selectedInsulinId);
                 Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
                 intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -86,7 +89,6 @@ public class ShotActivity extends DatabaseActivity {
         for (Insulin insulin : insulinsList) {
             RadioButton insulinRadioButton = (RadioButton)
                     getLayoutInflater().inflate(R.layout.insulin_radio_button, null);
-//            RadioButton insulinRadioButton = new RadioButton(getApplicationContext());
             int id = getResources()
                     .getIdentifier(insulin.getCode(), Constants.STRING_RES_TYPE, getPackageName());
             insulinRadioButton.setText(getResources().getString(id));
@@ -94,27 +96,12 @@ public class ShotActivity extends DatabaseActivity {
             radioGroup.addView(insulinRadioButton);
         }
 
-        final EditText insulinAmountInput = findViewById(R.id.insulinAmount);
-        insulinAmountInput.addTextChangedListener(new TextWatcher() {
-
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    insulinAmount = Integer.parseInt(s.toString());
-                } catch (Exception e) {
-                    Snackbar.make(insulinAmountInput, e.getLocalizedMessage(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (radioGroup.getCheckedRadioButtonId()!= -1) {
+                    insulinAmountInput.setEnabled(true);
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 

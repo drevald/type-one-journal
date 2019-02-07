@@ -35,11 +35,23 @@ public interface DaoAccess {
     @Query("SELECT * FROM SugarLevel")
     List<SugarLevel> fetchSugarLevels ();
 
-    @Update
-    void updateMovie (SugarLevel record);
+//    @Update
+//    void updateMovie (SugarLevel record);
 
     @Delete
-    void deleteSugarLevel(SugarLevel record);
+    void deleteSugarLevel(SugarLevel sugarLevel);
+
+    @Delete
+    void deleteInsulitShot(InsulinShot insulinShot);
+
+    @Delete
+    void deleteActivityPeriod(ActivityPeriod activityPeriod);
+
+    @Delete
+    void deleteOtherRecord(OtherRecord otherRecord);
+
+    @Delete
+    void deleteMeal(Meal meal);
 
     @Insert
     void insertSugarLevel (Insulin record);
@@ -133,5 +145,8 @@ public interface DaoAccess {
 
     @Query("DELETE FROM MealIngredient WHERE Id = :id")
     void deleteMealIngredient(long id);
+
+    @Query("DELETE FROM MealIngredient WHERE mealId = :id")
+    void deleteMealIngredients(long id);
 
 }

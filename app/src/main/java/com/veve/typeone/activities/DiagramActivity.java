@@ -39,9 +39,11 @@ import com.veve.typeone.R;
 
 public class DiagramActivity extends DatabaseActivity {
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault());
+    static SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,\nHH:mm", Locale.getDefault());
 
     List<Record> records = new ArrayList<Record>();
+
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +93,7 @@ public class DiagramActivity extends DatabaseActivity {
             }
         });
 
-        try {
-            records = new DiagramTask(daoAccess).execute().get();
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
-        }
-
-        ListView listView = (ListView)findViewById(R.id.listView);
+        listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(new BaseAdapter() {
             @Override
             public int getCount() {
@@ -126,20 +122,64 @@ public class DiagramActivity extends DatabaseActivity {
                 dateTextView.setText(String.format(Locale.getDefault(), "%s",
                         sdf.format(resultdate)));
                 recordTextView.setText(record.getText());
+                ImageButton removeButton = convertView.findViewById(R.id.removeButton);
+                removeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new RecordDeletionTask().execute(record);
+                        update();
+                    }
+                });
                 return convertView;
             }
         });
 
+        update();
+
+    }
+
+    private void update() {
+        records.clear();
+        try {
+            records = new DiagramTask(daoAccess).execute().get();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
+        }
+        ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        try {
-            records = new DiagramTask(daoAccess).execute().get();
+    protected void onResume() {
+        super.onResume();
+        update();
+    }
 
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getLocalizedMessage(), e);
+
+    /////////////////  DB TASKS //////////////////////////////////////////////
+
+
+    static class RecordDeletionTask extends AsyncTask<Record, Void, Void> {
+        @Override
+        protected Void doInBackground(Record... records) {
+            Object originalRecord = records[0].getOriginalRecord();
+            if (originalRecord instanceof Meal) {
+                Meal meal = (Meal) originalRecord;
+                daoAccess.deleteMealIngredients(meal.getId());
+                daoAccess.deleteMeal(meal);
+            } else if (originalRecord instanceof SugarLevel)  {
+                SugarLevel sugarLevel = (SugarLevel) originalRecord;
+                daoAccess.deleteSugarLevel(sugarLevel);
+            } else if (originalRecord instanceof InsulinShot)  {
+                InsulinShot insulinShot = (InsulinShot) originalRecord;
+                daoAccess.deleteInsulitShot(insulinShot);
+            } else if (originalRecord instanceof ActivityPeriod) {
+                ActivityPeriod activityPeriod = (ActivityPeriod) originalRecord;
+                daoAccess.deleteActivityPeriod(activityPeriod);
+            } else if (originalRecord instanceof  OtherRecord) {
+                OtherRecord otherRecord = (OtherRecord)originalRecord;
+                daoAccess.deleteOtherRecord(otherRecord);
+            }
+            return null;
         }
     }
 
@@ -238,4 +278,5 @@ public class DiagramActivity extends DatabaseActivity {
     }
 
 }
+
 

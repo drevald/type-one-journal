@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -56,11 +57,21 @@ public class SugarActivity extends DatabaseActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AddSugarTask(daoAccess).execute(
-                        Float.parseFloat(textView.getEditableText().toString()));
-                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
-                intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intentOne);
+                String inputString = textView.getEditableText().toString();
+                float sugarLevel = Float.parseFloat(inputString);
+                if (sugarLevel < 0) {
+                    Snackbar.make(textView, "Could not be negative value",
+                            Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else if (sugarLevel > 50) {
+                    Snackbar.make(textView, "Could not be that much",
+                            Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else {
+                    new AddSugarTask(daoAccess).execute(
+                            Float.parseFloat(textView.getEditableText().toString()));
+                    Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+                    intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intentOne);
+                }
             }
         });
 

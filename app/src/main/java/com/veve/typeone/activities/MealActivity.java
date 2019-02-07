@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.veve.typeone.Constants;
 import com.veve.typeone.R;
 import com.veve.typeone.model.Ingredient;
+import com.veve.typeone.model.Meal;
 import com.veve.typeone.model.MealIngredient;
 
 import java.io.Serializable;
@@ -63,29 +65,10 @@ public class MealActivity extends DatabaseActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(getClass().getName(),"onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(getClass().getName(),"onDestroy");
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("mealIngredients", (Serializable) mealIngredients);
         Log.d(getClass().getName(), "onSaveInstanceState List of " + mealIngredients.size() + " saved");
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-        Log.d(getClass().getName(),"onRestoreInstanceState");
-
     }
 
     @Override
@@ -94,15 +77,14 @@ public class MealActivity extends DatabaseActivity {
         Log.d(getClass().getName(),"onCreate");
 
         setContentView(R.layout.activity_meal);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState != null && savedInstanceState.get("mealIngredients") != null) {
             mealIngredients = (List<MealIngredient>) savedInstanceState.get("mealIngredients");
             Log.d(getClass().getName(),"List of " + mealIngredients.size() + " restored");
         } else {
             mealIngredients = new ArrayList<MealIngredient>();
-            mealIngredients.add(new MealIngredient(1, 2, 3));
-            mealIngredients.add(new MealIngredient(1, 3, 3));
-            mealIngredients.add(new MealIngredient(1, 4, 3));
             Log.d(getClass().getName(),"new meals list created");
         }
 
@@ -163,6 +145,19 @@ public class MealActivity extends DatabaseActivity {
 
         // Save
         saveMealButton = findViewById(R.id.saveMeal);
+        saveMealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(getClass().getSimpleName(), "before storing " + mealIngredients.size() + " ingredients");
+                AddMealTask addMealTask = new AddMealTask();
+                addMealTask.execute();
+                Log.d(getClass().getSimpleName(), "after storing " + mealIngredients.size() + " ingredients");
+                Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
+                backIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(backIntent);
+                Log.d(getClass().getSimpleName(), "clean ingredients " + mealIngredients.size() + " left");
+            }
+        });
 
         // Back
         ImageButton backButton = findViewById(R.id.back);
@@ -204,36 +199,54 @@ public class MealActivity extends DatabaseActivity {
             String counterTextValue = String.format(Locale.getDefault(),
                     RESOURCES.getString(R.string.bread_units_counter), breadUnitsTotal, kKalTotal);
             counterText.setText(counterTextValue);
+            ingredientsListAdapter.notifyDataSetChanged();
         }
     }
-
 
 ////////////////    DATABASE TASKS    //////////////////////////////////////////////////////////////
 
     static class ProductFinderTask extends AsyncTask<Void, Void, List<Ingredient>> {
+
         @Override
         protected List<Ingredient> doInBackground(Void... voids) {
             return daoAccess.fetchIngredients();
         }
+
     }
 
-    class RemoveProductListener implements Button.OnClickListener {
+    static class AddMealTask extends AsyncTask<Void, Void, Void> {
 
-        int productNumber;
-
-        RemoveProductListener(int productNumber) {
-            this.productNumber = productNumber;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d(getClass().getSimpleName(), "AddMealTask pre-execute");
         }
 
         @Override
-        public void onClick(View v) {
-            MealIngredient mealIngredient = mealIngredients.get(productNumber);
-            Log.d(getClass().getName(), "Removing ingredient at position " + productNumber + " ingredient:" + mealIngredients.toString());
-            mealIngredients.remove(mealIngredient);
-            updateActivity();
+        protected Void doInBackground(Void... voids) {
+            Log.d(getClass().getSimpleName(), "AddMealTask");
+            if(mealId == 0) {
+                mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
+            }
+            Log.d(getClass().getSimpleName(), "iterating " + mealIngredients.size() + "ingredients");
+            for (MealIngredient mealIngredient : mealIngredients){
+                Log.d(getClass().getSimpleName(), "storing  " + mealIngredient.toString());
+                mealIngredient.setMealId(mealId);
+            }
+            daoAccess.insertMealIngredients(mealIngredients);
+            return null;
         }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mealIngredients.clear();
+            mealId = 0;
+            updateActivity();
+        }
     }
+
+/////////////////     LISTENERS     ////////////////////////////////////////////////////////////////
 
     class AddIngredientListener implements Button.OnClickListener {
 
@@ -247,8 +260,6 @@ public class MealActivity extends DatabaseActivity {
         }
 
     }
-
-
 }
 
 

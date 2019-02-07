@@ -23,12 +23,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/button_gap"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="fill_vertical"
             android:columnCount="2"
             android:orientation="horizontal"
@@ -121,37 +122,24 @@
                     android:weekSeparatorLineColor="#00ff00" />
 
             </LinearLayout>
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageButton
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:background="#00000000"
-                android:contentDescription="@string/add"
-                android:text="@string/add"
                 android:tint="@color/colorAccent"
+                android:text="@string/add"
+                android:contentDescription="@string/add"
+                android:layout_gravity="bottom"
                 app:srcCompat="@drawable/ic_return" />
 
-        </GridLayout>
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="48sp"-->
-            <!--android:padding="@dimen/button_gap">-->
-
-            <!--<ImageButton-->
-                <!--android:id="@+id/back"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--android:background="#00000000"-->
-                <!--android:contentDescription="@string/add"-->
-                <!--android:text="@string/add"-->
-                <!--android:tint="@color/colorAccent"-->
-                <!--app:srcCompat="@drawable/ic_return" />-->
-
-        <!--</LinearLayout>-->
+        </LinearLayout>
 
     </LinearLayout>
 
