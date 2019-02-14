@@ -107,6 +107,16 @@ public class MealIngredientActivity extends DatabaseActivity {
             }
         });
 
+        ImageButton newIngredientButton = findViewById(R.id.newIngredient);
+        newIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewIngredientActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                startActivity(intent);
+            }
+        });
+
         updateView();
 
     }

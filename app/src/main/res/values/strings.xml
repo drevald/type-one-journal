@@ -68,4 +68,5 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
+    <string name="title_activity_new_ingredient">NewIngredientActivity</string>
 </resources>

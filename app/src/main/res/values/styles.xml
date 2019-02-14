@@ -37,20 +37,20 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="petit" parent="ThemeOverlay.AppCompat.Light" >
+    <style name="petit" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:labelTextSize">12sp</item>
     </style>
 
     <!--<style name="AppTheme.header" parent="ThemeOverlay.AppCompat.Light">-->
-        <!--<item name="android:textSize">48sp</item>-->
+    <!--<item name="android:textSize">48sp</item>-->
     <!--</style>-->
 
     <!--<style name="AppTheme.Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">-->
-        <!--<item name="android:textSize">24sp</item>-->
+    <!--<item name="android:textSize">24sp</item>-->
     <!--</style>-->
 
     <!--<style name="header" parent="TextAppearance.AppCompat">-->
-        <!--<item name="android:textSize">48sp</item>-->
+    <!--<item name="android:textSize">48sp</item>-->
     <!--</style>-->
 
 </resources>

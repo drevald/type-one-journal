@@ -10,12 +10,14 @@ public class Ingredient {
     private int id;
     private int typeId;
     private String ingredientCode;
+    private String ingredientName;
     private float breadUnitsPer100g;
     private int glycemicIndex;
     private int fatPer100g;
     private int carbohydratePer100g;
     private int proteinPer100g;
     private int energyKkalPer100g;
+    private int defaultWeightGramms;
 
     public Ingredient(int id,
                       int typeId,
@@ -25,7 +27,9 @@ public class Ingredient {
                       int fatPer100g,
                       int carbohydratePer100g,
                       int proteinPer100g,
-                      int energyKkalPer100g) {
+                      int energyKkalPer100g,
+                      int defaultWeightGramms,
+                      String ingredientName) {
         this.id = id;
         this.typeId = typeId;
         this.ingredientCode = ingredientCode;
@@ -35,6 +39,8 @@ public class Ingredient {
         this.carbohydratePer100g = carbohydratePer100g;
         this.proteinPer100g = proteinPer100g;
         this.energyKkalPer100g = energyKkalPer100g;
+        this.defaultWeightGramms = defaultWeightGramms;
+        this.ingredientName = ingredientName;
     }
 
     public int getId() {
@@ -108,4 +114,21 @@ public class Ingredient {
     public void setEnergyKkalPer100g(int energyKkalPer100g) {
         this.energyKkalPer100g = energyKkalPer100g;
     }
+
+    public String getIngredientName() {
+        return ingredientName;
+    }
+
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
+    }
+
+    public int getDefaultWeightGramms() {
+        return defaultWeightGramms;
+    }
+
+    public void setDefaultWeightGramms(int defaultWeightGramms) {
+        this.defaultWeightGramms = defaultWeightGramms;
+    }
+
 }
