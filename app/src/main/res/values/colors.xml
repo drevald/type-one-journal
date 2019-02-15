@@ -6,4 +6,5 @@
     <color name="colorButtonText">#CCCCCC</color>
     <color name="colorButtonOk">#00BF7E</color>
     <color name="colorBackground">#EEEEEE</color>
+    <color name="wrongValue">#ffff99</color>
 </resources>

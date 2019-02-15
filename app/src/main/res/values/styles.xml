@@ -9,6 +9,7 @@
         <item name="android:textSize">24sp</item>
         <item name="android:radioButtonStyle">@style/radiobutton</item>
         <item name="android:spinnerItemStyle">@style/radiobutton</item>
+        <item name="android:editTextStyle">@style/EditTextDefault</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -41,16 +42,9 @@
         <item name="android:labelTextSize">12sp</item>
     </style>
 
-    <!--<style name="AppTheme.header" parent="ThemeOverlay.AppCompat.Light">-->
-    <!--<item name="android:textSize">48sp</item>-->
-    <!--</style>-->
-
-    <!--<style name="AppTheme.Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">-->
-    <!--<item name="android:textSize">24sp</item>-->
-    <!--</style>-->
-
-    <!--<style name="header" parent="TextAppearance.AppCompat">-->
-    <!--<item name="android:textSize">48sp</item>-->
-    <!--</style>-->
+    <style name="EditTextDefault" parent="@android:style/Widget.EditText">
+        <item name="android:layout_marginLeft">@dimen/button_gap</item>
+        <item name="android:layout_width">400sp</item>
+    </style>
 
 </resources>

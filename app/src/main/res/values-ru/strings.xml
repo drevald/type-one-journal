@@ -1,5 +1,6 @@
 <resources>
     <!-- UI -->
+    <string name="title_activity_new_ingredient">Новый Продукт</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="app_name">Журнал Первого Типа</string>
     <string name="add_glucose_level">Добавить уровень глюкозы</string>
@@ -68,5 +69,17 @@
     <string name="chicken_boiled">Курица вареная</string>
     <string name="egg">Яйцо</string>
     <string name="omelette">Омлет</string>
+
+    <string name="ingredient_name">Имя продукта</string>
+    <string name="bread_units_per_100g">Хлебных единиц на 100г</string>
+    <string name="glycemic_index">Гликемический индекс</string>
+    <string name="fat_per_100g">Жира на 100г</string>
+    <string name="carbohydrate_per_100g">Углеводов на 100г</string>
+    <string name="protein_per_100g">Белка нв 100г</string>
+    <string name="energy_kkal_per_100g">Калорийность, кКал на 100г</string>
+    <string name="default_weight">Вес продукта, грамм</string>
+
+    <string name="empty_string"/>
+
 
 </resources>

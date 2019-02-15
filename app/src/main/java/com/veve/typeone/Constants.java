@@ -8,5 +8,6 @@ public interface Constants {
     public static final int PADDING = 16;
     public static final int MS_IN_MINUTE = 60000;
     public static final int MIN_IN_HOUR = 60;
+    public static final int CARBOHYDRATES_PER_BREAD_UNIT = 12;
 
 }

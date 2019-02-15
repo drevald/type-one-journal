@@ -112,6 +112,7 @@ public class MealIngredientActivity extends DatabaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), NewIngredientActivity.class);
+                intent.putExtra("mealIngredient", mealIngredient);
                 intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
                 startActivity(intent);
             }

@@ -68,5 +68,17 @@
     <string name="chicken_fried">Chicken fried</string>
     <string name="egg">Egg</string>
     <string name="omelette">Omeletter</string>
-    <string name="title_activity_new_ingredient">NewIngredientActivity</string>
+    <string name="title_activity_new_ingredient">New Ingredient</string>
+
+    <string name="ingredient_name">Product Name</string>
+    <string name="bread_units_per_100g">Bread Units per 100g</string>
+    <string name="glycemic_index">Glycemic index</string>
+    <string name="fat_per_100g">Fat per 100g</string>
+    <string name="carbohydrate_per_100g">Carbohydrate per 100g</string>
+    <string name="protein_per_100g">Protein per 100g</string>
+    <string name="energy_kkal_per_100g">Energy, kkal per 100g</string>
+    <string name="default_weight">Product Weight, gram</string>
+
+    <string name="empty_string"/>
+
 </resources>
