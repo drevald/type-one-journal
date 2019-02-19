@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Ingredient {
 
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int typeId;
     private String ingredientCode;
@@ -18,6 +18,31 @@ public class Ingredient {
     private int proteinPer100g;
     private int energyKkalPer100g;
     private int defaultWeightGramms;
+
+    public Ingredient() {
+    }
+
+    public Ingredient(int typeId,
+                      String ingredientCode,
+                      float breadUnitsPer100g,
+                      int glycemicIndex,
+                      int fatPer100g,
+                      int carbohydratePer100g,
+                      int proteinPer100g,
+                      int energyKkalPer100g,
+                      int defaultWeightGramms,
+                      String ingredientName) {
+        this.typeId = typeId;
+        this.ingredientCode = ingredientCode;
+        this.breadUnitsPer100g = breadUnitsPer100g;
+        this.glycemicIndex = glycemicIndex;
+        this.fatPer100g = fatPer100g;
+        this.carbohydratePer100g = carbohydratePer100g;
+        this.proteinPer100g = proteinPer100g;
+        this.energyKkalPer100g = energyKkalPer100g;
+        this.defaultWeightGramms = defaultWeightGramms;
+        this.ingredientName = ingredientName;
+    }
 
     public Ingredient(int id,
                       int typeId,

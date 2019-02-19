@@ -83,6 +83,9 @@ public interface DaoAccess {
     @Query("DELETE FROM Ingredient")
     void deleteIngredients();
 
+    @Query("DELETE FROM Ingredient WHERE typeId = :typeId")
+    void deleteIngredients(int typeId);
+
     @Insert
     void insertIngredient(Ingredient ingredient);
 
