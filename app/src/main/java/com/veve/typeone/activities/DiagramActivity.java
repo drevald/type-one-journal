@@ -223,10 +223,8 @@ public class DiagramActivity extends DatabaseActivity {
                 for (MealIngredient mealIngredient : mealIngredients) {
                     Ingredient ingredient = daoAccess.fetchIngredient(
                             mealIngredient.getIngredientId());
-                    int ingredientResourceId = RESOURCES.getIdentifier(
-                            ingredient.getIngredientCode(),
-                            Constants.STRING_RES_TYPE, "com.veve.shotsandsugar");
-                    sb.append(RESOURCES.getText(ingredientResourceId));
+                    sb.append(getLocalizedStringFromCode(ingredient.getIngredientCode(),
+                            ingredient.getIngredientName()));
                     sb.append(", ");
                     sb.append(mealIngredient.getIngredientWeightGramms());
                     sb.append("g");

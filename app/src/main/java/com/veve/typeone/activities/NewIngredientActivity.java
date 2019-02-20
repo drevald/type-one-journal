@@ -115,6 +115,9 @@ public class NewIngredientActivity extends AppCompatActivity {
                     ingredient.setIngredientCode(null);
                     ingredient.setTypeId(1);
                     new NewProductTask().execute(ingredient);
+                    Intent intent = new Intent(getApplicationContext(), MealIngredientActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                 } else {
                     StringBuilder message = new StringBuilder();
                     for (InputValidationResponse result : results) {

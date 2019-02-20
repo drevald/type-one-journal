@@ -87,7 +87,7 @@ public class ActivityActivity extends DatabaseActivity {
         try {
             activityList = new GetActivitiesTask().execute().get();
             for (Activity activity : activityList) {
-                activityNamesList.add(getLocalizedStringFromCode(activity.getActivityCode()));
+                activityNamesList.add(getLocalizedStringFromCode(activity.getActivityCode(), null));
             }
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());

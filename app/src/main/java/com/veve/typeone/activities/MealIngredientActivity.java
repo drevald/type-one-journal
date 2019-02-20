@@ -36,13 +36,22 @@ public class MealIngredientActivity extends DatabaseActivity {
     TextView productLabel;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        updateIngredients();
+        updateView();
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onPostResume();
         mealIngredientPosition = intent.getIntExtra("mealIngredientPosition", -1);
-        mealIngredient = (MealIngredient) intent.getSerializableExtra("mealIngredient");
-        productLabel.setText(productLabel.getText().toString() + "_" + mealIngredientPosition);
-        Log.d(getClass().getName(),
-                "Received: " + mealIngredient.toString() + " at " + mealIngredientPosition);
+        if (intent.getSerializableExtra("mealIngredient") != null) {
+            mealIngredient = (MealIngredient) intent.getSerializableExtra("mealIngredient");
+            productLabel.setText(productLabel.getText().toString() + "_" + mealIngredientPosition);
+            Log.d(getClass().getName(),
+                    "Received: " + mealIngredient.toString() + " at " + mealIngredientPosition);
+        }
         updateView();
     }
 
@@ -58,19 +67,7 @@ public class MealIngredientActivity extends DatabaseActivity {
 
         productLabel = findViewById(R.id.productLabel);
 
-        try {
-            MealActivity.ProductFinderTask task = new MealActivity.ProductFinderTask();
-            task.execute();
-            ingredientsList = task.get();
-            ingredientsNamesList = new ArrayList<String>();
-            for (Ingredient ingredient : ingredientsList) {
-                ingredientsNamesList.add(getLocalizedStringFromCode(ingredient.getIngredientCode()));
-            }
-            Log.d(getClass().getName(), "Ingredients list " + ingredientsList.hashCode()
-                    + " has " + ingredientsList.size() + " items added");
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getLocalizedMessage());
-        }
+        updateIngredients();
 
         productSelection = findViewById(R.id.productSelection);
         productSelection.setAdapter(new ArrayAdapter<>(
@@ -122,7 +119,26 @@ public class MealIngredientActivity extends DatabaseActivity {
 
     }
 
+    private void updateIngredients() {
+        try {
+            MealActivity.ProductFinderTask task = new MealActivity.ProductFinderTask();
+            task.execute();
+            ingredientsList = task.get();
+            ingredientsNamesList = new ArrayList<String>();
+            for (Ingredient ingredient : ingredientsList) {
+                ingredientsNamesList.add(
+                        getLocalizedStringFromCode(ingredient.getIngredientCode(),
+                                ingredient.getIngredientName()));
+            }
+            Log.d(getClass().getName(), "Ingredients list " + ingredientsList.hashCode()
+                    + " has " + ingredientsList.size() + " items added");
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage());
+        }
+    }
+
     private void updateView() {
+        ((ArrayAdapter)(productSelection.getAdapter())).notifyDataSetChanged();
         productSelection.setSelection((int)mealIngredient.getIngredientId());
         weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
     }

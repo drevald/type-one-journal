@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
-
 public class MealActivity extends DatabaseActivity {
 
     static List<MealIngredient> mealIngredients;
@@ -40,6 +38,13 @@ public class MealActivity extends DatabaseActivity {
     static ImageButton saveMealButton;
 
     static long mealId;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateIngredients();
+        updateActivity();
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -88,11 +93,7 @@ public class MealActivity extends DatabaseActivity {
             Log.d(getClass().getName(),"new meals list created");
         }
 
-        try {
-            ingredients = new ProductFinderTask().execute().get();
-        } catch (Exception e) {
-            Log.e(getClass().getName(), e.getLocalizedMessage());
-        }
+        updateIngredients();
 
         // List
         ListView list  = findViewById(R.id.mealIngredientsList);
@@ -104,14 +105,10 @@ public class MealActivity extends DatabaseActivity {
                     TextView mealIngredientText = convertView.findViewById(R.id.mealIngredient);
                     MealIngredient mealIngredient = mealIngredients.get(position);
                     Ingredient ingredient = ingredients.get((int)mealIngredient.getIngredientId());
-                    int ingredientResourceId = RESOURCES.getIdentifier(
-                    ingredient.getIngredientCode(),
-                    Constants.STRING_RES_TYPE, "com.veve.shotsandsugar");
-                    String mealRecordText = RESOURCES.getString(R.string.ingredient_record,
-                    RESOURCES.getText(ingredientResourceId),
-                    mealIngredient.getIngredientWeightGramms());
+                    String mealRecordText;
+                    mealRecordText = getLocalizedStringFromCode(ingredient.getIngredientCode(),
+                            ingredient.getIngredientName());
                     mealIngredientText.setText(mealRecordText);
-
                     mealIngredientText.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -177,6 +174,14 @@ public class MealActivity extends DatabaseActivity {
 
         updateActivity();
 
+    }
+
+    private void updateIngredients() {
+        try {
+            ingredients = new ProductFinderTask().execute().get();
+        } catch (Exception e) {
+            Log.e(getClass().getName(), e.getLocalizedMessage());
+        }
     }
 
     static void updateActivity() {

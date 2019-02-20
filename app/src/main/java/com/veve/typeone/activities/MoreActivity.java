@@ -47,7 +47,7 @@ public class MoreActivity extends DatabaseActivity {
         try {
             othersList = new MoreActivity.ListOthersTask().execute().get();
             for (Other other : othersList) {
-                othersNamesList.add(getLocalizedStringFromCode(other.getCode()));
+                othersNamesList.add(getLocalizedStringFromCode(other.getCode(), null));
             }
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());

@@ -37,9 +37,13 @@ public abstract class DatabaseActivity extends AppCompatActivity {
         }
     }
 
-    protected String getLocalizedStringFromCode(String code) {
+    protected static String getLocalizedStringFromCode(String code, String defaultString) {
+        if (code == null)
+            return defaultString;
+//        int resourceId = RESOURCES.getIdentifier(code,
+//                Constants.STRING_RES_TYPE, getApplicationContext().getPackageName());
         int resourceId = RESOURCES.getIdentifier(code,
-                Constants.STRING_RES_TYPE, getApplicationContext().getPackageName());
+                Constants.STRING_RES_TYPE, "com.veve.typeone.activities");
         return RESOURCES.getText(resourceId).toString();
     }
 
