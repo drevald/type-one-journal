@@ -104,10 +104,18 @@ public class MealActivity extends DatabaseActivity {
                     convertView = getLayoutInflater().inflate(R.layout.meal_ingredient_record, null);
                     TextView mealIngredientText = convertView.findViewById(R.id.mealIngredient);
                     MealIngredient mealIngredient = mealIngredients.get(position);
-                    Ingredient ingredient = ingredients.get((int)mealIngredient.getIngredientId());
+                    Ingredient ingredient = null;
+                    for (Ingredient listedIngredient : ingredients){
+                        if (listedIngredient.getId() == mealIngredient.getIngredientId()) {
+                            ingredient = listedIngredient;
+                            break;
+                        }
+                    }
                     String mealRecordText;
-                    mealRecordText = getLocalizedStringFromCode(ingredient.getIngredientCode(),
-                            ingredient.getIngredientName());
+                    mealRecordText = RESOURCES.getString(R.string.ingredient_record,
+                            getLocalizedStringFromCode(ingredient.getIngredientCode(),
+                                    ingredient.getIngredientName()),
+                            mealIngredient.getIngredientWeightGramms());
                     mealIngredientText.setText(mealRecordText);
                     mealIngredientText.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -190,21 +198,25 @@ public class MealActivity extends DatabaseActivity {
         if (ingredientsListAdapter.getCount() == 0) {
             saveMealButton.setEnabled(false);
             counterText.clearComposingText();
+            counterText.setText("");
         } else {
             saveMealButton.setEnabled(true);
+            ingredientsListAdapter.notifyDataSetChanged();
             float breadUnitsTotal = 0f;
             float kKalTotal = 0f;
             for (MealIngredient mealIngredient : mealIngredients) {
-                Ingredient ingredient = ingredients.get((int)mealIngredient.getIngredientId());
-                breadUnitsTotal += ingredient.getBreadUnitsPer100g()
-                        * mealIngredient.getIngredientWeightGramms() * 0.01;
-                kKalTotal += ingredient.getEnergyKkalPer100g()
-                        * mealIngredient.getIngredientWeightGramms() * 0.01;
+                for (Ingredient ingredient : ingredients) {
+                    if (ingredient.getId() != mealIngredient.getIngredientId())
+                        continue;
+                    breadUnitsTotal += ingredient.getBreadUnitsPer100g()
+                            * mealIngredient.getIngredientWeightGramms() * 0.01;
+                    kKalTotal += ingredient.getEnergyKkalPer100g()
+                            * mealIngredient.getIngredientWeightGramms() * 0.01;
+                }
             }
             String counterTextValue = String.format(Locale.getDefault(),
                     RESOURCES.getString(R.string.bread_units_counter), breadUnitsTotal, kKalTotal);
             counterText.setText(counterTextValue);
-            ingredientsListAdapter.notifyDataSetChanged();
         }
     }
 

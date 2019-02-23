@@ -183,7 +183,7 @@ public class DiagramActivity extends DatabaseActivity {
         }
     }
 
-    static class DiagramTask extends AsyncTask<Void, Void, List<Record>> {
+    class DiagramTask extends AsyncTask<Void, Void, List<Record>> {
 
         DaoAccess daoAccess;
 
@@ -208,7 +208,7 @@ public class DiagramActivity extends DatabaseActivity {
             for (InsulinShot insulinShot : shotRecords) {
                 Insulin insulin = daoAccess.fetchInsulin(insulinShot.getInsulinId());
                 int insulinNameId = RESOURCES.getIdentifier(insulin.getCode(),
-                        Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
+                        Constants.STRING_RES_TYPE,"com.veve.typeone");
                 String insulinName = RESOURCES.getString(insulinNameId);
                 String text = String.format(Locale.getDefault(),
                         RESOURCES.getString(R.string.shot_record),
@@ -237,7 +237,7 @@ public class DiagramActivity extends DatabaseActivity {
             for (ActivityPeriod activityPeriod : activityRecords) {
                 Activity activity = daoAccess.fetchActivity(activityPeriod.getActivityId());
                     int activityNameId = RESOURCES.getIdentifier(activity.getActivityCode(),
-                            Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
+                            Constants.STRING_RES_TYPE,"com.veve.typeone");
                     String activityName = RESOURCES.getString(activityNameId);
                     int durationInMin =
                             (int)(activityPeriod.getEndTime()-activityPeriod.getStartTime())
@@ -261,7 +261,7 @@ public class DiagramActivity extends DatabaseActivity {
             for (OtherRecord otherRecord : otherRecords) {
                 Other other = daoAccess.fetchOther(otherRecord.getOtherId());
                 int otherNameId = RESOURCES.getIdentifier(other.getCode(),
-                        Constants.STRING_RES_TYPE,"com.veve.shotsandsugar");
+                        Constants.STRING_RES_TYPE,"com.veve.typeone");
                 String otherName = RESOURCES.getString(otherNameId);
                 String text = String.format(Locale.getDefault(),
                         RESOURCES.getString(R.string.other_record),

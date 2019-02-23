@@ -2,10 +2,13 @@ package com.veve.typeone.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -70,10 +73,46 @@ public class MealIngredientActivity extends DatabaseActivity {
         updateIngredients();
 
         productSelection = findViewById(R.id.productSelection);
-        productSelection.setAdapter(new ArrayAdapter<>(
+        productSelection.setAdapter(new ArrayAdapter<Ingredient>(
                 getApplicationContext(),
                 R.layout.list_item,
-                ingredientsNamesList));
+                ingredientsList){
+
+            @Override
+            public long getItemId(int position) {
+                Log.d("adapter", "getItemId("+position+")");
+                return ingredientsList.get(position).getId();
+            }
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                Log.d("adapter", "getView("+position+")");
+                convertView = (TextView)getLayoutInflater().inflate(R.layout.list_item, null);
+                ((TextView)(convertView)).setText(ingredientsNamesList.get(position));
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                Log.d("adapter", "getDropDownView("+position+")");
+                convertView = (TextView)getLayoutInflater().inflate(R.layout.list_item, null);
+                ((TextView)(convertView)).setText(ingredientsNamesList.get(position));
+                return convertView;
+            }
+
+        });
+
+//        productSelection.setAdapter(new ArrayAdapter<>(
+//            getApplicationContext(),
+//            R.layout.list_item,
+//            ingredientsNamesList){
+//            @Override
+//            public long getItemId(int position) {
+//                return super.getItemId(position);
+//            }
+//        });
+
 
         weightInput = findViewById(R.id.weightInput);
 
@@ -139,7 +178,10 @@ public class MealIngredientActivity extends DatabaseActivity {
 
     private void updateView() {
         ((ArrayAdapter)(productSelection.getAdapter())).notifyDataSetChanged();
-        productSelection.setSelection((int)mealIngredient.getIngredientId());
+        for (Ingredient listedIngredient : ingredientsList) {
+            if (mealIngredient.getIngredientId() == listedIngredient.getId())
+                productSelection.setSelection(ingredientsList.indexOf(listedIngredient));
+        }
         weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
     }
 

@@ -25,12 +25,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:fitsSystemWindows="true"
         android:padding="@dimen/button_gap"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="fill_vertical"
+            android:columnCount="2"
             android:orientation="horizontal">
 
             <TextView
@@ -42,15 +45,8 @@
             <Spinner
                 android:id="@+id/productSelection"
                 android:layout_width="200sp"
+                style = "@style/EditTextDefault"
                 android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0sp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,39 +58,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/product_weight"
+                style = "@style/EditTextDefault"
                 android:inputType="numberDecimal"/>
 
-        </LinearLayout>
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="15sp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<ImageButton-->
-                <!--android:id="@+id/back"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="#00000000"-->
-                <!--android:tint="@color/colorAccent"-->
-                <!--android:text="@string/add"-->
-                <!--android:contentDescription="@string/add"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--app:srcCompat="@drawable/ic_return" />-->
-
-            <!--<TextView-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:paddingLeft="@dimen/button_gap"-->
-                <!--android:id="@+id/counterText" />-->
-
-        <!--</LinearLayout>-->
+        </GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
 
             <ImageButton
                 android:id="@+id/back"
