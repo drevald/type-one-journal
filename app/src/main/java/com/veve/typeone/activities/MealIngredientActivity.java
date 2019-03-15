@@ -1,6 +1,9 @@
 package com.veve.typeone.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -17,9 +22,11 @@ import android.widget.TextView;
 
 import com.veve.typeone.R;
 import com.veve.typeone.model.Ingredient;
+import com.veve.typeone.model.IngredientUnit;
 import com.veve.typeone.model.MealIngredient;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MealIngredientActivity extends DatabaseActivity {
@@ -28,11 +35,17 @@ public class MealIngredientActivity extends DatabaseActivity {
 
     List<Ingredient> ingredientsList;
 
-    List<String> ingredientsNamesList;
+    List<IngredientUnit> ingredientUnitList;
+
+    List<String> ingredientsNamesList = Arrays.asList(new String[] {"Uno", "Duos", "Tres"});
+
+    String[] ingredientsNamesArray = new String[] {"Uno", "Duos", "Tres"};
 
     int mealIngredientPosition;
 
     Spinner productSelection;
+
+    Spinner unitSelection;
 
     EditText weightInput;
 
@@ -56,6 +69,11 @@ public class MealIngredientActivity extends DatabaseActivity {
                     "Received: " + mealIngredient.toString() + " at " + mealIngredientPosition);
         }
         updateView();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 
     @Override
@@ -103,15 +121,41 @@ public class MealIngredientActivity extends DatabaseActivity {
 
         });
 
-//        productSelection.setAdapter(new ArrayAdapter<>(
-//            getApplicationContext(),
-//            R.layout.list_item,
-//            ingredientsNamesList){
-//            @Override
-//            public long getItemId(int position) {
-//                return super.getItemId(position);
-//            }
-//        });
+        productSelection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                IngredienUnitTask ingredienUnitTask = new IngredienUnitTask();
+                ingredienUnitTask.execute(id);
+                try {
+                    ingredientUnitList = ingredienUnitTask.get();
+                } catch (Exception e) {
+                    Log.e(getClass().getName(), e.getLocalizedMessage());
+                }
+                updateView();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        unitSelection = findViewById(R.id.unitsList);
+//        unitSelection.setAdapter(new ArrayAdapter(
+//                getApplicationContext(),
+//                R.layout.list_item,
+//                ingredientsNamesArray));
+        unitSelection.setAdapter(new CursorAdapter(){
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                return null;
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+
+            }
+        });
 
 
         weightInput = findViewById(R.id.weightInput);
@@ -171,6 +215,15 @@ public class MealIngredientActivity extends DatabaseActivity {
             }
             Log.d(getClass().getName(), "Ingredients list " + ingredientsList.hashCode()
                     + " has " + ingredientsList.size() + " items added");
+
+            IngredienUnitTask ingredienUnitTask = new IngredienUnitTask();
+            ingredienUnitTask.execute((long)ingredientsList.get(1).getId());
+            try {
+                ingredientUnitList = ingredienUnitTask.get();
+            } catch (Exception e) {
+                Log.e(getClass().getName(), e.getLocalizedMessage());
+            }
+
         } catch (Exception e) {
             Log.e(getClass().getName(), e.getLocalizedMessage());
         }
@@ -183,8 +236,30 @@ public class MealIngredientActivity extends DatabaseActivity {
                 productSelection.setSelection(ingredientsList.indexOf(listedIngredient));
         }
         weightInput.setText(String.valueOf(mealIngredient.getIngredientWeightGramms()));
+        if (ingredientUnitList != null && ingredientUnitList.size() > 0) {
+            findViewById(R.id.unitLabel).setVisibility(View.VISIBLE);
+            findViewById(R.id.unitsList).setVisibility(View.VISIBLE);
+            findViewById(R.id.unitQuantityLabel).setVisibility(View.VISIBLE);
+            findViewById(R.id.unitQuantityInput).setVisibility(View.VISIBLE);
+            ((ArrayAdapter)(unitSelection.getAdapter())).notifyDataSetChanged();
+        } else {
+            findViewById(R.id.unitLabel).setVisibility(View.GONE);
+            findViewById(R.id.unitsList).setVisibility(View.GONE);
+            findViewById(R.id.unitQuantityLabel).setVisibility(View.GONE);
+            findViewById(R.id.unitQuantityInput).setVisibility(View.GONE);
+        }
     }
 
     //////////////////  DB TASK  ///////////////////////////////////////////////////
+
+    static class IngredienUnitTask extends AsyncTask<Long, Void, List<IngredientUnit>> {
+
+        @Override
+        protected List<IngredientUnit> doInBackground(Long... longs) {
+            List<IngredientUnit> result = daoAccess.fetchIngredientUnits(longs[0].longValue());
+            return result;
+        }
+
+    }
 
 }

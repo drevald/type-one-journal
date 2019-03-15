@@ -14,6 +14,8 @@ public class MealIngredient implements Serializable {
     private long mealId;
     private long ingredientId;
     private int ingredientWeightGramms;
+    private long unitId;
+    private long unitQuantity;
 
     @Ignore
     public MealIngredient() {
@@ -55,6 +57,22 @@ public class MealIngredient implements Serializable {
 
     public void setIngredientWeightGramms(int ingredientWeightGramms) {
         this.ingredientWeightGramms = ingredientWeightGramms;
+    }
+
+    public long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(long unitId) {
+        this.unitId = unitId;
+    }
+
+    public long getUnitQuantity() {
+        return unitQuantity;
+    }
+
+    public void setUnitQuantity(long unitQuantity) {
+        this.unitQuantity = unitQuantity;
     }
 
     public String toString() {

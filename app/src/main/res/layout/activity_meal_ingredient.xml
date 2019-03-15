@@ -61,6 +61,37 @@
                 style = "@style/EditTextDefault"
                 android:inputType="numberDecimal"/>
 
+            <TextView
+                android:id="@+id/unitLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Units"
+                android:visibility="gone"/>
+
+            <Spinner
+                android:id="@+id/unitsList"
+                android:layout_width="200sp"
+                style = "@style/EditTextDefault"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/unitQuantityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unit quantity"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/unitQuantityInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/product_weight"
+                style = "@style/EditTextDefault"
+                android:inputType="numberDecimal"
+                android:visibility="gone"/>
+
+
         </GridLayout>
 
         <LinearLayout

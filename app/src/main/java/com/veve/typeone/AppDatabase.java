@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import com.veve.typeone.model.Activity;
 import com.veve.typeone.model.ActivityPeriod;
 import com.veve.typeone.model.Ingredient;
+import com.veve.typeone.model.IngredientUnit;
 import com.veve.typeone.model.Insulin;
 import com.veve.typeone.model.InsulinShot;
 import com.veve.typeone.model.Meal;
@@ -19,6 +20,7 @@ import com.veve.typeone.model.Other;
 import com.veve.typeone.model.OtherRecord;
 import com.veve.typeone.model.SelectedInsulin;
 import com.veve.typeone.model.SugarLevel;
+import com.veve.typeone.model.Unit;
 
 import java.io.File;
 
@@ -33,7 +35,9 @@ import java.io.File;
         Activity.class,
         ActivityPeriod.class,
         Other.class,
-        OtherRecord.class
+        OtherRecord.class,
+        IngredientUnit.class,
+        Unit.class
 }, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -75,6 +79,16 @@ public abstract class AppDatabase extends RoomDatabase {
                 daoAccess.insertIngredient(new Ingredient(0, "chicken_fried", 0, 0, 12, 0, 26, 210, 0, null));
                 daoAccess.insertIngredient(new Ingredient(0, "egg", 0.1f, 0, 12, 1, 13, 160, 0, null));
                 daoAccess.insertIngredient(new Ingredient(0, "omelette", 0.2f, 50, 20, 3, 14, 250, 0, null));
+
+                daoAccess.deleteUnits();
+                daoAccess.insertUnit(new Unit("Tea Spoon"));
+                daoAccess.insertUnit(new Unit("Spoon"));
+
+
+                daoAccess.deleteIngredientUnits();
+                daoAccess.insertIngredientUnit(new IngredientUnit(1, 1, 10));
+                daoAccess.insertIngredientUnit(new IngredientUnit(2, 1, 25));
+
                 daoAccess.deleteActivities();
                 daoAccess.insertActivity(new Activity(0, "morning_exercise"));
                 daoAccess.insertActivity(new Activity(1, "warm_up"));

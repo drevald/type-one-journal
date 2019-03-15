@@ -11,6 +11,7 @@ import java.util.List;
 import com.veve.typeone.model.Activity;
 import com.veve.typeone.model.ActivityPeriod;
 import com.veve.typeone.model.Ingredient;
+import com.veve.typeone.model.IngredientUnit;
 import com.veve.typeone.model.Insulin;
 import com.veve.typeone.model.InsulinShot;
 import com.veve.typeone.model.Meal;
@@ -19,6 +20,7 @@ import com.veve.typeone.model.Other;
 import com.veve.typeone.model.OtherRecord;
 import com.veve.typeone.model.SelectedInsulin;
 import com.veve.typeone.model.SugarLevel;
+import com.veve.typeone.model.Unit;
 
 @Dao
 public interface DaoAccess {
@@ -151,5 +153,20 @@ public interface DaoAccess {
 
     @Query("DELETE FROM MealIngredient WHERE mealId = :id")
     void deleteMealIngredients(long id);
+
+    @Insert
+    void insertUnit(Unit unit);
+
+    @Query("DELETE FROM Unit")
+    void deleteUnits();
+
+    @Insert
+    void insertIngredientUnit(IngredientUnit ingredientUnit);
+
+    @Query("DELETE FROM IngredientUnit")
+    void deleteIngredientUnits();
+
+    @Query("SELECT * FROM IngredientUnit WHERE ingredientId = :ingredientId")
+    List<IngredientUnit> fetchIngredientUnits(long ingredientId);
 
 }
