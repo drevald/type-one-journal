@@ -145,7 +145,7 @@ public class MealIngredientActivity extends DatabaseActivity {
 //                getApplicationContext(),
 //                R.layout.list_item,
 //                ingredientsNamesArray));
-        unitSelection.setAdapter(new CursorAdapter(){
+        unitSelection.setAdapter(new CursorAdapter(getApplicationContext(), daoAccess.fetchRawIngredientUnits(1)){
             @Override
             public View newView(Context context, Cursor cursor, ViewGroup parent) {
                 return null;

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+import android.database.Cursor;
 
 import java.util.List;
 
@@ -168,5 +169,8 @@ public interface DaoAccess {
 
     @Query("SELECT * FROM IngredientUnit WHERE ingredientId = :ingredientId")
     List<IngredientUnit> fetchIngredientUnits(long ingredientId);
+
+    @Query("SELECT * FROM IngredientUnit WHERE ingredientId = :ingredientId")
+    Cursor fetchRawIngredientUnits(long ingredientId);
 
 }
