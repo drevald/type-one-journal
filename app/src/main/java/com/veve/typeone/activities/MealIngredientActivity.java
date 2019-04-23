@@ -141,21 +141,21 @@ public class MealIngredientActivity extends DatabaseActivity {
         });
 
         unitSelection = findViewById(R.id.unitsList);
-//        unitSelection.setAdapter(new ArrayAdapter(
-//                getApplicationContext(),
-//                R.layout.list_item,
-//                ingredientsNamesArray));
-        unitSelection.setAdapter(new CursorAdapter(getApplicationContext(), daoAccess.fetchRawIngredientUnits(1)){
-            @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                return null;
-            }
-
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-
-            }
-        });
+        unitSelection.setAdapter(new ArrayAdapter(
+                getApplicationContext(),
+                R.layout.list_item,
+                ingredientsNamesArray));
+//        unitSelection.setAdapter(new CursorAdapter(getApplicationContext(), daoAccess.fetchRawIngredientUnits(1)){
+//            @Override
+//            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+//                return null;
+//            }
+//
+//            @Override
+//            public void bindView(View view, Context context, Cursor cursor) {
+//
+//            }
+//        });
 
 
         weightInput = findViewById(R.id.weightInput);

@@ -79,6 +79,8 @@
     <string name="energy_kkal_per_100g">Energy, kkal per 100g</string>
     <string name="default_weight">Product Weight, gram</string>
 
-    <string name="empty_string"/>
+    <string name="empty_string" />
+    <string name="title_activity_diary">DiaryActivity</string>
+    <string name="title_activity_diary_record">DiaryRecordActivity</string>
 
 </resources>

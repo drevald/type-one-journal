@@ -21,7 +21,10 @@ import com.veve.typeone.model.Other;
 import com.veve.typeone.model.OtherRecord;
 import com.veve.typeone.model.SelectedInsulin;
 import com.veve.typeone.model.SugarLevel;
+import com.veve.typeone.model.ThreeColumnRecord;
 import com.veve.typeone.model.Unit;
+import com.veve.typeone.model.DiaryRecord;
+
 
 @Dao
 public interface DaoAccess {
@@ -172,5 +175,12 @@ public interface DaoAccess {
 
     @Query("SELECT * FROM IngredientUnit WHERE ingredientId = :ingredientId")
     Cursor fetchRawIngredientUnits(long ingredientId);
+
+    @Insert
+    long insertThreeColumnRecord(ThreeColumnRecord threeColumnRecord);
+
+    @Query("SELECT * FROM ThreeColumnRecord")
+    Cursor fetchRawThreeColRecords();
+
 
 }

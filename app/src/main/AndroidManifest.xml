@@ -11,13 +11,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.DiaryRecordActivity"
+            android:label="@string/title_activity_diary_record"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.DiaryActivity"
+            android:label="@string/title_activity_diary"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".activities.SugarActivity"
             android:label="@string/add_glucose_level"
@@ -50,13 +61,13 @@
         <activity
             android:name=".activities.MealIngredientActivity"
             android:label="@string/title_activity_meal_ingredient"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.NewIngredientActivity"
             android:label="@string/title_activity_new_ingredient"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

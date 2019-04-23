@@ -8,10 +8,19 @@ public class Meal {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
+    private long recordId;
     private long time;
 
     public Meal(long time) {
         this.time = time;
+    }
+
+    public long getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
     }
 
     public long getId() {

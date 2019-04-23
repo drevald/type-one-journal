@@ -10,6 +10,7 @@ public class SugarLevel {
     private long id;
     private float value;
     private long timestamp;
+    private long recordId;
 
     public SugarLevel(float value, long timestamp) {
         this.value = value;
@@ -40,5 +41,11 @@ public class SugarLevel {
         this.timestamp = timestamp;
     }
 
+    public long getRecordId() {
+        return recordId;
+    }
 
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
+    }
 }

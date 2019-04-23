@@ -9,6 +9,8 @@ public class InsulinShot {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
+    private long recordId;
+
     private int amount;
 
     private int insulinId;
@@ -53,4 +55,11 @@ public class InsulinShot {
         this.time = time;
     }
 
+    public long getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(long recordId) {
+        this.recordId = recordId;
+    }
 }

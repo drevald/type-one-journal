@@ -157,10 +157,18 @@ public class MealActivity extends DatabaseActivity {
                 AddMealTask addMealTask = new AddMealTask();
                 addMealTask.execute();
                 Log.d(getClass().getSimpleName(), "after storing " + mealIngredients.size() + " ingredients");
-                Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-                backIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(backIntent);
-                Log.d(getClass().getSimpleName(), "clean ingredients " + mealIngredients.size() + " left");
+
+                Intent recordIntent = new Intent(getApplicationContext(), DiaryRecordActivity.class);
+                recordIntent.putExtra("mealId", mealId);
+                recordIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(recordIntent);
+
+
+//                Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
+//                backIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                startActivity(backIntent);
+//                Log.d(getClass().getSimpleName(), "clean ingredients " + mealIngredients.size() + " left");
+
             }
         });
 

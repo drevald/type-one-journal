@@ -76,7 +76,7 @@ public class MealIngredient implements Serializable {
     }
 
     public String toString() {
-        return "id:"+id+",mealId:"+mealId+",ingredientId:"+ingredientId+",weight:"+ingredientWeightGramms;
+        return "_id:"+id+",mealId:"+mealId+",ingredientId:"+ingredientId+",weight:"+ingredientWeightGramms;
     }
 
 }

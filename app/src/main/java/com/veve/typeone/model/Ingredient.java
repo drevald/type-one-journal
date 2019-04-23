@@ -1,6 +1,7 @@
 package com.veve.typeone.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
@@ -22,6 +23,7 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    @Ignore
     public Ingredient(int typeId,
                       String ingredientCode,
                       float breadUnitsPer100g,
@@ -44,6 +46,7 @@ public class Ingredient {
         this.ingredientName = ingredientName;
     }
 
+    @Ignore
     public Ingredient(int id,
                       int typeId,
                       String ingredientCode,

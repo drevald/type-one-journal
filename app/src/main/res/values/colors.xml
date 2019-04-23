@@ -7,4 +7,8 @@
     <color name="colorButtonOk">#00BF7E</color>
     <color name="colorBackground">#EEEEEE</color>
     <color name="wrongValue">#ffff99</color>
+    <color name="dark_red">#ff0000</color>
+    <color name="dark_green">#00ff00</color>
+    <color name="dark_blue">#0000ff</color>
+
 </resources>

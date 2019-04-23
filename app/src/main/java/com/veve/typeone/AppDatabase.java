@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 
 import com.veve.typeone.model.Activity;
 import com.veve.typeone.model.ActivityPeriod;
+import com.veve.typeone.model.DiaryRecord;
 import com.veve.typeone.model.Ingredient;
 import com.veve.typeone.model.IngredientUnit;
 import com.veve.typeone.model.Insulin;
@@ -20,6 +21,7 @@ import com.veve.typeone.model.Other;
 import com.veve.typeone.model.OtherRecord;
 import com.veve.typeone.model.SelectedInsulin;
 import com.veve.typeone.model.SugarLevel;
+import com.veve.typeone.model.ThreeColumnRecord;
 import com.veve.typeone.model.Unit;
 
 import java.io.File;
@@ -37,7 +39,8 @@ import java.io.File;
         Other.class,
         OtherRecord.class,
         IngredientUnit.class,
-        Unit.class
+        Unit.class,
+        ThreeColumnRecord.class
 }, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
