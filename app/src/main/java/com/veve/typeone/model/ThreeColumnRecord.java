@@ -2,6 +2,7 @@ package com.veve.typeone.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.Nullable;
 
 @Entity
 public class ThreeColumnRecord extends DiaryRecord {
@@ -10,13 +11,22 @@ public class ThreeColumnRecord extends DiaryRecord {
     @PrimaryKey(autoGenerate = true)
     long _id;
     long time;
+    @Nullable
     float glucoseLevel;
+    @Nullable
     float insulinShot;
+    @Nullable
     long mealId;
+    @Nullable
+    String mealDetails;
 
     public ThreeColumnRecord() {
 
     }
+
+    public String getMealDetails() { return mealDetails; }
+
+    public void setMealDetails(String mealDetails) { this.mealDetails = mealDetails; }
 
     public long getId() {
         return _id;

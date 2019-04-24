@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,9 +53,18 @@ public class DiaryRecordActivity extends DatabaseActivity {
             @Override
             public void onClick(View view) {
                 RecordSaverTask recordSaverTask = new RecordSaverTask();
-                Float glucoseLevelValue = Float.parseFloat(glucoseLevel.getText().toString());
-                Float insulineShotValie = Float.parseFloat(insulineShot.getText().toString());
-                recordSaverTask.execute(glucoseLevelValue, insulineShotValie);
+                Float glucoseLevelValue, insulineShotValue;
+                try {
+                    glucoseLevelValue = Float.parseFloat(glucoseLevel.getText().toString());
+                } catch (Exception e) {
+                    glucoseLevelValue = -1f;
+                }
+                try {
+                    insulineShotValue = Float.parseFloat(insulineShot.getText().toString());
+                } catch (Exception e) {
+                    insulineShotValue = -1f;
+                }
+                recordSaverTask.execute(glucoseLevelValue, insulineShotValue, mealDetails.getText().toString());
                 Intent intent = new Intent(DiaryRecordActivity.this, DiaryActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -65,59 +75,29 @@ public class DiaryRecordActivity extends DatabaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d(getClass().getName(), "Recieved meal info id:"+mealId+" mealDetails:"+intent.getLongExtra("mealId", -1)
+                + "  details " + intent.getStringExtra("mealString"));
         mealId = intent.getLongExtra("mealId", -1);
         if ( mealId > 0) {
             mealDetails = findViewById(R.id.mealDetails);
             mealDetails.setVisibility(View.VISIBLE);
-            MealIngredientTask mealIngredientTask = new MealIngredientTask();
-            mealIngredientTask.execute(mealId);
+            mealDetails.setText(intent.getStringExtra("mealString"));
         }
     }
-
 
 
     /////////////////////    DB TASKS   //////////////////////////////////////////
 
-    class RecordSaverTask extends AsyncTask<Float, Void, Void> {
+    class RecordSaverTask extends AsyncTask<Object, Void, Void> {
         @Override
-        protected Void doInBackground(Float... params) {
+        protected Void doInBackground(Object... params) {
             if (diaryRecordId == 0) {
                 ThreeColumnRecord diaryRecord = new ThreeColumnRecord();
                 diaryRecord.setTime(System.currentTimeMillis());
-                diaryRecord.setGlucoseLevel(params[0]);
-                diaryRecord.setInsulinShot(params[1]);
+                diaryRecord.setGlucoseLevel((Float)params[0]);
+                diaryRecord.setInsulinShot((Float)params[1]);
+                diaryRecord.setMealDetails((String)params[2]);
                 diaryRecordId = daoAccess.insertThreeColumnRecord(diaryRecord);
-            }
-            return null;
-        }
-    }
-
-    class MealIngredientTask extends AsyncTask<Long, Void, List<MealIngredient>> {
-
-        List<Ingredient> ingredients;
-        @Override
-        protected List<MealIngredient> doInBackground(Long... longs) {
-            ingredients = daoAccess.fetchIngredients();
-            return daoAccess.fetchMealIngredients(longs[0]);
-        }
-
-        @Override
-        protected void onPostExecute(List<MealIngredient> mealIngredients) {
-            super.onPostExecute(mealIngredients);
-            String details = "";
-            for (MealIngredient mealIngredient : mealIngredients) {
-                details.concat(String.format("%s %d gramm;",
-                getLocalizedStringFromCode(getIngredientById(mealIngredient.getIngredientId()).getIngredientCode(),""),
-                mealIngredient.getIngredientWeightGramms()));
-            }
-            mealDetails.setText(details);
-        }
-
-        private Ingredient getIngredientById(long id) {
-            for (Ingredient ingredient : ingredients) {
-                if (ingredient.getId() == id) {
-                    return ingredient;
-                }
             }
             return null;
         }

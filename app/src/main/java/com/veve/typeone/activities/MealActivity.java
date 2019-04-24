@@ -124,6 +124,7 @@ public class MealActivity extends DatabaseActivity {
                             intent.putExtra("mealIngredientPosition", position);
                             intent.putExtra("mealIngredient", mealIngredients.get(position));
                             Log.d(getClass().getName(),"Sending " + mealIngredient.toString() + " at " + position);
+
                             startActivity(intent);
                         }
                     });
@@ -157,18 +158,12 @@ public class MealActivity extends DatabaseActivity {
                 AddMealTask addMealTask = new AddMealTask();
                 addMealTask.execute();
                 Log.d(getClass().getSimpleName(), "after storing " + mealIngredients.size() + " ingredients");
-
                 Intent recordIntent = new Intent(getApplicationContext(), DiaryRecordActivity.class);
                 recordIntent.putExtra("mealId", mealId);
+                recordIntent.putExtra("mealString", getMealString());
                 recordIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                Log.d(getClass().getName(), "Sending meal info id:"+mealId+" mealDetails:"+getMealString());
                 startActivity(recordIntent);
-
-
-//                Intent backIntent = new Intent(getApplicationContext(), MainActivity.class);
-//                backIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(backIntent);
-//                Log.d(getClass().getSimpleName(), "clean ingredients " + mealIngredients.size() + " left");
-
             }
         });
 
@@ -190,6 +185,34 @@ public class MealActivity extends DatabaseActivity {
 
         updateActivity();
 
+    }
+
+    private String getMealString() {
+        StringBuilder sb = new StringBuilder();
+        float calorierTotal = 0;
+        float breadUnitsTotal = 0;
+        for (MealIngredient mealIngredient : mealIngredients) {
+            Ingredient ingredient = getIngredientById(mealIngredient.getIngredientId());
+            sb.append(getLocalizedStringFromCode(ingredient.getIngredientCode(),
+                    ingredient.getIngredientName()));
+            sb.append(", ");
+            sb.append(mealIngredient.getIngredientWeightGramms());
+            sb.append("g");
+            sb.append("; ");
+            breadUnitsTotal += ingredient.getBreadUnitsPer100g()
+                    * mealIngredient.getIngredientWeightGramms();
+        }
+        sb.append(String.format(Locale.getDefault(), " Bread units total %2.1f", breadUnitsTotal));
+        return sb.toString();
+    }
+
+    private Ingredient getIngredientById(long id) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getId() == id) {
+                return ingredient;
+            }
+        }
+        return null;
     }
 
     private void updateIngredients() {

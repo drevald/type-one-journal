@@ -182,5 +182,4 @@ public interface DaoAccess {
     @Query("SELECT * FROM ThreeColumnRecord")
     Cursor fetchRawThreeColRecords();
 
-
 }

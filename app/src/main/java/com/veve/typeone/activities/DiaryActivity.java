@@ -56,6 +56,14 @@ public class DiaryActivity extends DatabaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CursorAdapter cursorAdapter = ((CursorAdapter)(diaryRecords.getAdapter()));
+        if (cursorAdapter != null)
+            cursorAdapter.notifyDataSetChanged();
+    }
+
     class RecordsGetterTask extends AsyncTask<Void, Void, Cursor> {
 
         @Override
@@ -71,14 +79,13 @@ public class DiaryActivity extends DatabaseActivity {
                 public View newView(Context context, Cursor cursor, ViewGroup parent) {
                     View view = getLayoutInflater().inflate(R.layout.three_cols_record, null);
                     ((TextView)view.findViewById(R.id.time))
-                            .setText(String.format(Locale.getDefault(), "%s",
-                                    sdf.format(new Date(cursor.getLong(1)))));
+                            .setText(sdf.format(new Date(cursor.getLong(1))));
                     ((TextView)view.findViewById(R.id.glucose))
                             .setText(String.valueOf(cursor.getFloat(2)));
                     ((TextView)view.findViewById(R.id.insulin))
                             .setText(String.valueOf(cursor.getFloat(3)));
                     ((TextView)view.findViewById(R.id.meal))
-                            .setText(String.valueOf(cursor.getLong(4)));
+                            .setText(String.valueOf(cursor.getString(5)));
                     return view;
                 }
 
