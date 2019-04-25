@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.veve.typeone">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +17,10 @@
             android:name=".activities.DiaryRecordActivity"
             android:label="@string/title_activity_diary_record"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.DiaryActivity"
-            android:label="@string/title_activity_diary"
+            android:label="TypeOneJournal"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,7 +30,7 @@
         </activity>
         <activity
             android:name=".activities.MainActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".activities.SugarActivity"
             android:label="@string/add_glucose_level"

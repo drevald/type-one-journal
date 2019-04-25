@@ -32,6 +32,8 @@ public class DiaryActivity extends DatabaseActivity {
 
     ListView diaryRecords;
 
+    DiaryCursorAdapter diaryCursorAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,8 @@ public class DiaryActivity extends DatabaseActivity {
             }
         });
 
+        diaryRecords.setAdapter(diaryCursorAdapter);
+
         RecordsGetterTask recordsGetterTask = new RecordsGetterTask();
         recordsGetterTask.execute();
 
@@ -59,9 +63,8 @@ public class DiaryActivity extends DatabaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        CursorAdapter cursorAdapter = ((CursorAdapter)(diaryRecords.getAdapter()));
-        if (cursorAdapter != null)
-            cursorAdapter.notifyDataSetChanged();
+        RecordsGetterTask recordsGetterTask = new RecordsGetterTask();
+        recordsGetterTask.execute();
     }
 
     class RecordsGetterTask extends AsyncTask<Void, Void, Cursor> {
@@ -74,27 +77,41 @@ public class DiaryActivity extends DatabaseActivity {
         @Override
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
-            diaryRecords.setAdapter(new CursorAdapter(getApplicationContext(), cursor, true) {
-                @Override
-                public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                    View view = getLayoutInflater().inflate(R.layout.three_cols_record, null);
-                    ((TextView)view.findViewById(R.id.time))
-                            .setText(sdf.format(new Date(cursor.getLong(1))));
-                    ((TextView)view.findViewById(R.id.glucose))
-                            .setText(String.valueOf(cursor.getFloat(2)));
-                    ((TextView)view.findViewById(R.id.insulin))
-                            .setText(String.valueOf(cursor.getFloat(3)));
-                    ((TextView)view.findViewById(R.id.meal))
-                            .setText(String.valueOf(cursor.getString(5)));
-                    return view;
-                }
-
-                @Override
-                public void bindView(View view, Context context, Cursor cursor) {
-
-                }
-            });
+            if (diaryRecords.getAdapter() == null) {
+                diaryCursorAdapter = new DiaryCursorAdapter(getApplicationContext(), cursor, true);
+                diaryRecords.setAdapter(diaryCursorAdapter);
+            } else {
+                diaryCursorAdapter.swapCursor(cursor);
+            }
         }
+
+    }
+
+    class DiaryCursorAdapter extends CursorAdapter {
+
+        public DiaryCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+            super(context, c, autoRequery);
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            View view = getLayoutInflater().inflate(R.layout.three_cols_record, null);
+            ((TextView)view.findViewById(R.id.time))
+                    .setText(sdf.format(new Date(cursor.getLong(1))));
+            ((TextView)view.findViewById(R.id.glucose))
+                    .setText(String.valueOf(cursor.getFloat(2)));
+            ((TextView)view.findViewById(R.id.insulin))
+                    .setText(String.valueOf(cursor.getFloat(3)));
+            ((TextView)view.findViewById(R.id.meal))
+                    .setText(String.valueOf(cursor.getString(5)));
+            return view;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+
+        }
+
     }
 
 }

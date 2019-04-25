@@ -172,7 +172,7 @@ public class MealActivity extends DatabaseActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentOne = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intentOne = new Intent(getApplicationContext(), DiaryRecordActivity.class);
                 intentOne.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intentOne);
             }
@@ -202,7 +202,7 @@ public class MealActivity extends DatabaseActivity {
             breadUnitsTotal += ingredient.getBreadUnitsPer100g()
                     * mealIngredient.getIngredientWeightGramms();
         }
-        sb.append(String.format(Locale.getDefault(), " Bread units total %2.1f", breadUnitsTotal));
+        sb.append(String.format(Locale.getDefault(), " Bread units total %2.1f", breadUnitsTotal/100));
         return sb.toString();
     }
 
