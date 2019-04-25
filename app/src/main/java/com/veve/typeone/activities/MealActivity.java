@@ -157,13 +157,6 @@ public class MealActivity extends DatabaseActivity {
                 Log.d(getClass().getSimpleName(), "before storing " + mealIngredients.size() + " ingredients");
                 AddMealTask addMealTask = new AddMealTask();
                 addMealTask.execute();
-                Log.d(getClass().getSimpleName(), "after storing " + mealIngredients.size() + " ingredients");
-                Intent recordIntent = new Intent(getApplicationContext(), DiaryRecordActivity.class);
-                recordIntent.putExtra("mealId", mealId);
-                recordIntent.putExtra("mealString", getMealString());
-                recordIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                Log.d(getClass().getName(), "Sending meal info id:"+mealId+" mealDetails:"+getMealString());
-                startActivity(recordIntent);
             }
         });
 
@@ -262,7 +255,7 @@ public class MealActivity extends DatabaseActivity {
 
     }
 
-    static class AddMealTask extends AsyncTask<Void, Void, Void> {
+    class AddMealTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -273,7 +266,7 @@ public class MealActivity extends DatabaseActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d(getClass().getSimpleName(), "AddMealTask");
-            if(mealId == 0) {
+            if(mealId < 1) {
                 mealId = daoAccess.insertMeal(new Meal(System.currentTimeMillis()));
             }
             Log.d(getClass().getSimpleName(), "iterating " + mealIngredients.size() + "ingredients");
@@ -288,6 +281,15 @@ public class MealActivity extends DatabaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            Log.d(getClass().getSimpleName(), "after storing " + mealIngredients.size() + " ingredients");
+            Intent recordIntent = new Intent(getApplicationContext(), DiaryRecordActivity.class);
+            recordIntent.putExtra("mealId", mealId);
+            recordIntent.putExtra("mealString", getMealString());
+            recordIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            Log.d(getClass().getName(), "Sending meal info id:"+mealId+" mealDetails:"+getMealString());
+            startActivity(recordIntent);
+
             mealIngredients.clear();
             mealId = 0;
             updateActivity();

@@ -28,6 +28,12 @@ public class DiaryRecordActivity extends DatabaseActivity {
 
     TextView mealDetails;
 
+    EditText glucoseLevel;
+
+    EditText insulineShot;
+
+    Button setMealButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +41,9 @@ public class DiaryRecordActivity extends DatabaseActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText glucoseLevel = findViewById(R.id.glucoseLevel);
-        EditText insulineShot = findViewById(R.id.insulineShot);
+        glucoseLevel = findViewById(R.id.glucoseLevel);
+        insulineShot = findViewById(R.id.insulineShot);
+        mealDetails = findViewById(R.id.mealDetails);
         Button setMealButton = findViewById(R.id.setMeal);
 
         setMealButton.setOnClickListener(new View.OnClickListener() {
@@ -64,10 +71,7 @@ public class DiaryRecordActivity extends DatabaseActivity {
                 } catch (Exception e) {
                     insulineShotValue = -1f;
                 }
-                recordSaverTask.execute(glucoseLevelValue, insulineShotValue, mealDetails.getText().toString());
-                Intent intent = new Intent(DiaryRecordActivity.this, DiaryActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivity(intent);
+                recordSaverTask.execute(glucoseLevelValue, insulineShotValue, mealDetails.getText().toString(), mealRecordId);
             }
         });
     }
@@ -80,15 +84,21 @@ public class DiaryRecordActivity extends DatabaseActivity {
         mealId = intent.getLongExtra("mealId", -1);
         if ( mealId > 0) {
             mealDetails = findViewById(R.id.mealDetails);
-            mealDetails.setVisibility(View.VISIBLE);
-            mealDetails.setText(intent.getStringExtra("mealString"));
+            runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                  mealDetails.setVisibility(View.VISIBLE);
+                  mealDetails.setText(intent.getStringExtra("mealString"));
+                  mealRecordId=intent.getLongExtra("mealId", -1);
+              }
+            });
         }
     }
-
 
     /////////////////////    DB TASKS   //////////////////////////////////////////
 
     class RecordSaverTask extends AsyncTask<Object, Void, Void> {
+
         @Override
         protected Void doInBackground(Object... params) {
             if (diaryRecordId == 0) {
@@ -97,10 +107,24 @@ public class DiaryRecordActivity extends DatabaseActivity {
                 diaryRecord.setGlucoseLevel((Float)params[0]);
                 diaryRecord.setInsulinShot((Float)params[1]);
                 diaryRecord.setMealDetails((String)params[2]);
+                diaryRecord.setMealId((Long)params[3]);
                 diaryRecordId = daoAccess.insertThreeColumnRecord(diaryRecord);
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mealId = 0;
+            insulineShot.clearComposingText();
+            glucoseLevel.clearComposingText();
+            mealDetails.clearComposingText();
+            mealDetails.setVisibility(View.GONE);
+            Intent intent = new Intent(DiaryRecordActivity.this, DiaryActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+
     }
 
 }

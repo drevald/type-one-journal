@@ -44,7 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:text="1"/>
 
         </LinearLayout>
 
@@ -66,7 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:text="1"/>
 
         </LinearLayout>
 
