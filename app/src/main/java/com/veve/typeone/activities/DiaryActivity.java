@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -71,7 +72,9 @@ public class DiaryActivity extends DatabaseActivity {
 
         @Override
         protected Cursor doInBackground(Void... voids) {
-            return daoAccess.fetchRawThreeColRecords();
+            Cursor cursor = daoAccess.fetchRawThreeColRecords();
+            Log.d("DB", "returned cursor of size " + cursor.getCount());
+            return cursor;
         }
 
         @Override
@@ -80,8 +83,10 @@ public class DiaryActivity extends DatabaseActivity {
             if (diaryRecords.getAdapter() == null) {
                 diaryCursorAdapter = new DiaryCursorAdapter(getApplicationContext(), cursor, true);
                 diaryRecords.setAdapter(diaryCursorAdapter);
+                Log.d("DB", "Cursor used in new adapter");
             } else {
                 diaryCursorAdapter.swapCursor(cursor);
+                Log.d("DB", "Adapter updated with new cursor");
             }
         }
 

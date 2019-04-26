@@ -18,8 +18,6 @@ import com.veve.typeone.model.ThreeColumnRecord;
 
 import java.util.List;
 
-import static com.veve.typeone.activities.MealActivity.mealId;
-
 public class DiaryRecordActivity extends DatabaseActivity {
 
     long diaryRecordId;
@@ -79,10 +77,11 @@ public class DiaryRecordActivity extends DatabaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d(getClass().getName(), "Recieved meal info id:"+mealId+" mealDetails:"+intent.getLongExtra("mealId", -1)
+        mealRecordId = intent.getLongExtra("mealId", -1);
+        Log.d(getClass().getName(), "Recieved meal info id:"+mealRecordId+" mealDetails:"
+                + intent.getLongExtra("mealId", -1)
                 + "  details " + intent.getStringExtra("mealString"));
-        mealId = intent.getLongExtra("mealId", -1);
-        if ( mealId > 0) {
+        if ( mealRecordId > 0) {
             mealDetails = findViewById(R.id.mealDetails);
             runOnUiThread(new Runnable() {
               @Override
@@ -101,6 +100,7 @@ public class DiaryRecordActivity extends DatabaseActivity {
 
         @Override
         protected Void doInBackground(Object... params) {
+            Log.d("DB", "Start saving 3Col record");
             if (diaryRecordId == 0) {
                 ThreeColumnRecord diaryRecord = new ThreeColumnRecord();
                 diaryRecord.setTime(System.currentTimeMillis());
@@ -109,13 +109,15 @@ public class DiaryRecordActivity extends DatabaseActivity {
                 diaryRecord.setMealDetails((String)params[2]);
                 diaryRecord.setMealId((Long)params[3]);
                 diaryRecordId = daoAccess.insertThreeColumnRecord(diaryRecord);
+                Log.d("DB", "3Col record has been storede with id = " + diaryRecordId + " record details: " + diaryRecord.toString());
             }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            mealId = 0;
+            diaryRecordId = 0;
+            mealRecordId = 0;
             insulineShot.clearComposingText();
             glucoseLevel.clearComposingText();
             mealDetails.clearComposingText();

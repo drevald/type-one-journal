@@ -4,6 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
 
+import java.util.Date;
+import java.util.Locale;
+
 @Entity
 public class ThreeColumnRecord extends DiaryRecord {
 
@@ -67,4 +70,16 @@ public class ThreeColumnRecord extends DiaryRecord {
     public void setMealId(long mealId) {
         this.mealId = mealId;
     }
+
+    public String toString() {
+        return String.format(Locale.getDefault(),
+                "Time:%s, Glucose:%f, Shot:%f, Meal%s",
+                new Date(getTime()), getGlucoseLevel(), getInsulinShot(), getMealDetails());
+    }
+
+    public boolean equals(ThreeColumnRecord threeColumnRecord) {
+        return _id == threeColumnRecord._id && glucoseLevel==threeColumnRecord.glucoseLevel
+                && insulinShot==threeColumnRecord.insulinShot;
+    }
+
 }
