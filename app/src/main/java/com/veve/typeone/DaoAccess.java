@@ -182,4 +182,7 @@ public interface DaoAccess {
     @Query("SELECT * FROM ThreeColumnRecord")
     Cursor fetchRawThreeColRecords();
 
+    @Query("DELETE FROM ThreeColumnRecord")
+    void deleteDiaryRecords();
+
 }
