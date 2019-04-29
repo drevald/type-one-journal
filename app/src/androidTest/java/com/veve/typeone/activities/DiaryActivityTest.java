@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static android.support.test.InstrumentationRegistry.getContext;
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -33,6 +34,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
 
 @LargeTest
@@ -66,11 +69,11 @@ public class DiaryActivityTest {
 
     @Test
     public void diaryActivityTest() {
-        onView(allOf(withId(R.id.diaryRecords), hasMinimumChildCount(1)))
-                .check(doesNotExist());
+        onView(allOf(withId(R.id.diaryRecords), hasMinimumChildCount(1))).check(doesNotExist());
         onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.save)).perform(click());
         onView(allOf(withId(R.id.diaryRecords), hasMinimumChildCount(1))).check(matches(isDisplayed()));
+        onView(allOf(withParent(withId(R.id.record)), withId(R.id.glucose))).check(matches(withText("1")));
     }
 
 }
